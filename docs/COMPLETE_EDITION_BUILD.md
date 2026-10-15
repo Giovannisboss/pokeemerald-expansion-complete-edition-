@@ -99,7 +99,8 @@ Build the host controller with `gcc -O2 -Wall -Wextra tools/complete_edition/pla
 Its `fight` command accepts packed move slots (left slot in bits 0–1, right
 slot in bits 2–3), a bounded frame budget and read-only addresses for the battle
 flag, controller array, action/move input handlers, cursor arrays, callback2
-address and expected battle callback. For example, slot value 3 chooses left
+address and expected battle callback. An optional final target-input-handler address
+confirms the game's default enemy target in doubles; choose important targets manually. For example, slot value 3 chooses left
 move 3 and right move 0. The callback guard stops automation when another menu
 or evolution callback takes control. Obtain symbols from the matching production ELF using
 `arm-none-eabi-nm`; do not reuse addresses from another ROM revision. The helper
@@ -116,3 +117,19 @@ NPC origins and bridges, and prefers paths with less grass. Extra observed NPC
 positions can be supplied with `--blocked X,Y`. Moving NPCs, trainer sight lines,
 encounters and special terrain still require live position checks after each
 segment; the helper never operates or changes game memory.
+
+
+## Alpha 2.5 verification
+
+The frozen engine/test tree `94e05b7e637809f718b068a50d33e73d657b7713`
+passed the complete native audit: 5,397 PASS, no unexpected failure outcomes,
+63 assumption skips, 16 known failures, 421 TODOs and nine expected outcomes.
+Run native `make check` jobs sequentially: the headless runner uses shared host
+temporary names even when ELF output names differ. Production compilation may
+run independently. See the Alpha 2.5 QA JSON for exact scope and remaining gaps.
+
+The subsequent field-resource fix is tree
+`8942ab795b3c900133782efe904ddeaec7da1e3d`. It enables nine placed NPC graphics
+that were accidentally gated behind IS_FRLG. All 61 placed graphics IDs pass
+native validation. Final outcome-coverage details (including the incomplete
+broad recheck and its focused completion) are in the final-coverage QA JSON.

@@ -1,0 +1,39 @@
+{
+  "rom_sha256": "8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6",
+  "source_engine_commit": "b2e16856f01511d668d198c684cd9a54e6293b35",
+  "method": "Normal buttons in mGBA 0.10.2; read-only position/UI inspection; no memory writes, flags, levels, items or party data injected.",
+  "verified": [
+    "Alpha 2.4 normal Centre save reloads in a fresh Alpha 2.5 process at Rustboro Centre (10,2), one badge.",
+    "Sentret deposited normally in BOX1 before saving; normal save/reload retained the single active party setup.",
+    "Alpha 2.5 Route 116 wild/trainer progression triggers Mudkip evolution normally.",
+    "Callback guard stops battle input when the evolution scene takes control.",
+    "Shiny Marshtomp evolution completes on the release ROM and returns to Route 116 field movement.",
+    "Release ROM cleared Route 116 trainer encounters and entered Rusturf Tunnel at (4,10).",
+    "Normal release-ROM save created at Rusturf Tunnel (4,10) after Marshtomp evolution; pre-grunt battery checkpoint retained privately.",
+    "A fresh process reloaded the release ROM battery save at Rusturf Tunnel (4,10), preserving the evolved party.",
+    "Final graphics-fixed ROM loads the normal pre-grunt battery save and renders Brock visibly in Rusturf Tunnel.",
+    "Wild battle returns safely to Rusturf Tunnel with Brock present.",
+    "Rusturf Aqua grunt defeated and post-battle dialogue resumes in the field without reset.",
+    "Devon Goods award and Mr Briney/Peeko reunion/exit cutscene complete; field controls return.",
+    "Devon Parts confirmed in the Key Items pocket after rescue.",
+    "Normal post-rescue save reloads in a fresh final-ROM process at Rusturf Tunnel (13,5).",
+    "Devon Parts remains in the Key Items pocket after that fresh reload."
+  ],
+  "observations": [
+    {
+      "build": "Alpha 2.4",
+      "observation": "An exploratory session returned unexpectedly to the boot screen around the Rusturf grunt encounter.",
+      "status": "Reproduced and fixed; graphics for placed Brock NPC were disabled by IS_FRLG resource guards.",
+      "private_journal": "alpha25-route116.log",
+      "root_cause": "Null graphics info during SpawnObjectEventsOnReturnToField created a sprite with invalid animation data; read-only CPU branch/store traces identified the caller.",
+      "fix": "Enable existing resources for all nine placed FRLG-gated NPC graphics; native resource regression covers all 61 distinct CE_ placement graphics IDs.",
+      "verified": "Final ROM completes wild/trainer battle returns and Peeko rescue."
+    }
+  ],
+  "scope_limits": [
+    "Full story, Frontier, all world events, portraits and hardware remain unverified."
+  ],
+  "durable_checkpoint": "Rusturf Tunnel (13,5), one badge, shiny Marshtomp level 17, Devon Parts recovered and Peeko rescued; Sentret in BOX1.",
+  "initial_build_sha256": "dc20e24e7d3868323c3bc6db28f14c9b912698a80ef67acae35930da7a7cffe1",
+  "next_story_task": "Return Devon Parts to the Rustboro employee, then continue the Devon/Briney story."
+}

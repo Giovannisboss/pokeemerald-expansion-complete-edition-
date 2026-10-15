@@ -1,0 +1,118 @@
+{
+  "source_commit": "77cf69e428c573e044c9d49169eca19f1c929a77",
+  "complete": true,
+  "failing_outcomes": 0,
+  "statuses": {
+    "PASS": 331,
+    "TO_DO": 11,
+    "KNOWN_FAILING": 3,
+    "ASSUMPTION_FAIL": 3
+  },
+  "runs": [
+    {
+      "log": "alpha25-boundaries.log",
+      "statuses": {
+        "PASS": 37
+      },
+      "complete": true
+    },
+    {
+      "log": "alpha25-conversion-ai-final.log",
+      "statuses": {
+        "PASS": 1
+      },
+      "complete": true
+    },
+    {
+      "log": "alpha25-conversion-effects-final.log",
+      "statuses": {
+        "PASS": 14
+      },
+      "complete": true
+    },
+    {
+      "log": "alpha25-values-verified.log",
+      "statuses": {
+        "PASS": 9
+      },
+      "complete": true
+    },
+    {
+      "log": "alpha25-flash-verified.log",
+      "statuses": {
+        "PASS": 3
+      },
+      "complete": true
+    },
+    {
+      "log": "00.log",
+      "statuses": {
+        "PASS": 12,
+        "TO_DO": 2
+      },
+      "complete": true
+    },
+    {
+      "log": "01.log",
+      "statuses": {
+        "PASS": 12,
+        "TO_DO": 3
+      },
+      "complete": true
+    },
+    {
+      "log": "02.log",
+      "statuses": {
+        "KNOWN_FAILING": 2,
+        "PASS": 26
+      },
+      "complete": true
+    },
+    {
+      "log": "03.log",
+      "statuses": {
+        "ASSUMPTION_FAIL": 3,
+        "KNOWN_FAILING": 1,
+        "PASS": 140
+      },
+      "complete": true
+    },
+    {
+      "log": "04.log",
+      "statuses": {
+        "PASS": 27,
+        "TO_DO": 6
+      },
+      "complete": true
+    },
+    {
+      "log": "06.log",
+      "statuses": {
+        "PASS": 7
+      },
+      "complete": true
+    },
+    {
+      "log": "07.log",
+      "statuses": {
+        "PASS": 5
+      },
+      "complete": true
+    },
+    {
+      "log": "08.log",
+      "statuses": {
+        "PASS": 4
+      },
+      "complete": true
+    },
+    {
+      "log": "09.log",
+      "statuses": {
+        "PASS": 34
+      },
+      "complete": true
+    }
+  ],
+  "note": "Some targeted files were verified before the final AI-only change; the final full audit subsequently covered every test on the final engine tree."
+}

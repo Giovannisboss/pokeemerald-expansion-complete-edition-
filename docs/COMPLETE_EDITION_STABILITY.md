@@ -270,3 +270,76 @@ is part of the ROM. No move or ability was removed; Gen 4 defaults are preserved
 Gold portrait generation was rejected by the built-in image tool and produced
 no artwork. Temporary portraits remain. Full story/evolution, all Frontier
 facilities, world-event captures and real hardware QA remain open.
+
+
+## Alpha 2.5 regression closure (2026-10-15)
+
+The frozen engine/test tree `94e05b7e637809f718b068a50d33e73d657b7713`
+completed 5,906 native outcomes: **5,397 PASS, zero unexpected failures**,
+63 assumption skips, 16 KNOWN_FAILING, 421 TODOs, seven EXPECTED_FAIL and two
+intentional CRASH results. No FAIL, FLAKY, INVALID, TIMEOUT or ERROR occurred.
+The 108 unexpected Alpha 2.4 failures are absent; none were moved into the
+unchanged known-failure or TODO counts. See the full and comparison JSON.
+
+The fixes separate generation-dependent fixture assumptions from the Gen4
+production profile, repair runtime test accessors and replace direct configuration
+reads in affected paths. Damage-ratio tests use stable 80-power Strength rather
+than Gen4 Tackle, whose 35 power magnifies base-power rounding. Conversion 2's
+production handler validates unavailable history before accessing move data;
+AI scores observed usable history, and behavioral tests cover both generations.
+No move/ability was removed, and the physical/special split remains enabled.
+
+Targeted reruns record 331 PASS, 11 existing TODOs, three known failures and three
+assumption skips. Three actual flash-storage tests pass separately. Native check
+jobs must run sequentially because their host temporary filenames are shared;
+a concurrent flash invocation failed at runner startup, then passed when rerun
+after the full audit. That intermediate startup error is not a game failure or
+part of the final audit.
+
+The production ROM is 16 MiB (linked 16,557,520 bytes), with EWRAM 235,496 bytes
+and IWRAM 28,364 bytes. SHA-256:
+`dc20e24e7d3868323c3bc6db28f14c9b912698a80ef67acae35930da7a7cffe1`.
+The BPS passes an exact apply-to-clean-ROM round trip.
+
+Native Alpha 2.4 play and the fresh Alpha 2.5 replay both observed Mudkip
+evolve into shiny Marshtomp and resume field movement. Route 116 trainer/wild battles, ordinary blackouts and Centre
+recovery were exercised. An unexpected boot-screen return occurred around the
+Rusturf grunt encounter; its cause is unconfirmed and the rescue is not marked
+passed. A normal Centre save after depositing Sentret in BOX1 reloaded in a
+fresh Alpha 2.5 process at (10,2), and a release-ROM replay continues from it.
+The playthrough report records the final durable checkpoint and any unresolved
+observation. Full adventure, Frontier, world-event interactions, portraits and
+real hardware validation remain release blockers despite the clean unexpected-
+failure audit.
+
+
+### Rusturf reset resolved and rescue saved
+
+The reset reproduced on the first Alpha 2.5 ROM. Read-only CPU branch and store
+traces identified `SpawnObjectEventsOnReturnToField` passing missing Brock
+resource data to sprite creation. Brock is a new visitor at the tunnel entrance;
+his graphics, seven other Kanto leaders and the placed FRLG Cooltrainer were
+still gated behind IS_FRLG. The fix moves their existing image/frame/info/pointer
+resources outside that map-family guard. It does not hide the NPC or substitute
+a generic crash fallback. Native resource coverage checks all 61 unique CE_
+graphics IDs, with map validation enforcing coverage of future placements.
+
+Final ROM SHA-256:
+`8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6`.
+Linked ROM: 16,568,604 bytes; padded 16 MiB; RAM use unchanged. The final BPS
+passes an exact round trip. In a fresh normal-save replay, Brock renders,
+a wild battle and the Aqua grunt battle both return safely to the field,
+Devon Parts is awarded and Mr Briney/Peeko leave after their reunion. The player
+saves at Rusturf Tunnel (13,5). A new emulator process reloads that normal save
+and confirms Devon Parts remains in Key Items. Marshtomp is level 17; Sentret
+is stored in BOX1. Returning the package to Devon is the next story task.
+
+The completed battle audit above remains the 5,906-outcome pre-field-resource
+run. The post-fix broad recheck recorded 5,904 outcomes without a completion
+footer, so it remains marked incomplete. Its only three missing named outcomes
+are Strong Winds tests; all pass in a complete 11-test focused rerun. Combined
+named-outcome coverage matches every prior suite outcome plus the new graphics
+regression: 5,398 PASS, 63 assumption skips, 16 known failures, 421 TODOs and nine
+expected outcomes, with no unexpected failures. The final-coverage report retains
+both component reports and the exact three completed names. No incomplete log
+is reported as a completed runner session.

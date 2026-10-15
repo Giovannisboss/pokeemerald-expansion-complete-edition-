@@ -5,7 +5,7 @@
 // advance HEX_FIELD_LOCK_ADDRESS MAX_FRAMES,
 // walk KEY_MASK MAX_FRAMES HEX_BATTLE_FLAG_ADDRESS, quit.
 // fight MOVE_SLOTS MAX_FRAMES HEX_BATTLE_FLAG HEX_CONTROLLERS HEX_ACTION_HANDLER
-//       HEX_MOVE_HANDLER HEX_ACTION_CURSOR HEX_MOVE_CURSOR HEX_CALLBACK2_ADDRESS HEX_BATTLE_CALLBACK
+//       HEX_MOVE_HANDLER HEX_ACTION_CURSOR HEX_MOVE_CURSOR HEX_CALLBACK2_ADDRESS HEX_BATTLE_CALLBACK [HEX_TARGET_HANDLER]
 // MOVE_SLOTS packs the left move in bits 0-1 and the right move in bits 2-3.
 // The callback guard yields for evolution, move-learning and other menus.
 // Fight uses read-only UI state and ordinary buttons; B declines optional switches.

@@ -1,0 +1,31 @@
+{
+  "baseline": {
+    "recorded_results": 5908,
+    "statuses": {
+      "ASSUMPTION_FAIL": 65,
+      "CRASH": 2,
+      "EXPECTED_FAIL": 7,
+      "FAIL": 93,
+      "FLAKY": 9,
+      "INVALID": 6,
+      "KNOWN_FAILING": 16,
+      "PASS": 5289,
+      "TO_DO": 421
+    },
+    "failing_outcomes": 108
+  },
+  "final": {
+    "recorded_results": 5906,
+    "statuses": {
+      "ASSUMPTION_FAIL": 63,
+      "CRASH": 2,
+      "EXPECTED_FAIL": 7,
+      "KNOWN_FAILING": 16,
+      "PASS": 5397,
+      "TO_DO": 421
+    },
+    "failing_outcomes": 0
+  },
+  "known_failing_count_unchanged": true,
+  "todo_count_unchanged": true
+}

@@ -1,0 +1,76 @@
+{
+  "source_commit": "b2e16856f01511d668d198c684cd9a54e6293b35",
+  "source_tree": "8942ab795b3c900133782efe904ddeaec7da1e3d",
+  "complete_by_named_outcome_coverage": true,
+  "statuses": {
+    "ASSUMPTION_FAIL": 63,
+    "CRASH": 2,
+    "EXPECTED_FAIL": 7,
+    "KNOWN_FAILING": 16,
+    "PASS": 5398,
+    "TO_DO": 421
+  },
+  "covered_outcomes": 5907,
+  "unexpected_failures": 0,
+  "broad_recheck": {
+    "log": "/workspace/scratch/bc6c2945d0e4/alpha25-full-graphics-final.log",
+    "complete": false,
+    "recorded_results": 5904,
+    "reported_total": null,
+    "statuses": {
+      "ASSUMPTION_FAIL": 63,
+      "CRASH": 2,
+      "EXPECTED_FAIL": 7,
+      "KNOWN_FAILING": 16,
+      "PASS": 5395,
+      "TO_DO": 421
+    },
+    "failing_outcomes": 0,
+    "no_failing_outcomes": false,
+    "failures": []
+  },
+  "focused_completion": {
+    "log": "/workspace/scratch/bc6c2945d0e4/alpha25-winds-final.log",
+    "complete": true,
+    "recorded_results": 11,
+    "reported_total": 11,
+    "statuses": {
+      "PASS": 11
+    },
+    "failing_outcomes": 0,
+    "no_failing_outcomes": true,
+    "failures": []
+  },
+  "missing_broad_outcomes_verified_by_focused_run": [
+    {
+      "name": "Strong winds can be replaced by Primordial Sea",
+      "status": "PASS"
+    },
+    {
+      "name": "Strong winds can be replaced by Desolate Land",
+      "status": "PASS"
+    },
+    {
+      "name": "Strong winds prevent Weakness Policy from activating on Flying-type weaknesses",
+      "status": "PASS"
+    }
+  ],
+  "graphics_regression": {
+    "log": "/workspace/scratch/bc6c2945d0e4/alpha25-graphics-test-fixed.log",
+    "complete": true,
+    "recorded_results": 1,
+    "reported_total": 1,
+    "statuses": {
+      "PASS": 1
+    },
+    "failing_outcomes": 0,
+    "no_failing_outcomes": true,
+    "failures": []
+  },
+  "notes": [
+    "The completed 5906-outcome battle audit preceded the field-resource fix.",
+    "The final broad recheck emitted 5904 outcomes but no TOTAL footer; it is retained as incomplete, not relabelled as a completed runner session.",
+    "All three unreported Strong Winds outcomes pass in a complete focused rerun on the final source. Named-outcome coverage equals the prior full suite plus the new graphics regression.",
+    "No battle logic changed after the completed audit; the subsequent changes enable field graphics and add resource coverage."
+  ]
+}

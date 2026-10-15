@@ -1,0 +1,24 @@
+{
+  "log": "alpha25-full-final.log",
+  "complete": true,
+  "recorded_results": 5906,
+  "reported_total": 5906,
+  "statuses": {
+    "ASSUMPTION_FAIL": 63,
+    "CRASH": 2,
+    "EXPECTED_FAIL": 7,
+    "KNOWN_FAILING": 16,
+    "PASS": 5397,
+    "TO_DO": 421
+  },
+  "failing_outcomes": 0,
+  "no_failing_outcomes": true,
+  "failures": [],
+  "source_commit": "77cf69e428c573e044c9d49169eca19f1c929a77",
+  "source_tree": "94e05b7e637809f718b068a50d33e73d657b7713",
+  "notes": [
+    "No battle engine or test changes during the final audit.",
+    "Known-failing and TODO counts remain 16 and 421; no unexpected failures were relabelled into them.",
+    "Parameter families normally produce one PASS row; failed/flaky trials can emit multiple outcomes. Counts are runner outcomes, not individual parameter assertions."
+  ]
+}
