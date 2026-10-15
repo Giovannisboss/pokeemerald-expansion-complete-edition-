@@ -7360,7 +7360,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
     {
         .name = COMPOUND_STRING("Charge"),
     #if B_CHARGE >= GEN_9
-        #if B_CHARGE_SPDEF_RAISE >= GEN_5
+        #if B_CHARGE_SPDEF_RAISE >= GEN_4
         .description = COMPOUND_STRING(
             "Ups the user's next Electric\n"
             "move. It also raises Sp. Def."),
@@ -7370,7 +7370,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
             "Electric move used next."),
         #endif
     #else
-        #if B_CHARGE_SPDEF_RAISE >= GEN_5
+        #if B_CHARGE_SPDEF_RAISE >= GEN_4
         .description = COMPOUND_STRING(
             "Ups the user's next move if\n"
             "Electric. Also raises Sp. Def."),
@@ -7392,7 +7392,7 @@ const struct MoveInfo gMovesInfo[MOVES_COUNT_ALL] =
         .snatchAffected = TRUE,
         .ignoresProtect = TRUE,
         .mirrorMoveBanned = TRUE,
-        #if B_UPDATED_MOVE_DATA  >= GEN_5
+        #if B_CHARGE_SPDEF_RAISE >= GEN_4
         .additionalEffects = ADDITIONAL_EFFECTS({
             .moveEffect = STAT_CHANGE_EFFECT_PLUS,
             .spDef = 1,

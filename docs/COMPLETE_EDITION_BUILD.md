@@ -17,8 +17,8 @@ The output is `pokeemerald.gba`. Build logs and SHA-256 hashes are saved in `bui
 ## Emulator tests
 
 ```sh
-make -j4 -O KEEP_TEMPS=1 check TESTS="test/pokemon.c"
-make -j4 -O KEEP_TEMPS=1 check
+make -j4 KEEP_TEMPS=1 check TESTS="test/pokemon.c"
+make -j4 KEEP_TEMPS=1 check
 ```
 
 The repository includes the upstream headless mGBA runner. These tests execute ARM game code in the emulator. They do not replace manual adventure, save/load, sound, timing and real-hardware checks. A successful compile alone is not proof of a playable adventure.
@@ -69,3 +69,25 @@ python3 tools/complete_edition/export_encounters.py /path/outside/repo/Wild_Enco
 ```
 
 Flash tests restore Timer 2's test-watchdog handler and timer registers after exercising the production flash routines; otherwise later full-suite tests can lose their timeout interrupt.
+
+## Button-input playthrough controller
+
+The optional host controller runs the unmodified production ROM, accepts buttons,
+and captures images/checkpoints. It deliberately exposes no memory-write command.
+Read-only memory inspection can identify the current map and coordinates.
+Emulator checkpoints are private QA files, never a replacement for battery-save tests.
+
+```sh
+gcc -O2 -Wall -Wextra tools/complete_edition/play.c -lmgba -o /tmp/ce-play
+/tmp/ce-play /private/qa.gba
+```
+
+Commands: `run MASK FRAMES` holds buttons; `pulse MASK FRAMES` presses for eight
+frames every thirty frames; `shot /absolute/path.ppm` captures the screen;
+`save /absolute/path.state` and `load /absolute/path.state` handle checkpoints;
+`read HEX_ADDRESS BYTE_COUNT` reads at most 256 bytes; `position HEX_POINTER`
+dereferences the ELF symbol address of `gSaveBlock1Ptr` and reports map/coordinates;
+`quit` exits. An optional second argument records commands with frame numbers. Key masks:
+A=1, B=2, Select=4, Start=8, Right=16, Left=32, Up=64, Down=128, R=256, L=512.
+Each run is bounded to 36,000 frames. Use short single presses around dialogue
+and menus: repeatedly pressing A can close and reopen a sign.

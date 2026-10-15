@@ -32,6 +32,7 @@ SINGLE_BATTLE_TEST("Charge's effect is kept until the user uses an Electric move
 {
     s16 damage[2] = {0};
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -55,6 +56,7 @@ SINGLE_BATTLE_TEST("Charge's effect is removed if the user fails using an Electr
 {
     s16 damage[2];
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -83,6 +85,7 @@ SINGLE_BATTLE_TEST("Charge's effect does not stack with Electromorphosis or Wind
     PARAMETRIZE { species = SPECIES_TADBULB; ability = ABILITY_ELECTROMORPHOSIS; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         ASSUME(IsWindMove(MOVE_AIR_CUTTER));
         PLAYER(species) { Ability(ability); }
         OPPONENT(SPECIES_WOBBUFFET);
@@ -107,6 +110,7 @@ SINGLE_BATTLE_TEST("Charge's effect is removed regardless if the next move is El
 {
     s16 damage[2];
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_4);
         ASSUME(GetMoveType(MOVE_SCRATCH) != TYPE_ELECTRIC);
         ASSUME(GetMoveCategory(MOVE_SCRATCH) != DAMAGE_CATEGORY_STATUS);
         PLAYER(SPECIES_WOBBUFFET);
@@ -124,10 +128,7 @@ SINGLE_BATTLE_TEST("Charge's effect is removed regardless if the next move is El
         ANIMATION(ANIM_TYPE_MOVE, MOVE_THUNDERBOLT, player);
         HP_BAR(opponent, captureDamage: &damage[1]);
     } THEN {
-        if (B_CHARGE < GEN_9)
-            EXPECT_EQ(damage[0], damage[1]);
-        else
-            EXPECT_MUL_EQ(damage[0], Q_4_12(2.0), damage[1]);
+        EXPECT_EQ(damage[0], damage[1]);
     }
 }
 

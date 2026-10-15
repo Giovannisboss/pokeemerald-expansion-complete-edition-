@@ -3,20 +3,21 @@
 
 SINGLE_BATTLE_TEST("Lightning Rod absorbs Electric-type moves and increases the Sp. Attack")
 {
+    // Shock Wave isolates redirection from Thunderbolt's paralysis chance.
     u32 config;
     PARAMETRIZE { config = GEN_4; }
     PARAMETRIZE { config = GEN_5; }
     GIVEN {
         WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, config);
-        ASSUME(GetMoveType(MOVE_THUNDERBOLT) == TYPE_ELECTRIC);
+        ASSUME(GetMoveType(MOVE_SHOCK_WAVE) == TYPE_ELECTRIC);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_RAICHU) { Ability(ABILITY_LIGHTNING_ROD); }
     } WHEN {
-        TURN { MOVE(player, MOVE_THUNDERBOLT); MOVE(opponent, MOVE_CELEBRATE); }
+        TURN { MOVE(player, MOVE_SHOCK_WAVE); MOVE(opponent, MOVE_CELEBRATE); }
     } SCENE {
         if (config >= GEN_5) {
             NONE_OF {
-                ANIMATION(ANIM_TYPE_MOVE, MOVE_THUNDERBOLT, player);
+                ANIMATION(ANIM_TYPE_MOVE, MOVE_SHOCK_WAVE, player);
                 HP_BAR(opponent);
             };
             ABILITY_POPUP(opponent, ABILITY_LIGHTNING_ROD);
@@ -28,7 +29,7 @@ SINGLE_BATTLE_TEST("Lightning Rod absorbs Electric-type moves and increases the 
                 ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, opponent);
                 MESSAGE("The opposing Raichu's Sp. Atk rose!");
             };
-            ANIMATION(ANIM_TYPE_MOVE, MOVE_THUNDERBOLT, player);
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_SHOCK_WAVE, player);
             HP_BAR(opponent);
         }
         ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponent);
@@ -43,20 +44,21 @@ SINGLE_BATTLE_TEST("Lightning Rod absorbs Electric-type moves and increases the 
 
 DOUBLE_BATTLE_TEST("Lightning Rod forces single-target Electric-type moves to target the Pokémon with this Ability.")
 {
+    // Shock Wave isolates redirection from Thunderbolt's paralysis chance.
     u32 config;
     PARAMETRIZE { config = GEN_4; }
     PARAMETRIZE { config = GEN_5; }
     GIVEN {
         WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, config);
-        ASSUME(GetMoveType(MOVE_THUNDERBOLT) == TYPE_ELECTRIC);
+        ASSUME(GetMoveType(MOVE_SHOCK_WAVE) == TYPE_ELECTRIC);
         PLAYER(SPECIES_WOBBUFFET);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_RAICHU) { Ability(ABILITY_LIGHTNING_ROD); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
         TURN {
-            MOVE(playerLeft, MOVE_THUNDERBOLT, target: opponentRight);
-            MOVE(playerRight, MOVE_THUNDERBOLT, target: opponentRight);
+            MOVE(playerLeft, MOVE_SHOCK_WAVE, target: opponentRight);
+            MOVE(playerRight, MOVE_SHOCK_WAVE, target: opponentRight);
             MOVE(opponentLeft, MOVE_CELEBRATE);
             MOVE(opponentRight, MOVE_CELEBRATE);
         }
@@ -76,9 +78,9 @@ DOUBLE_BATTLE_TEST("Lightning Rod forces single-target Electric-type moves to ta
             NONE_OF {
                 HP_BAR(opponentRight);
             };
-            ANIMATION(ANIM_TYPE_MOVE, MOVE_THUNDERBOLT, playerLeft);
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_SHOCK_WAVE, playerLeft);
             HP_BAR(opponentLeft);
-            ANIMATION(ANIM_TYPE_MOVE, MOVE_THUNDERBOLT, playerRight);
+            ANIMATION(ANIM_TYPE_MOVE, MOVE_SHOCK_WAVE, playerRight);
             HP_BAR(opponentLeft);
         }
         ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponentLeft);

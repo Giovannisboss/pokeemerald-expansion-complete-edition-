@@ -1,5 +1,8 @@
 # Complete Edition — Alpha 2.1
 
+
+Current stability corrections and the latest completed broad audit are recorded in [stability work](COMPLETE_EDITION_STABILITY.md). Full story/Frontier QA remains unfinished.
+
 This is a boot-tested development milestone, not a completed or release-certified game.
 
 ## Implemented

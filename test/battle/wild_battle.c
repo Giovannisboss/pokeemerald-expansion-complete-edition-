@@ -3,7 +3,11 @@
 
 WILD_BATTLE_TEST("An item given by the player to the wild mon is not duplicated if the mon is caught")
 {
+    u32 restoreGeneration;
+    PARAMETRIZE { restoreGeneration = GEN_4; }
+    PARAMETRIZE { restoreGeneration = GEN_9; }
     GIVEN {
+        WITH_CONFIG(B_RESTORE_HELD_BATTLE_ITEMS, restoreGeneration);
         ASSUME(GetMoveEffect(MOVE_TRICK) == EFFECT_TRICK);
         WITH_CONFIG(B_STEAL_WILD_ITEMS, GEN_9);
         PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_SUPER_POTION); }
@@ -16,6 +20,6 @@ WILD_BATTLE_TEST("An item given by the player to the wild mon is not duplicated 
     } THEN {
         EXPECT_EQ(FALSE, CheckBagHasItem(ITEM_HYPER_POTION, 1));
         EXPECT_EQ(FALSE, CheckBagHasItem(ITEM_SUPER_POTION, 1));
-        EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_HELD_ITEM), ITEM_HYPER_POTION);
+        EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_HELD_ITEM), restoreGeneration >= GEN_9 ? ITEM_HYPER_POTION : ITEM_NONE);
     }
 }

@@ -248,6 +248,11 @@ enum StatChangeResult TryStatChange(struct BattleCalcValues *cv, struct StatChan
     }
 
     enum StatChangeResult result = STAT_CHANGE_DIDNT_WORK;
+    // A move can have an auxiliary effect without any stat stages to apply
+    // (for example, Charge with the older move data). The caller must still
+    // advance to the next battler instead of retrying this empty queue forever.
+    if (st->statStageAmount == 0)
+        st->nextBattler = TRUE;
     for (u32 i = 0; i < st->statStageAmount; i++)
     {
         if (i + 1 == st->statStageAmount) // Avoids redundant looping

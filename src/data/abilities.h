@@ -247,7 +247,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Lightning Rod"),
         .description = COMPOUND_STRING(
-        #if B_REDIRECT_ABILITY_IMMUNITY >= GEN_4
+        #if B_REDIRECT_ABILITY_IMMUNITY >= GEN_5
             "Draws Electr. to up Sp. Atk."),
         #else
             "Draws Electric moves."),
@@ -889,7 +889,7 @@ const struct AbilityInfo gAbilitiesInfo[ABILITIES_COUNT] =
     {
         .name = _("Storm Drain"),
         .description = COMPOUND_STRING(
-        #if B_REDIRECT_ABILITY_IMMUNITY >= GEN_4
+        #if B_REDIRECT_ABILITY_IMMUNITY >= GEN_5
             "Draws Water to up Sp. Atk."),
         #else
             "Draws Water-type moves."),

@@ -9303,7 +9303,7 @@ void SetItemsToRestoreAfterBattle(enum BattleTrainer trainer, u32 partySlot)
 
     struct LostItem *lostItem = GetLostItemState(trainer, partySlot);
     lostItem->originalItem = GetMonData(&gParties[trainer][partySlot], MON_DATA_HELD_ITEM);
-    lostItem->restoreAfterBattle = B_RESTORE_HELD_BATTLE_ITEMS >= GEN_9 || B_TRAINERS_KNOCK_OFF_ITEMS;
+    lostItem->restoreAfterBattle = GetConfig(B_RESTORE_HELD_BATTLE_ITEMS) >= GEN_9 || B_TRAINERS_KNOCK_OFF_ITEMS;
 }
 
 void TryRestoreHeldItems(void)
