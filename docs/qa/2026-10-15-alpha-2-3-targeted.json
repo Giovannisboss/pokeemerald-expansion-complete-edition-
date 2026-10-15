@@ -1,0 +1,134 @@
+{
+  "profile": "Changed battle groups, Complete Edition and actual flash-save tests",
+  "statuses": {
+    "PASS": 137,
+    "TO_DO": 6,
+    "ASSUMPTION_FAIL": 1
+  },
+  "complete": true,
+  "reports": [
+    {
+      "log": "../continued-alpha23-targeted/00.log",
+      "complete": true,
+      "recorded_results": 12,
+      "reported_total": 12,
+      "statuses": {
+        "PASS": 11,
+        "TO_DO": 1
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/final-0.log",
+      "complete": true,
+      "recorded_results": 21,
+      "reported_total": 21,
+      "statuses": {
+        "PASS": 21
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-semi-final.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/03.log",
+      "complete": true,
+      "recorded_results": 15,
+      "reported_total": 15,
+      "statuses": {
+        "PASS": 15
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/final-1.log",
+      "complete": true,
+      "recorded_results": 13,
+      "reported_total": 13,
+      "statuses": {
+        "PASS": 13
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/05.log",
+      "complete": true,
+      "recorded_results": 23,
+      "reported_total": 23,
+      "statuses": {
+        "ASSUMPTION_FAIL": 1,
+        "PASS": 17,
+        "TO_DO": 5
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/06.log",
+      "complete": true,
+      "recorded_results": 10,
+      "reported_total": 10,
+      "statuses": {
+        "PASS": 10
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/07.log",
+      "complete": true,
+      "recorded_results": 8,
+      "reported_total": 8,
+      "statuses": {
+        "PASS": 8
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/08.log",
+      "complete": true,
+      "recorded_results": 34,
+      "reported_total": 34,
+      "statuses": {
+        "PASS": 34
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../continued-alpha23-targeted/09.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    }
+  ]
+}

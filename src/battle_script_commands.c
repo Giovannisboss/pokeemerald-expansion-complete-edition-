@@ -4941,7 +4941,7 @@ bool32 TryDefogClear(enum BattlerId battlerAtk, bool32 clear)
         u32 *sideStatuses = &gSideStatuses[i];
         gBattleScripting.battler = i;
 
-        if (GetBattlerSide(battlerAtk) != i)
+        if (GetBattlerSide(gBattlerTarget) == i)
         {
             DEFOG_CLEAR(SIDE_STATUS_REFLECT, reflectTimer, BattleScript_SideStatusWoreOff, MOVE_REFLECT);
             DEFOG_CLEAR(SIDE_STATUS_LIGHTSCREEN, lightscreenTimer, BattleScript_SideStatusWoreOff, MOVE_LIGHT_SCREEN);
@@ -4949,7 +4949,8 @@ bool32 TryDefogClear(enum BattlerId battlerAtk, bool32 clear)
             DEFOG_CLEAR(SIDE_STATUS_AURORA_VEIL, auroraVeilTimer, BattleScript_SideStatusWoreOff, MOVE_AURORA_VEIL);
             DEFOG_CLEAR(SIDE_STATUS_SAFEGUARD, safeguardTimer, BattleScript_SideStatusWoreOff, MOVE_SAFEGUARD);
         }
-        if (GetConfig(B_DEFOG_EFFECT_CLEARING) >= GEN_6)
+        // Gen 4-5 clear hazards only from the selected target's side.
+        if (GetConfig(B_DEFOG_EFFECT_CLEARING) >= GEN_6 || GetBattlerSide(gBattlerTarget) == i)
         {
             if (DefogClearHazards(i, clear))
                 return TRUE;
@@ -5414,7 +5415,8 @@ static void Cmd_twoturnmoveschargestringandanimation(void)
 
     // TODO: saved string id is not needed
     gBattleScripting.savedStringId = GetMoveTwoTurnAttackStringId(gCurrentMove);
-    if (MoveHasChargeTurnAdditionalEffect(gCurrentMove))
+    if ((GetConfig(B_UPDATED_MOVE_DATA) < GEN_5 && GetMoveEffect(gCurrentMove) == EFFECT_SEMI_INVULNERABLE)
+     || MoveHasChargeTurnAdditionalEffect(gCurrentMove))
         gBattlescriptCurrInstr = cmd->animationThenStringPtr;
     else
         gBattlescriptCurrInstr = cmd->nextInstr;

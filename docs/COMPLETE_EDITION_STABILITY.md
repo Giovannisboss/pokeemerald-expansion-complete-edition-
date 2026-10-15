@@ -182,3 +182,55 @@ all 37 focused groups with exit status 0, reproducing the 403-pass profile.
 The final Alpha 2.2 production ROM was loaded in a fresh mGBA process using the
 ordinary battery save after whiteout/recovery. Mudkip (level 9, 36/36 HP) and
 the caught Sentret (level 3, 15/15 HP) were both present and healed.
+
+
+## Alpha 2.3 continued stabilization (2026-10-15)
+
+The targeted profile passes 137 cases with six TODOs and one assumption failure
+recorded separately. It includes all 21 Defog cases, all 13 Conversion 2 cases,
+all six parameters of both semi-invulnerable charge scenarios, partner switch
+messages, Beat Up, Focus Punch, Stockpile, paralysis, Complete Edition gates
+and actual flash saves. Two former known Defog failures are now ordinary passes.
+
+Defog clears the selected side in Gen 4 (including ally targets), respects the
+generation-specific Substitute behavior and retains minimum-evasion refusal.
+Power Herb prints the subsequent attack string for older semi-invulnerable moves.
+Beat Up's type and Conversion 2's target read their dedicated generation settings.
+No moves or abilities were removed, and no battle-order gameplay change was made.
+
+The first continued broad run completed 5,906 outcomes: 5,272 PASS, 123 failing
+outcomes (108 FAIL, nine FLAKY, six INVALID), 65 assumption failures, 16 known
+failures, 421 TODOs and nine expected outcomes. It had no TIMEOUT or ERROR and
+precedes the final message/fixture corrections. Its report is retained as
+`qa/2026-10-15-alpha-2-3-before-message-fixes-full.json`.
+
+The final-source broad audit completed all 5,906 outcomes: 5,276 PASS, 119
+failing outcomes (104 FAIL, nine FLAKY, six INVALID), 65 assumption failures,
+16 known failures, 421 TODOs and nine expected outcomes. No TIMEOUT or ERROR
+occurred. The normal Make failure status reflects the remaining failed cases;
+there was no wrapper parse error. The final report is
+`qa/2026-10-15-alpha-2-3-full.json`. Alpha 2.2 had 139 failing outcomes.
+Unresolved outcomes remain explicit; none were reclassified as passes.
+
+The final production build uses SHA-256
+`451840cb5dc1f0a1d11636f33002d4d8ab72964da57f2dac38dcfb01e75ad4f1`.
+BPS generation verified an exact source-to-target round trip. ROM usage is
+16,557,400 bytes; EWRAM remains 235,496 bytes and IWRAM 28,364 bytes. All 938
+production and 1,912 native-test objects pass the integrity guard.
+
+Ordinary buttons advanced the previous save through Petalburg/Norman, Wally's
+catching tutorial, Scott, Cindy, the woods and the first Team Aqua grunt. The
+Great Ball reward was confirmed in the Bag. A fresh emulator process loaded the
+ordinary battery save on the final ROM. The Bulbasaur site refused access before
+the first badge. No story flags, levels, items or party data were injected.
+The host QA controller's `fight` command reads battle UI state and presses normal
+buttons; it is not part of the game. It requires a usable selected move and does
+not handle all party/Bag/learning states. It was exercised in wild and trainer
+battles with a bounded frame budget.
+
+The final ROM subsequently passed James, Winston and Haley and reached Rustboro.
+Mudkip fainted against Haley and Sentret completed the fight. Rustboro nurse
+healing restored both Pokemon; a normal save and fresh final-ROM process loaded
+the Rustboro Centre checkpoint at (7,4). This remains early-game QA.
+Full story, Frontier, all event travel/captures,
+portraits and real hardware testing remain release blockers.

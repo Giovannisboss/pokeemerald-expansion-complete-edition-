@@ -62,7 +62,6 @@ SINGLE_BATTLE_TEST("Defog fails if target has minimum evasion stat change")
 
 SINGLE_BATTLE_TEST("Defog lowers evasiveness of target behind Substitute (Gen4)")
 {
-    KNOWN_FAILING;
     GIVEN {
         WITH_CONFIG(B_DEFOG_EFFECT_CLEARING, GEN_4);
         PLAYER(SPECIES_WOBBUFFET) { Speed(4); }
@@ -82,7 +81,6 @@ SINGLE_BATTLE_TEST("Defog lowers evasiveness of target behind Substitute (Gen4)"
 
 SINGLE_BATTLE_TEST("Defog fails if target has minimum evasion stat change behind Substitute (Gen4)")
 {
-    KNOWN_FAILING;
     GIVEN {
         WITH_CONFIG(B_DEFOG_EFFECT_CLEARING, GEN_4);
         PLAYER(SPECIES_WOBBUFFET) { Speed(4); }
@@ -97,7 +95,7 @@ SINGLE_BATTLE_TEST("Defog fails if target has minimum evasion stat change behind
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DEFOG, player);
         ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_STATS_CHANGE, opponent);
         MESSAGE("The opposing Wobbuffet's evasiveness harshly fell!");
-        MESSAGE("But it failed!");
+        MESSAGE("The opposing Wobbuffet's evasiveness won't go any lower!");
     } THEN {
         EXPECT_EQ(opponent->statStages[STAT_EVASION], DEFAULT_STAT_STAGE - 6);
     }
@@ -695,12 +693,11 @@ DOUBLE_BATTLE_TEST("Defog removes everything it can")
         MESSAGE("Your side's Aurora Veil wore off!");
         MESSAGE("Your side's Safeguard wore off!");
 
+        MESSAGE("The spikes disappeared from the ground around your side!");
+        MESSAGE("The sticky web has disappeared from the ground on your side!");
+        MESSAGE("The toxic spikes disappeared from the ground around your side!");
+        MESSAGE("The pointed stones disappeared from your side!");
         if (config == GEN_6) {
-            MESSAGE("The spikes disappeared from the ground around your side!");
-            MESSAGE("The sticky web has disappeared from the ground on your side!");
-            MESSAGE("The toxic spikes disappeared from the ground around your side!");
-            MESSAGE("The pointed stones disappeared from your side!");
-
             // Opponent side
             MESSAGE("The spikes disappeared from the ground around the opposing side!");
             MESSAGE("The sticky web has disappeared from the ground on the opposing side!");
@@ -708,17 +705,10 @@ DOUBLE_BATTLE_TEST("Defog removes everything it can")
             MESSAGE("The pointed stones disappeared from the opposing side!");
         }
     } THEN {
-        if (config == GEN_6) {
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][0], HAZARDS_NONE);
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][1], HAZARDS_NONE);
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][2], HAZARDS_NONE);
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][3], HAZARDS_NONE);
-        } else {
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][0], HAZARDS_STICKY_WEB);
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][1], HAZARDS_SPIKES);
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][2], HAZARDS_STEALTH_ROCK);
-            EXPECT_EQ(gBattleStruct->hazardsQueue[0][3], HAZARDS_TOXIC_SPIKES);
-        }
+        EXPECT_EQ(gBattleStruct->hazardsQueue[0][0], HAZARDS_NONE);
+        EXPECT_EQ(gBattleStruct->hazardsQueue[0][1], HAZARDS_NONE);
+        EXPECT_EQ(gBattleStruct->hazardsQueue[0][2], HAZARDS_NONE);
+        EXPECT_EQ(gBattleStruct->hazardsQueue[0][3], HAZARDS_NONE);
         EXPECT_EQ(gBattleStruct->hazardsQueue[0][4], HAZARDS_NONE);
         EXPECT_EQ(gBattleStruct->hazardsQueue[0][5], HAZARDS_NONE);
 
@@ -761,5 +751,33 @@ SINGLE_BATTLE_TEST("Defog is used on the correct side if opposing mon is behind 
             EXPECT_EQ(opponent->statStages[STAT_EVASION], DEFAULT_STAT_STAGE);
         else
             EXPECT_EQ(opponent->statStages[STAT_EVASION], DEFAULT_STAT_STAGE - 1);
+    }
+}
+
+DOUBLE_BATTLE_TEST("Defog Gen 4 clears only the selected side's hazards and screens")
+{
+    bool32 targetAlly;
+    PARAMETRIZE { targetAlly = FALSE; }
+    PARAMETRIZE { targetAlly = TRUE; }
+
+    GIVEN {
+        WITH_CONFIG(B_DEFOG_EFFECT_CLEARING, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET) { Speed(4); }
+        PLAYER(SPECIES_WOBBUFFET) { Speed(3); }
+        OPPONENT(SPECIES_WOBBUFFET) { Speed(2); }
+        OPPONENT(SPECIES_WOBBUFFET) { Speed(1); }
+    } WHEN {
+        TURN {
+            MOVE(playerLeft, MOVE_STEALTH_ROCK);
+            MOVE(playerRight, MOVE_REFLECT);
+            MOVE(opponentLeft, MOVE_SPIKES);
+            MOVE(opponentRight, MOVE_REFLECT);
+        }
+        TURN { MOVE(playerLeft, MOVE_DEFOG, target: targetAlly ? playerRight : opponentLeft); }
+    } THEN {
+        EXPECT_EQ(IsHazardOnSide(B_SIDE_PLAYER, HAZARDS_SPIKES), !targetAlly);
+        EXPECT_EQ(IsHazardOnSide(B_SIDE_OPPONENT, HAZARDS_STEALTH_ROCK), targetAlly);
+        EXPECT_EQ(!!(gSideStatuses[B_SIDE_PLAYER] & SIDE_STATUS_REFLECT), !targetAlly);
+        EXPECT_EQ(!!(gSideStatuses[B_SIDE_OPPONENT] & SIDE_STATUS_REFLECT), targetAlly);
     }
 }

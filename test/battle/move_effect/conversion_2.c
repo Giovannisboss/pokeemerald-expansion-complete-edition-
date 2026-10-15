@@ -84,14 +84,14 @@ SINGLE_BATTLE_TEST("Conversion 2's type change considers status moves (Gen 5+)")
 {
     GIVEN {
         WITH_CONFIG(B_UPDATED_CONVERSION_2, GEN_5);
-        PLAYER(SPECIES_WOBBUFFET);
+        PLAYER(SPECIES_WOBBUFFET) { Ability(ABILITY_OWN_TEMPO); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
-        TURN { MOVE(opponent, MOVE_CURSE); }
+        TURN { MOVE(opponent, MOVE_CONFUSE_RAY); }
         TURN { MOVE(player, MOVE_CONVERSION_2); }
     } SCENE {
         // turn 1
-        MESSAGE("The opposing Wobbuffet used Curse!");
+        MESSAGE("The opposing Wobbuffet used Confuse Ray!");
         // turn 2
         ONE_OF {
             MESSAGE("Wobbuffet transformed into the Normal type!");

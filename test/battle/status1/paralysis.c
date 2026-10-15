@@ -113,6 +113,8 @@ SINGLE_BATTLE_TEST("Thunder Wave prints an avoided attack message when it misses
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
+        // Gen 4 Thunder Wave has 100 accuracy; evasion makes a miss possible.
+        TURN { MOVE(opponent, MOVE_DOUBLE_TEAM); }
         TURN { MOVE(player, MOVE_THUNDER_WAVE, hit: FALSE); }
     } SCENE {
         MESSAGE("Wobbuffet used Thunder Wave!");

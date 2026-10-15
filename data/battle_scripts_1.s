@@ -1827,6 +1827,12 @@ BattleScript_PowerHerbActivation::
 	removeitem BS_ATTACKER
 	return
 
+BattleScript_PowerHerbActivationGen4::
+	call BattleScript_PowerHerbActivation
+	printattackstring
+	waitmessage B_WAIT_TIME_LONG
+	return
+
 BattleScript_TwoTurnMoveCharging::
 	waitmessage B_WAIT_TIME_LONG
 	twoturnmoveschargestringandanimation

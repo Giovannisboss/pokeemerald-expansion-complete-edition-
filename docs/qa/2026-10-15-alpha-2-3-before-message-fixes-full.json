@@ -1,0 +1,637 @@
+{
+  "log": "build/complete-edition-logs/full/tests-0.log",
+  "complete": true,
+  "recorded_results": 5906,
+  "reported_total": 5906,
+  "statuses": {
+    "ASSUMPTION_FAIL": 65,
+    "CRASH": 2,
+    "EXPECTED_FAIL": 7,
+    "FAIL": 108,
+    "FLAKY": 9,
+    "INVALID": 6,
+    "KNOWN_FAILING": 16,
+    "PASS": 5272,
+    "TO_DO": 421
+  },
+  "failing_outcomes": 123,
+  "no_failing_outcomes": false,
+  "failures": [
+    {
+      "name": "Gem boosted Damage calculation 1/16",
+      "status": "FAIL",
+      "detail": "test/battle/damage_formula.c:351: EXPECT_EQ(273, 220) failed"
+    },
+    {
+      "name": "Transistor Damage calculation 1/32",
+      "status": "FAIL",
+      "detail": "test/battle/damage_formula.c:409: Unmatched ANIMATION"
+    },
+    {
+      "name": "Punching Glove vs Muscle Band Damage calculation 1/16",
+      "status": "FAIL",
+      "detail": "test/battle/damage_formula.c:294: EXPECT_EQ(204, 162) failed"
+    },
+    {
+      "name": "Costar copies an ally's Focus Energy critical hit boost (2/2)",
+      "status": "FAIL",
+      "detail": "test/battle/ability/costar.c:72: Expected 0.5 passes/successes, observed 0.25"
+    },
+    {
+      "name": "Eelevate considers Wonder Room",
+      "status": "FAIL",
+      "detail": "test/battle/ability/eelevate.c:282: Did you mean: ANIMATION(ANIM_TYPE_MOVE, MOVE_EXTREME_SPEED, player)"
+    },
+    {
+      "name": "Electromorphosis sets up Charge when hit by any move 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/ability/electromorphosis.c:52: EXPECT_MUL_EQ(76, 2.0, 76) failed: 152 not in [74..78]"
+    },
+    {
+      "name": "Illusion does not break if the attacker faints without taking damage",
+      "status": "FAIL",
+      "detail": "test/battle/ability/illusion.c:53: Did you mean: HP_BAR(opponent)"
+    },
+    {
+      "name": "Intimidate is not going to trigger if a mon switches out through u-turn and the opposing field is empty",
+      "status": "FAIL",
+      "detail": "test/battle/ability/intimidate.c:243: Matched ABILITY_POPUP"
+    },
+    {
+      "name": "Electromorphosis triggers on each multistrike hit but Charge does not stack",
+      "status": "FAIL",
+      "detail": "test/battle/ability/electromorphosis.c:106: EXPECT_MUL_EQ(67, 2.0, 67) failed: 134 not in [65..69]"
+    },
+    {
+      "name": "Dancer-called attacks do not trigger Life Orb if target is immune",
+      "status": "FAIL",
+      "detail": "test/battle/ability/dancer.c:249: Matched ANIMATION"
+    },
+    {
+      "name": "Flower Veil does not prevent self-inflicted stat drops - abilities",
+      "status": "FAIL",
+      "detail": "test/battle/ability/flower_veil.c:141: EXPECT_EQ(7, 8) failed"
+    },
+    {
+      "name": "(Gulp Missile) Cramorant in Gorging damages an electric type without paralysing",
+      "status": "FAIL",
+      "detail": "test/battle/ability/gulp_missile.c:249: Matched ANIMATION"
+    },
+    {
+      "name": "Protosynthesis uses Wonder Room swapped defenses when choosing boosted stat",
+      "status": "FAIL",
+      "detail": "test/battle/ability/protosynthesis.c:147: Unmatched ANIMATION"
+    },
+    {
+      "name": "Quark Drive uses Wonder Room swapped defenses when choosing boosted stat",
+      "status": "FAIL",
+      "detail": "test/battle/ability/quark_drive.c:214: Unmatched ANIMATION"
+    },
+    {
+      "name": "Spread Moves: AOE move vs Eiscue and Mimikyu (Based on vanilla games)",
+      "status": "FAIL",
+      "detail": "test/battle/spread_moves.c:240: Unmatched HP_BAR"
+    },
+    {
+      "name": "Magic Bounce bounces back moves hitting foes field 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/ability/magic_bounce.c:177: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Mega Sol ignores Snow's Ice-type Defense boost",
+      "status": "FAIL",
+      "detail": "test/battle/ability/mega_sol.c:172: EXPECT_MUL_EQ(32, 1.5, 32) failed: 48 not in [30..34]"
+    },
+    {
+      "name": "Beast Boost considers Wonder Room",
+      "status": "FAIL",
+      "detail": "test/battle/ability/beast_boost.c:172: Did you mean: ANIMATION(ANIM_TYPE_MOVE, MOVE_EXTREME_SPEED, player)"
+    },
+    {
+      "name": "Beads of Ruin increases damage taken by physical moves in Wonder Room 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/ability/beads_of_ruin.c:107: EXPECT_GT(13, 13) failed"
+    },
+    {
+      "name": "Delta Stream fails if overworld weather is present (Gen9)",
+      "status": "FAIL",
+      "detail": "test/battle/ability/delta_stream.c:155: Unmatched MESSAGE(\"But it failed!\")"
+    },
+    {
+      "name": "Dragonize boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6) 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/ability/dragonize.c:45: EXPECT_MUL_EQ(51, 1.949, 102) failed: 99 not in [100..104]"
+    },
+    {
+      "name": "Imposter doesn't apply the heroic transformation message when copying Palafin",
+      "status": "FAIL",
+      "detail": "test/battle/ability/zero_to_hero.c:130: Did you mean: ABILITY_POPUP(opponent, ABILITY_ZERO_TO_HERO)"
+    },
+    {
+      "name": "Desolate Land fails if overworld weather is present (Gen9)",
+      "status": "FAIL",
+      "detail": "test/battle/ability/desolate_land.c:271: Unmatched MESSAGE(\"But it failed!\")"
+    },
+    {
+      "name": "Hadron Engine boosts the Pokemon's Special Attack on Electric Terrain even if not grounded 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/ability/hadron_engine.c:74: EXPECT_MUL_EQ(114, 1.333, 153) failed: 151 not in [152..154]"
+    },
+    {
+      "name": "Spicy Spray burns the attacker even if the defender behind a Substitute takes damage",
+      "status": "FAIL",
+      "detail": "test/battle/ability/spicy_spray.c:111: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Infiltrator doesn't ignore a battler's Substitute when using Transform or Sky Drop 1/4",
+      "status": "FAIL",
+      "detail": "test/battle/ability/infiltrator.c:245: Matched ANIMATION"
+    },
+    {
+      "name": "Neutralizing Gas is active until the last Dragon Darts hit even if Neutralizing Gas is no longer on the field",
+      "status": "FAIL",
+      "detail": "test/battle/ability/neutralizing_gas.c:725: Matched MESSAGE"
+    },
+    {
+      "name": "Hunger Switch does not switch a mon transformed into Morpeko's form",
+      "status": "FAIL",
+      "detail": "test/battle/ability/hunger_switch.c:35: Matched ANIMATION"
+    },
+    {
+      "name": "Orichalcum Pulse sets up sun for 5 turns",
+      "status": "FAIL",
+      "detail": "test/battle/ability/orichalcum_pulse.c:23: Unmatched MESSAGE(\"The sunlight faded.\")"
+    },
+    {
+      "name": "Orichalcum Pulse sets up sun for 8 turns with Heat Rock",
+      "status": "FAIL",
+      "detail": "test/battle/ability/orichalcum_pulse.c:53: Unmatched MESSAGE(\"The sunlight faded.\")"
+    },
+    {
+      "name": "Mega Sol: Growth increases Attack and Sp. Atk by 2 stages under Mega Sol (Gen 5+)",
+      "status": "FAIL",
+      "detail": "test/battle/ability/mega_sol.c:344: EXPECT_EQ(7, 8) failed"
+    },
+    {
+      "name": "Primordial Sea fails if overworld weather is present (Gen9)",
+      "status": "FAIL",
+      "detail": "test/battle/ability/primordial_sea.c:245: Unmatched MESSAGE(\"But it failed!\")"
+    },
+    {
+      "name": "AI_FLAG_SMART_SWITCHING: AI will consider player's endure effects when evaluating Bad Odds 1v1 (1/?)",
+      "status": "INVALID",
+      "detail": "in <AgbMainLoop+0x128>"
+    },
+    {
+      "name": "Sand Spit sets up sandstorm for 5 turns when hit",
+      "status": "FAIL",
+      "detail": "test/battle/ability/sand_spit.c:24: Unmatched MESSAGE(\"The sandstorm subsided.\")"
+    },
+    {
+      "name": "AI will see 2HKOs through resist berries",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai.c:1025: Unmatched EXPECT_MOVE Jump Kick, got Headbutt"
+    },
+    {
+      "name": "AI recognizes Volt Absorb received from Trace",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_doubles.c:1013: Unmatched NOT_EXPECT_MOVES Thunder Wave"
+    },
+    {
+      "name": "AI sees random rolls correctly (16/16)",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_doubles.c:934: Expected 0.199 passes/successes, observed 1.0"
+    },
+    {
+      "name": "Shield Dust does or does not block Sparkling Aria depending on number of targets hit 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/ability/shield_dust.c:147: Matched MESSAGE"
+    },
+    {
+      "name": "AI only rewards spread moves when an ally's absorbing ability provides a useful benefit 11/13",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_doubles.c:461: Unmatched SCORE_GT_VAL Discharge 100, got 90"
+    },
+    {
+      "name": "Switch AI: Palafin hard switches into absorb abilities instead of Flip Turn (Single) 1/3",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_switching.c:2005: Expected SWITCH, got MOVE"
+    },
+    {
+      "name": "Sword of Ruin increases damage taken by special moves in Wonder Room 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/ability/sword_of_ruin.c:106: EXPECT_LT(17, 17) failed"
+    },
+    {
+      "name": "Wind Power sets up Charge for opponent when hit by a wind move 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/ability/wind_power.c:100: EXPECT_MUL_EQ(16, 2.0, 16) failed: 32 not in [14..18]"
+    },
+    {
+      "name": "Pixilate boosts power of affected moves by 20% (Gen7+) or 30% (Gen1-6) 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/ability/pixilate.c:46: EXPECT_MUL_EQ(28, 1.949, 57) failed: 54 not in [55..59]"
+    },
+    {
+      "name": "AI will choose Beat Up on an ally with Justified if it will benefit the ally 2/4",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_doubles.c:573: Expected target opponentRight, got playerLeft"
+    },
+    {
+      "name": "Sand Spit sets up sandstorm for 8 turns when hit with Smooth Rock",
+      "status": "FAIL",
+      "detail": "test/battle/ability/sand_spit.c:55: Unmatched MESSAGE(\"The sandstorm subsided.\")"
+    },
+    {
+      "name": "AI will not use Protect if its right ally is about to trigger Justified with Beat Up",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_doubles.c:621: Unmatched SCORE_LT_VAL Protect 100, got 101"
+    },
+    {
+      "name": "AI_FLAG_SMART_SWITCHING: AI will consider player's endure effects when evaluating switchin candidates 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_switching.c:2280: Expected partyIndex 2, got 1"
+    },
+    {
+      "name": "AI_FLAG_SMART_SWITCHING: AI will switch out if all moves deal zero damage (absorbing ability) (1/?)",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_switching.c:1867: Expected 1.0 passes/successes, observed 0.0"
+    },
+    {
+      "name": "Covert Cloak does or does not block Sparkling Aria depending on number of targets hit 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/hold_effect/covert_cloak.c:150: Matched MESSAGE"
+    },
+    {
+      "name": "Wind Power sets up Charge for player when hit by a wind move 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/ability/wind_power.c:55: EXPECT_MUL_EQ(16, 2.0, 16) failed: 32 not in [14..18]"
+    },
+    {
+      "name": "Final Gambit faints the user, and the target receives damage equal to the user's HP 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:23: Unmatched HP_BAR"
+    },
+    {
+      "name": "AI sees corresponding absorbing abilities on partners 2/11",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_doubles.c:928: Unmatched EXPECT_MOVE Discharge, got Constrict"
+    },
+    {
+      "name": "Switch AI: Palafin hard switches into absorb abilities instead of Flip Turn (Doubles) 1/3",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_switching.c:2030: Expected SWITCH, got MOVE"
+    },
+    {
+      "name": "AI sees Dragon Darts damage redirecting if one target is immune 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai.c:1670: Unmatched SCORE_EQ_VAL Dragon Darts 60, got 100"
+    },
+    {
+      "name": "Move Animations work 4 25/222",
+      "status": "INVALID",
+      "detail": "in <RecordedBattle_GetBattlerAction+0x4a>"
+    },
+    {
+      "name": "Final Gambit triggers the target's Focus Band",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:213: Unmatched MESSAGE(\"The opposing Wobbuffet hung on using its Focus Band!\")"
+    },
+    {
+      "name": "Parting Shot: Passes Substitute and switches the user out",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/parting_shot.c:22: EXPECT_EQ(6, 5) failed"
+    },
+    {
+      "name": "Final Gambit does not faint user if target protects",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:60: EXPECT_NE(0, 0) failed"
+    },
+    {
+      "name": "AI sees Loaded Dice damage increase from multi hit moves",
+      "status": "FAIL",
+      "detail": "test/battle/ai/ai_trytofaint.c:57: EXPECT_MOVE Bullet Seed has the same best score(101) as not expected MOVE Seed Bomb. Consider using TIE_BREAK_SCORE."
+    },
+    {
+      "name": "AI avoids Thunder Wave when it can not paralyse target 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/ai/check_bad_move.c:354: Unmatched SCORE_EQ, got Celebrate: 90, Thunder Wave: 103"
+    },
+    {
+      "name": "Rapid Spin doesn't blow away Wrap, hazards or raise Speed when Sheer Force boosted (Gen 9+)",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/rapid_spin.c:167: Matched MESSAGE"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Semi-invulnerable moves make the user semi-invulnerable turn 1, then strike turn 2 2/6",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/semi_invulnerable.c:81: Did you mean: MESSAGE(\"Wobbuffet used Dig!\")"
+    },
+    {
+      "name": "Assurance doubles in power if the target has been damaged by Rough Skin",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/assurance.c:236: EXPECT_MUL_EQ(88, 2.0, 172) failed: 176 not in [170..174]"
+    },
+    {
+      "name": "AI values moves above Splash, 101-200 47/63",
+      "status": "FAIL",
+      "detail": "test/battle/ai/values_moves_over_splash.c:151: EXPECT_MOVE Conversion 2 has the same best score(90) as not expected MOVE Splash. Consider using TIE_BREAK_SCORE."
+    },
+    {
+      "name": "Chilly Reception fails if it can't switch the user out or change the weather",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/chilly_reception.c:134: Matched ANIMATION"
+    },
+    {
+      "name": "Recoil if miss: Jump Kick's recoil happens after Spiky Shield damage and Pokemon can faint from either of these 1/3",
+      "status": "INVALID",
+      "detail": "in <RecordedBattle_GetBattlerAction+0x4a>"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Final Gambit triggers the target's Focus Sash",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:232: Unmatched MESSAGE(\"The opposing Wobbuffet hung on using its Focus Sash!\")"
+    },
+    {
+      "name": "Fling - Item does not get blocked by Unnerve if it isn't a berry",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/fling.c:198: Did you mean: MESSAGE(\"The opposing Wobbuffet used Scratch!\")"
+    },
+    {
+      "name": "Wake-Up Slap does not cure paralyzed pokemons behind substitutes or get increased power 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect_secondary/remove_status.c:88: Unmatched MESSAGE(\"The opposing Seismitoad woke up!\")"
+    },
+    {
+      "name": "Thrash confuses the user if it is canceled on turn 3 of 3, Protect",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect_secondary/thrash.c:85: Unmatched ANIMATION"
+    },
+    {
+      "name": "Knock Off does not remove item when used by Wild Pokemon (Gen 5+)",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/knock_off.c:28: EXPECT failed"
+    },
+    {
+      "name": "Multi Hit moves will not disrupt Destiny Bond flag 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/multi_hit.c:283: Unmatched MESSAGE(\"Wobbuffet took its attacker down with it!\")"
+    },
+    {
+      "name": "Parting Shot: Magic Bounce bounces it and switches the target out and original user doesn't switch out",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/parting_shot.c:89: TURN 1 incomplete"
+    },
+    {
+      "name": "Incinerate destroys Berries and Gems even if the holder has Klutz 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect_secondary/incinerate.c:26: EXPECT_EQ(352, 0) failed"
+    },
+    {
+      "name": "Psycho Shift burn is blocked by Substitute unless the user has Infiltrator 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/psycho_shift.c:22: Unmatched ANIMATION"
+    },
+    {
+      "name": "Chilly Reception switches the user out even if it can't change the weather",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/chilly_reception.c:119: Unmatched MESSAGE(\"But it failed!\")"
+    },
+    {
+      "name": "Conversion 2's type change considers status moves (Gen 5+)",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/conversion_2.c:97: Unmatched MESSAGE(\"Wobbuffet transformed into the Normal type!\")"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Frostbite is healed if hit with a thawing move 1/5",
+      "status": "FAIL",
+      "detail": "test/battle/status1/frostbite.c:69: Did you mean: MESSAGE(\"The opposing Wobbuffet?used Celebrate!\")"
+    },
+    {
+      "name": "Defog fails if target has minimum evasion stat change behind Substitute (Gen4)",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/defog.c:98: Unmatched MESSAGE(\"But it failed!\")"
+    },
+    {
+      "name": "Doodle fails if ally's ability can't be suppressed 2/15",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/doodle.c:114: Matched ANIMATION"
+    },
+    {
+      "name": "Final Gambit does not trigger the user's Sturdy",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:192: Did you mean: HP_BAR(opponent, damage: 1)"
+    },
+    {
+      "name": "Final Gambit faints user and target",
+      "status": "INVALID",
+      "detail": "in <RecordedBattle_GetBattlerAction+0x4a>"
+    },
+    {
+      "name": "Move Animations work 2 77/222",
+      "status": "FAIL",
+      "detail": "test/battle/move_animations/all_anims.c:2426: Unmatched ANIMATION"
+    },
+    {
+      "name": "Air Balloon pops when Disguise is broken 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/hold_effect/air_balloon.c:171: Unmatched HP_BAR"
+    },
+    {
+      "name": "Final Gambit does not trigger the user's Focus Band",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:152: Did you mean: HP_BAR(opponent, damage: 1)"
+    },
+    {
+      "name": "Thrash confuses the user after it finishes even if move failed",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect_secondary/thrash.c:135: Unmatched ANIMATION"
+    },
+    {
+      "name": "Axe Kick still deals crash damage when boosted by Sheer Force 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effects_combined/axe_kick.c:75: Did you mean: HP_BAR(player, hp: 15)"
+    },
+    {
+      "name": "Final Gambit triggers the target's Sturdy",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:252: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Final Gambit does not faint user if target is immune",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:92: EXPECT_NE(0, 0) failed"
+    },
+    {
+      "name": "Assurance doubles in power if Disguise has been broken",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/assurance.c:490: EXPECT_MUL_EQ(17, 2.0, 17) failed: 34 not in [15..19]"
+    },
+    {
+      "name": "Assurance does not double in power if the target's damage is blocked by Substitute",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/assurance.c:63: Unmatched HP_BAR"
+    },
+    {
+      "name": "Parting Shot: Magic Coat bounces it and switches the target out and original user doesn't switch out",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/parting_shot.c:73: TURN 1 incomplete"
+    },
+    {
+      "name": "Parting Shot: Soundproof and Good as Gold block Parting Shot 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/parting_shot.c:28: TURN 1 incomplete"
+    },
+    {
+      "name": "Magic Room: An item that can activate will activate once Magic Room is over",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/magic_room.c:54: Unmatched ANIMATION"
+    },
+    {
+      "name": "Magic Coat reflects hazards regardless of the user's position 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/magic_coat.c:90: Matched ANIMATION"
+    },
+    {
+      "name": "Psychic Terrain protects grounded battlers from priority moves in doubles - Right",
+      "status": "INVALID",
+      "detail": "in <Move+0x2fc>"
+    },
+    {
+      "name": "Psychic Terrain doesn't block priority moves against semi-invulnerable targets 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/psychic_terrain.c:134: Did you mean: ANIMATION(ANIM_TYPE_MOVE, MOVE_PSYCHIC_TERRAIN, player)"
+    },
+    {
+      "name": "Curse applies to the user if used with Protean/Libero 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/curse.c:56: Unmatched HP_BAR"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Semi-invulnerable moves don't need to charge with Power Herb 1/6",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/semi_invulnerable.c:217: Unmatched MESSAGE(\"Wobbuffet used Fly!\")"
+    },
+    {
+      "name": "Skill Swap fails if user or target has an ability that can't be swapped 4/27",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/skill_swap.c:107: Matched ANIMATION"
+    },
+    {
+      "name": "Psychic Terrain protects grounded battlers from priority moves in doubles - Left",
+      "status": "INVALID",
+      "detail": "in <Move+0x2fc>"
+    },
+    {
+      "name": "Recoil if miss: Supercell Slam causes recoil if it is absorbed",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/recoil_if_miss.c:129: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Reflect Damage: Counter is affected by Protect effects if it was damaged by that battler 2/4",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/reflect_damage.c:77: Matched ANIMATION"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Final Gambit triggers the target's Endure",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:271: Unmatched MESSAGE(\"The opposing Wobbuffet endured the hit!\")"
+    },
+    {
+      "name": "Final Gambit does not faint the user if it misses",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:136: EXPECT_EQ(0, 10) failed"
+    },
+    {
+      "name": "Sticky Web has correct interactions with Mirror Armor - no one has their Speed lowered if the set upper switched 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/sticky_web.c:185: EXPECT_EQ(5, 6) failed"
+    },
+    {
+      "name": "Frostbite reduces the special attack by 50 percent",
+      "status": "FAIL",
+      "detail": "test/battle/status1/frostbite.c:23: EXPECT_EQ(26, 13) failed"
+    },
+    {
+      "name": "Sticky Web has correct interactions with Mirror Armor - no one has their Speed lowered if the set upper fainted 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/sticky_web.c:240: EXPECT_EQ(5, 6) failed"
+    },
+    {
+      "name": "Magic Coat activates on the fastest opposing mon for hazard setting moves (raw speed) 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/magic_coat.c:137: Did you mean: ANIMATION(ANIM_TYPE_MOVE, MOVE_STEALTH_ROCK, opponentRight)"
+    },
+    {
+      "name": "Thrash confuses the user if it is canceled on turn 3 of 3, Immunity",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect_secondary/thrash.c:101: Unmatched ANIMATION"
+    },
+    {
+      "name": "Weather started after the one which started the battle lasts only 5 turns 2/2",
+      "status": "FLAKY",
+      "detail": "test/battle/starting_status/weather.c:108: Expected unmatched MESSAGE, but got MESSAGE at test/battle/starting_status/weather.c:87"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    },
+    {
+      "name": "Toxic cannot miss if used by a Poison-type (Gen6+) 4/4",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/toxic.c:64: Unmatched ANIMATION"
+    },
+    {
+      "name": "Smelling Salts does not cure paralyzed targets behind substitutes or get increased power 2/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect_secondary/remove_status.c:30: Did you mean: MESSAGE(\"The opposing Seismitoad couldn't?move because it's paralyzed!\")"
+    },
+    {
+      "name": "Final Gambit does not trigger the user's Focus Sash",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/final_gambit.c:172: Did you mean: HP_BAR(opponent, damage: 1)"
+    },
+    {
+      "name": "Magic Coat reflection doesn't activate Protean/Libero 1/2",
+      "status": "FAIL",
+      "detail": "test/battle/move_effect/magic_coat.c:163: Unmatched MESSAGE(\"Greninja bounced the Spikes back!\")"
+    },
+    {
+      "name": "Revelation Dance becomes Normal type if used by a Typeless Pokemon due to Roost",
+      "status": "FLAKY",
+      "detail": "test/battle/move_effect/revelation_dance.c:114: Expected unmatched ABILITY_POPUP, but got..."
+    }
+  ],
+  "snapshot_note": "Precedes final Power Herb attack-message correction and final Defog/Conversion 2 fixture corrections. Final-source broad audit is separate."
+}

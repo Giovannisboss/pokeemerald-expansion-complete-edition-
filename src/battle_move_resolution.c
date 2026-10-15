@@ -1866,7 +1866,10 @@ static enum CancelerResult CancelerCharging(struct BattleCalcValues *cv)
             if (gBattleMoveEffects[cv->moveEffect].semiInvulnerableEffect)
                 gBattleMons[cv->battlerAtk].volatiles.semiInvulnerable = STATE_NONE;
             gLastUsedItem = gBattleMons[cv->battlerAtk].item;
-            BattleScriptCall(BattleScript_PowerHerbActivation);
+            if (GetConfig(B_UPDATED_MOVE_DATA) < GEN_5 && cv->moveEffect == EFFECT_SEMI_INVULNERABLE)
+                BattleScriptCall(BattleScript_PowerHerbActivationGen4);
+            else
+                BattleScriptCall(BattleScript_PowerHerbActivation);
             result = CANCELER_RESULT_RUN_SCRIPT_AND_INCREMENT;
         }
         else // Use move next turn

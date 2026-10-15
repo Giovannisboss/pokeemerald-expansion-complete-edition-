@@ -83,23 +83,23 @@ SINGLE_BATTLE_TEST("Beat Up doesn't list party member's name (Gen5+)")
 
 SINGLE_BATTLE_TEST("Beat Up's damage is Dark-typed (Gen5+)", s16 damage)
 {
-    bool32 targetIsFairy;
-    PARAMETRIZE { targetIsFairy = FALSE; }
-    PARAMETRIZE { targetIsFairy = TRUE; }
+    bool32 targetResistsDark;
+    PARAMETRIZE { targetResistsDark = FALSE; }
+    PARAMETRIZE { targetResistsDark = TRUE; }
 
     ASSUME(GetMoveType(MOVE_BEAT_UP) == TYPE_DARK);
     GIVEN {
         WITH_CONFIG(B_BEAT_UP, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         PLAYER(SPECIES_WYNAUT);
-        OPPONENT(targetIsFairy ? SPECIES_SYLVEON : SPECIES_WOBBUFFET);
+        OPPONENT(targetResistsDark ? SPECIES_UMBREON : SPECIES_WOBBUFFET) { Defense(100); }
     } WHEN {
         TURN { MOVE(player, MOVE_BEAT_UP); }
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_BEAT_UP, player);
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } THEN {
-        if (targetIsFairy)
+        if (targetResistsDark)
             EXPECT_LT(results[i].damage, results[0].damage);
     }
 }
@@ -256,9 +256,9 @@ SINGLE_BATTLE_TEST("Beat Up's damage doesn't consider STAB")
     } SCENE {
         HP_BAR(opponent, captureDamage: &damage);
     } THEN {
-        // Raw damage: baseAtk 33 * basePower 1 * levelFactor ((100 * 2 / 5) + 2 = 42) = 1386
-        // Divide by baseDef 58 -> 23 (floor); 23/50 + 2 = 2;
-        u16 expected = 2;
+        // Raw damage: baseAtk 33 * basePower 10 * levelFactor ((100 * 2 / 5) + 2 = 42) = 13860
+        // Divide by baseDef 58 -> 238 (floor); 238/50 + 2 = 6;
+        u16 expected = 6;
         EXPECT_EQ(damage, expected);
     }
 }
@@ -309,10 +309,10 @@ SINGLE_BATTLE_TEST("Beat Up's damage is determined by each striking Pokémon's b
         ANIMATION(ANIM_TYPE_MOVE, MOVE_BEAT_UP, player);
         HP_BAR(opponent, captureDamage: &deoxysHit);
     } THEN {
-        // Shuckle: baseAtk 10 * basePower 1 * levelFactor 42 = 420; / baseDef 10 -> 42; 42/50 + 2 = 2
-        u16 shuckleDmg = 2;
-        // Deoxys-A: baseAtk 180 * basePower 1 * levelFactor 42 = 7560; / baseDef 10 -> 756; 756/50 + 2 = 17
-        u16 deoxysDmg = 17;
+        // Shuckle: baseAtk 10 * basePower 10 * levelFactor 42 = 4200; / baseDef 10 -> 420; 420/50 + 2 = 10
+        u16 shuckleDmg = 10;
+        // Deoxys-A: baseAtk 180 * basePower 10 * levelFactor 42 = 75600; / baseDef 10 -> 7560; 7560/50 + 2 = 153
+        u16 deoxysDmg = 153;
         EXPECT_EQ(shuckleHit, shuckleDmg);
         EXPECT_EQ(deoxysHit, deoxysDmg);
         EXPECT_LT(shuckleHit, deoxysHit);

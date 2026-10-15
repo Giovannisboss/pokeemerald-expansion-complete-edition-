@@ -1,0 +1,50 @@
+{
+  "roms_used": {
+    "progression": "Alpha 2.2 then intermediate Alpha 2.3 b070186aedcf00f2494c179e97192f20aec51bcf01a74cb2c939b4db7751f7e6",
+    "final_battery_reload": "451840cb5dc1f0a1d11636f33002d4d8ab72964da57f2dac38dcfb01e75ad4f1"
+  },
+  "input_policy": "Normal GBA buttons only; RAM reads identify position and battle UI. No RAM writes, debug warps, injected items, badges or party edits. Optional emulator states are internal checkpoints only.",
+  "completed": [
+    "Petalburg Norman introduction",
+    "Wally catching tutorial and return to gym",
+    "Scott introduction",
+    "Route 104 Cindy victory",
+    "Petalburg Woods entrance",
+    "Fresh Alpha 2.3 process loads ordinary Alpha 2.2 battery save at woods entrance",
+    "Bulbasaur site requires first badge",
+    "First Team Aqua grunt victory",
+    "Great Ball reward visible in Bag",
+    "James victory in Petalburg Woods",
+    "Winston victory on Route 104",
+    "Haley victory: Mudkip fainted and Sentret completed the battle",
+    "Reached Rustboro City Pokemon Centre",
+    "Rustboro nurse healing after Mudkip fainted against Haley",
+    "Ordinary save and fresh final-ROM battery reload in Rustboro Centre at (7,4)"
+  ],
+  "limitations": [
+    "No badges obtained yet",
+    "No complete story/Frontier playthrough",
+    "No hardware/flashcart test"
+  ],
+  "journals": [
+    "alpha23-story.log",
+    "alpha23-battery-reload.log",
+    "alpha23-woods-progress.log",
+    "alpha23-final-rom-reload.log",
+    "alpha23-rustboro-battery-check.log"
+  ],
+  "save_format": "Unchanged 0xCE000002, standard 128 KiB flash plus emulator RTC trailer",
+  "party_at_checkpoint": [
+    {
+      "species": "Mudkip",
+      "level": 12,
+      "hp": "44/44"
+    },
+    {
+      "species": "Sentret",
+      "level": 4,
+      "hp": "17/17"
+    }
+  ],
+  "checkpoint_location": "Rustboro City Pokemon Centre 1F (7,4), zero badges"
+}

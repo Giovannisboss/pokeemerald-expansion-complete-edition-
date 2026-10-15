@@ -146,6 +146,7 @@ SINGLE_BATTLE_TEST("Focus Punch does not activate when Focus Band/Focus Sash/Stu
     PARAMETRIZE { item = ITEM_FOCUS_SASH; ability = ABILITY_SHADOW_TAG; }
 
     GIVEN {
+        WITH_CONFIG(B_STURDY, GEN_5);
         ASSUME(GetMoveEffect(MOVE_SEISMIC_TOSS) == EFFECT_LEVEL_DAMAGE);
         PLAYER(SPECIES_WOBBUFFET) { Item(item); Ability(ability); MaxHP(100); HP(100); };
         OPPONENT(SPECIES_WOBBUFFET) {};

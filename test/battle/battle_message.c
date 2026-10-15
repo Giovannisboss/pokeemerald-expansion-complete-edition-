@@ -194,10 +194,10 @@ TWO_VS_ONE_BATTLE_TEST("Battle Message: STRINGID_INTROMSG, STRINGID_INTROSENDOUT
         MESSAGE("3 sent out Haunter! Go, Gastly!");
         MESSAGE("2 withdrew Wobbuffet!");
         MESSAGE("2 sent out Farigiraf!");
-        MESSAGE("2 withdrew Wynaut!");
-        MESSAGE("2 sent out Girafarig!");
         MESSAGE("3 withdrew Haunter!");
         MESSAGE("3 sent out Gengar!");
+        MESSAGE("2 withdrew Wynaut!");
+        MESSAGE("2 sent out Girafarig!");
     }
 }
 
@@ -224,10 +224,10 @@ AI_TWO_VS_ONE_BATTLE_TEST("Battle Message: STRINGID_INTROMSG, STRINGID_INTROSEND
         MESSAGE(AI_PARTNER_NAME " sent out Haunter! Go, Gastly!");
         MESSAGE(AI_TRAINER_NAME " withdrew Wobbuffet!");
         MESSAGE(AI_TRAINER_NAME " sent out Farigiraf!");
-        MESSAGE(AI_TRAINER_NAME " withdrew Wynaut!");
-        MESSAGE(AI_TRAINER_NAME " sent out Girafarig!");
         MESSAGE(AI_PARTNER_NAME " withdrew Haunter!");
         MESSAGE(AI_PARTNER_NAME " sent out Gengar!");
+        MESSAGE(AI_TRAINER_NAME " withdrew Wynaut!");
+        MESSAGE(AI_TRAINER_NAME " sent out Girafarig!");
     }
 }
 

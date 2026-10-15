@@ -293,6 +293,8 @@ static inline enum MoveTarget GetMoveTarget(enum Move moveId)
 {
     moveId = SanitizeMoveId(moveId);
     enum MoveTarget target = gMovesInfo[moveId].target;
+    if (moveId == MOVE_CONVERSION_2)
+        target = GetConfig(B_UPDATED_CONVERSION_2) >= GEN_5 ? TARGET_SELECTED : TARGET_USER;
     assertf(target != TARGET_SMART || gMovesInfo[moveId].strikeCount > 1, "Smart target requires strikeCount > 1: %S", gMovesInfo[moveId].name);
     return target;
 }
@@ -480,6 +482,8 @@ static inline bool32 MoveIgnoresSubstitute(enum Move moveId)
     #if TESTING
     if (moveId == MOVE_TRANSFORM)
         return GetConfig(B_TRANSFORM_SUBSTITUTE_FAIL) < GEN_5;
+    if (moveId == MOVE_DEFOG)
+        return GetConfig(B_DEFOG_EFFECT_CLEARING) < GEN_5;
     #endif
     return gMovesInfo[SanitizeMoveId(moveId)].ignoresSubstitute;
 }
