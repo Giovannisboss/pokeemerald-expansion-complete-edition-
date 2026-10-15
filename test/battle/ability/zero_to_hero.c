@@ -117,6 +117,7 @@ SINGLE_BATTLE_TEST("Transform doesn't apply the heroic transformation message wh
 SINGLE_BATTLE_TEST("Imposter doesn't apply the heroic transformation message when copying Palafin")
 {
     GIVEN {
+        WITH_CONFIG(B_TRANSFORM_FORM_CHANGES, GEN_5);
         PLAYER(SPECIES_PALAFIN_ZERO) { Ability(ABILITY_ZERO_TO_HERO); }
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_DITTO) { Ability(ABILITY_IMPOSTER); }

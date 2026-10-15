@@ -70,6 +70,7 @@ SINGLE_BATTLE_TEST("Weather started after the one which started the battle lasts
     SetStartingStatus(STARTING_STATUS_WEATHER_SUN);
 
     GIVEN {
+        WITH_CONFIG(B_ABILITY_WEATHER, GEN_6);
         WITH_CONFIG(B_OVERWORLD_WEATHER_OVERRIDE, GEN_8);
         PLAYER(SPECIES_POLITOED) { Ability(viaMove == TRUE ? ABILITY_DAMP : ABILITY_DRIZZLE); }
         OPPONENT(SPECIES_WOBBUFFET);

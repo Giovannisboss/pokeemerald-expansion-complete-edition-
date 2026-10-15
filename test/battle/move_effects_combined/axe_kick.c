@@ -10,6 +10,7 @@ ASSUMPTIONS
 SINGLE_BATTLE_TEST("Axe Kick confuses the target")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -24,6 +25,7 @@ SINGLE_BATTLE_TEST("Axe Kick confuses the target")
 SINGLE_BATTLE_TEST("Axe Kick deals damage half the hp to user if def battler protected")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -41,6 +43,7 @@ SINGLE_BATTLE_TEST("Axe Kick deals damage half the hp to user if def battler pro
 SINGLE_BATTLE_TEST("Axe Kick deals damage half the hp to user if it fails")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -62,6 +65,7 @@ SINGLE_BATTLE_TEST("Axe Kick still deals crash damage when boosted by Sheer Forc
     PARAMETRIZE { ability = ABILITY_INTIMIDATE; }
 
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         ASSUME(MoveIsAffectedBySheerForce(MOVE_AXE_KICK));
         PLAYER(SPECIES_TAUROS) { Ability(ability); }
         OPPONENT(SPECIES_WOBBUFFET);

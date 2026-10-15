@@ -185,6 +185,7 @@ SINGLE_BATTLE_TEST("Fling - Item is lost when target protects itself")
 SINGLE_BATTLE_TEST("Fling - Item does not get blocked by Unnerve if it isn't a berry")
 {
     GIVEN {
+        WITH_CONFIG(B_MENTAL_HERB, GEN_5);
         ASSUME(GetMoveEffect(MOVE_TAUNT) == EFFECT_TAUNT);
         PLAYER(SPECIES_CALYREX) { Item(ITEM_MENTAL_HERB); Ability(ABILITY_UNNERVE); }
         OPPONENT(SPECIES_WOBBUFFET) { Item(ITEM_ORAN_BERRY); }

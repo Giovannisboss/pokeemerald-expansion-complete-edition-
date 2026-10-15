@@ -1,6 +1,22 @@
 #include "global.h"
 #include "test/battle.h"
 
+SINGLE_BATTLE_TEST("Conversion 2 fails safely after Protect leaves no landed move (Gen4)")
+{
+    GIVEN {
+        WITH_CONFIG(B_UPDATED_CONVERSION_2, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_PROTECT); MOVE(opponent, MOVE_TACKLE); }
+        TURN { MOVE(player, MOVE_CONVERSION_2); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_PROTECT, player);
+        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_CONVERSION_2, player);
+        MESSAGE("But it failed!");
+    }
+}
+
 SINGLE_BATTLE_TEST("Conversion 2's type change considers Inverse Battles")
 {
     u32 config;

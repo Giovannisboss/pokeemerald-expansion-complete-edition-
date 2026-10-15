@@ -1018,6 +1018,7 @@ AI_DOUBLE_BATTLE_TEST("AI won't be confused by player's previous priority moves 
 AI_SINGLE_BATTLE_TEST("AI will see 2HKOs through resist berries")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_9);
         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT | AI_FLAG_OMNISCIENT);
         PLAYER(SPECIES_ZIGZAGOON) { HP(117); Moves(MOVE_CELEBRATE); Item(ITEM_CHOPLE_BERRY); }
         OPPONENT(SPECIES_ZIGZAGOON) { Moves(MOVE_JUMP_KICK, MOVE_HEADBUTT); }
@@ -1649,7 +1650,7 @@ AI_DOUBLE_BATTLE_TEST("AI sees Dragon Darts damage redirecting if one target is 
     enum Species species;
     enum Ability ability;
 
-    PARAMETRIZE { species = SPECIES_WIGGLYTUFF, ability = ABILITY_CONTRARY; }
+    PARAMETRIZE { species = SPECIES_FLORGES, ability = ABILITY_CONTRARY; }
     PARAMETRIZE { species = SPECIES_SHEDINJA, ability = ABILITY_WONDER_GUARD; }
 
     GIVEN {

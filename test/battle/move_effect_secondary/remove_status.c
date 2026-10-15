@@ -7,6 +7,7 @@ SINGLE_BATTLE_TEST("Smelling Salts does not cure paralyzed targets behind substi
     PARAMETRIZE { ability = ABILITY_INNER_FOCUS; }
     PARAMETRIZE { ability = ABILITY_INFILTRATOR; }
     GIVEN {
+        WITH_CONFIG(B_INFILTRATOR_SUBSTITUTE, GEN_6);
         ASSUME(MoveHasAdditionalEffect(MOVE_SMELLING_SALTS, MOVE_EFFECT_REMOVE_STATUS) == TRUE);
         ASSUME(GetMoveEffectArg_Status(MOVE_SMELLING_SALTS) == STATUS1_PARALYSIS);
         PLAYER(SPECIES_CROBAT) { Ability(ability); }
@@ -65,6 +66,7 @@ SINGLE_BATTLE_TEST("Wake-Up Slap does not cure paralyzed pokemons behind substit
     PARAMETRIZE { ability = ABILITY_INNER_FOCUS; }
     PARAMETRIZE { ability = ABILITY_INFILTRATOR; }
     GIVEN {
+        WITH_CONFIG(B_INFILTRATOR_SUBSTITUTE, GEN_6);
         ASSUME(MoveHasAdditionalEffect(MOVE_WAKE_UP_SLAP, MOVE_EFFECT_REMOVE_STATUS) == TRUE);
         ASSUME(GetMoveEffectArg_Status(MOVE_WAKE_UP_SLAP) == STATUS1_SLEEP);
         PLAYER(SPECIES_CROBAT) { Ability(ability); }

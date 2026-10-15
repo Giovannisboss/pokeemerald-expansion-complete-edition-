@@ -453,7 +453,7 @@ static void HandleSetEffectIncinerate(struct BattleCalcValues *cv, struct SetEff
         return;
 
     if (gItemsInfo[gBattleMons[se->effectBattler].item].pocket == POCKET_BERRIES
-     || (B_INCINERATE_GEMS >= GEN_6 && GetItemHoldEffect(gBattleMons[se->effectBattler].item) == HOLD_EFFECT_GEMS))
+     || (GetConfig(B_INCINERATE_GEMS) >= GEN_6 && GetItemHoldEffect(gBattleMons[se->effectBattler].item) == HOLD_EFFECT_GEMS))
     {
         gLastUsedItem = gBattleMons[se->effectBattler].item;
         gBattleMons[se->effectBattler].item = ITEM_NONE;

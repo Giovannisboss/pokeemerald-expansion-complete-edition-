@@ -160,6 +160,7 @@ SINGLE_BATTLE_TEST("Air Balloon pops when Disguise is broken")
     PARAMETRIZE { species = SPECIES_MIMIKYU_TOTEM_DISGUISED; newSpecies = SPECIES_MIMIKYU_BUSTED_TOTEM; }
 
     GIVEN {
+        WITH_CONFIG(B_DISGUISE_HP_LOSS, GEN_8);
         PLAYER(species) { Ability(ABILITY_DISGUISE); Item(ITEM_AIR_BALLOON); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

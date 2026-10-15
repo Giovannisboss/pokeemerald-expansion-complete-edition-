@@ -9799,7 +9799,7 @@ void GetBattlerTypes(enum BattlerId battler, bool32 ignoreTera, enum Type types[
     if (!isTera && gBattleMons[battler].volatiles.roostActive)
     {
         if (types[0] == TYPE_FLYING && types[1] == TYPE_FLYING)
-            types[0] = types[1] = B_ROOST_PURE_FLYING >= GEN_5 ? TYPE_NORMAL : TYPE_MYSTERY;
+            types[0] = types[1] = GetConfig(B_ROOST_PURE_FLYING) >= GEN_5 ? TYPE_NORMAL : TYPE_MYSTERY;
         else if (types[0] == TYPE_FLYING)
             types[0] = TYPE_MYSTERY;
         else if (types[1] == TYPE_FLYING)

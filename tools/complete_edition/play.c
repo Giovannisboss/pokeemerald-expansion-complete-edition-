@@ -78,9 +78,9 @@ int main(int argc, char **argv)
             core->setKeys(core, 0);
             printf("ADVANCE %u frames; lock=%u%s\n", i, core->busRead8(core, address), i == frames ? " (limit)" : "");
         } else if (!strcmp(command, "fight")) {
-            unsigned slot, flag, controllers, actionHandler, moveHandler, actionCursor, moveCursor, callbackAddress, battleCallback;
-            if (sscanf(line, "%*s %u %u %x %x %x %x %x %x %x %x", &slot, &frames, &flag,
-                       &controllers, &actionHandler, &moveHandler, &actionCursor, &moveCursor, &callbackAddress, &battleCallback) != 10
+            unsigned slot, flag, controllers, actionHandler, moveHandler, actionCursor, moveCursor, callbackAddress, battleCallback, targetHandler = 0;
+            if (sscanf(line, "%*s %u %u %x %x %x %x %x %x %x %x %x", &slot, &frames, &flag,
+                       &controllers, &actionHandler, &moveHandler, &actionCursor, &moveCursor, &callbackAddress, &battleCallback, &targetHandler) < 10
                 || slot > 15 || frames > 36000) {
                 puts("ERROR fight arguments"); fflush(stdout); continue;
             }
@@ -91,7 +91,10 @@ int main(int argc, char **argv)
                 for (unsigned battler = 0; battler < 4; battler += 2) {
                     unsigned handler = core->busRead32(core, controllers + 4 * battler) & ~1u;
                     unsigned cursor, wanted;
-                    if (handler == (actionHandler & ~1u)) {
+                    if (targetHandler && handler == (targetHandler & ~1u)) {
+                        button = 1; // Confirm the game's default enemy target.
+                        break;
+                    } else if (handler == (actionHandler & ~1u)) {
                         cursor = core->busRead8(core, actionCursor + battler); wanted = 0;
                     } else if (handler == (moveHandler & ~1u)) {
                         cursor = core->busRead8(core, moveCursor + battler); wanted = (slot >> (battler == 0 ? 0 : 2)) & 3;

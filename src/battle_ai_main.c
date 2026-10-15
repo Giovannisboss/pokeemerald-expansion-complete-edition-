@@ -4,6 +4,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_ai_util.h"
+#include "battle_util.h"
 #include "battle_ai_items.h"
 #include "battle_ai_switch.h"
 #include "battle_ai_main.h"
@@ -1282,6 +1283,29 @@ void BattleAI_DoAIProcessing_PredictedSwitchin(struct AiThinkingStruct *aiThink,
 
 // AI Score Functions
 // AI_FLAG_CHECK_BAD_MOVE - decreases move scores
+// Conversion 2 can only improve resistance after an observed move. Gen 1-4
+// use the last hit received; Gen 5+ use the selected foe's last move.
+static bool32 CanConversion2ImproveResistance(enum BattlerId battlerAtk, enum BattlerId battlerDef)
+{
+    bool32 oldRules = GetConfig(B_UPDATED_CONVERSION_2) < GEN_5;
+    enum Move lastMove = oldRules ? gLastLandedMoves[battlerAtk] : gLastResultingMoves[battlerDef];
+    enum Type lastType = oldRules ? gLastHitByType[battlerAtk] : gLastUsedMoveType[battlerDef];
+
+    if (lastMove == MOVE_NONE || lastMove == MOVE_UNAVAILABLE
+     || lastType == TYPE_NONE || lastType == TYPE_MYSTERY || lastType == TYPE_STELLAR
+     || GetActiveGimmick(battlerAtk) == GIMMICK_TERA)
+        return FALSE;
+    if (GetMoveEffect(lastMove) == EFFECT_STRUGGLE)
+        lastType = TYPE_NORMAL;
+
+    // Avoid replacing a type that already resists the observed attack.
+    for (u32 i = 0; i < 3; i++)
+        if (gBattleMons[battlerAtk].types[i] != TYPE_MYSTERY
+         && GetTypeModifier(lastType, gBattleMons[battlerAtk].types[i]) < UQ_4_12(1.0))
+            return FALSE;
+    return TRUE;
+}
+
 static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score)
 {
     if (IsTargetingPartner(battlerAtk, battlerDef))
@@ -2303,7 +2327,8 @@ static s32 AI_CheckBadMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
         break;
 
     case EFFECT_CONVERSION_2:
-        //TODO
+        if (!CanConversion2ImproveResistance(battlerAtk, battlerDef))
+            ADJUST_SCORE(-10);
         break;
     case EFFECT_LOCK_ON:
         if (gBattleMons[battlerAtk].volatiles.battlerWithSureHit != 0
@@ -4538,6 +4563,10 @@ static s32 AI_CalcMoveEffectScore(enum BattlerId battlerAtk, enum BattlerId batt
         else if (GetActiveGimmick(battlerDef) == GIMMICK_DYNAMAX)
             break;
         score += AI_TryToClearStats(battlerAtk, battlerDef, moveTargetsBothOpponents);
+        break;
+    case EFFECT_CONVERSION_2:
+        if (CanConversion2ImproveResistance(battlerAtk, battlerDef))
+            ADJUST_SCORE(GOOD_EFFECT);
         break;
     case EFFECT_CONVERSION:
         if (!IS_BATTLER_OF_TYPE(battlerAtk, GetMoveType(gBattleMons[battlerAtk].moves[0])))

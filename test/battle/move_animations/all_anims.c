@@ -2371,6 +2371,8 @@ DOUBLE_BATTLE_TEST("Move Animations work 1")
         }
     }
     GIVEN {
+        WITH_CONFIG(B_TELEPORT_BEHAVIOR, GEN_8);
+        WITH_CONFIG(B_IMPRISON, GEN_5);
         DISABLE_SELECTABLE_PARAMETERS;
         PLAYER(species) {
             Level(GetParametrizedLevel(move, variation));
@@ -2446,6 +2448,8 @@ DOUBLE_BATTLE_TEST("Move Animations work 2")
         }
     }
     GIVEN {
+        WITH_CONFIG(B_TELEPORT_BEHAVIOR, GEN_8);
+        WITH_CONFIG(B_IMPRISON, GEN_5);
         DISABLE_SELECTABLE_PARAMETERS;
         PLAYER(species) {
             Level(GetParametrizedLevel(move, variation));
@@ -2521,6 +2525,8 @@ DOUBLE_BATTLE_TEST("Move Animations work 3")
         }
     }
     GIVEN {
+        WITH_CONFIG(B_TELEPORT_BEHAVIOR, GEN_8);
+        WITH_CONFIG(B_IMPRISON, GEN_5);
         DISABLE_SELECTABLE_PARAMETERS;
         PLAYER(species) {
             Level(GetParametrizedLevel(move, variation));
@@ -2596,6 +2602,8 @@ DOUBLE_BATTLE_TEST("Move Animations work 4")
         }
     }
     GIVEN {
+        WITH_CONFIG(B_TELEPORT_BEHAVIOR, GEN_8);
+        WITH_CONFIG(B_IMPRISON, GEN_5);
         DISABLE_SELECTABLE_PARAMETERS;
         PLAYER(species) {
             Level(GetParametrizedLevel(move, variation));
@@ -2656,6 +2664,8 @@ SINGLE_BATTLE_TEST("Z-Moves animations work")
     enum Item item;
     Z_MOVE_PARAMETERS;
     GIVEN {
+        WITH_CONFIG(B_TELEPORT_BEHAVIOR, GEN_8);
+        WITH_CONFIG(B_IMPRISON, GEN_5);
         DISABLE_SELECTABLE_PARAMETERS;
         PLAYER(species) { Item(item); }
         OPPONENT(SPECIES_WOBBUFFET) { Item(ITEM_FOCUS_SASH); }

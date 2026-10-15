@@ -101,6 +101,7 @@ SINGLE_BATTLE_TEST("Spicy Spray burns the attacker even if the defender faints")
 SINGLE_BATTLE_TEST("Spicy Spray burns the attacker even if the defender behind a Substitute takes damage")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(IsSoundMove(MOVE_HYPER_VOICE));
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_SCOVILLAIN) { Item(ITEM_SCOVILLAINITE); }

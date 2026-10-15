@@ -4117,22 +4117,22 @@ static enum MoveEndResult MoveEndMoveBlockRecoil(struct BattleCalcValues *cv)
          && !gBattleStruct->unableToUseMove)
         {
             s32 recoil = 0;
-            if (B_CRASH_IF_TARGET_IMMUNE == GEN_4 && gBattleStruct->moveResultFlags[cv->battlerDef] & MOVE_RESULT_DOESNT_AFFECT_FOE)
+            if (GetConfig(B_CRASH_IF_TARGET_IMMUNE) == GEN_4 && gBattleStruct->moveResultFlags[cv->battlerDef] & MOVE_RESULT_DOESNT_AFFECT_FOE)
             {
                 recoil = GetNonDynamaxMaxHP(cv->battlerDef) / 2;
             }
-            if (B_RECOIL_IF_MISS_DMG >= GEN_5)
+            if (GetConfig(B_RECOIL_IF_MISS_DMG) >= GEN_5)
             {
                 recoil = GetNonDynamaxMaxHP(cv->battlerAtk) / 2;
             }
-            else if (B_RECOIL_IF_MISS_DMG >= GEN_3)
+            else if (GetConfig(B_RECOIL_IF_MISS_DMG) >= GEN_3)
             {
                 if ((GetNonDynamaxMaxHP(cv->battlerDef) / 2) < gBattleStruct->moveDamage[cv->battlerDef])
                     recoil = gBattleStruct->moveDamage[cv->battlerDef];
                 else
                     recoil = GetNonDynamaxMaxHP(cv->battlerDef) / 2;
             }
-            else if (B_RECOIL_IF_MISS_DMG == GEN_2)
+            else if (GetConfig(B_RECOIL_IF_MISS_DMG) == GEN_2)
             {
                 recoil = gBattleStruct->moveDamage[cv->battlerDef] / 8;
             }
@@ -4239,7 +4239,7 @@ static enum MoveEndResult MoveEndMoveBlock(struct BattleCalcValues *cv)
         case EFFECT_KNOCK_OFF:
             if (gBattleMons[battlerDef].item != ITEM_NONE
              && IsBattlerTurnDamaged(battlerDef, EXCLUDING_SUBSTITUTES)
-             && !(B_KNOCK_OFF_REMOVAL >= GEN_5 && side == B_SIDE_PLAYER && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
+             && !(GetConfig(B_KNOCK_OFF_REMOVAL) >= GEN_5 && side == B_SIDE_PLAYER && !(gBattleTypeFlags & BATTLE_TYPE_TRAINER))
              && CanBattlerGetOrLoseItem(battlerDef, cv->battlerAtk, gBattleMons[battlerDef].item)
              && !NoAliveMonsForEitherParty())
             {
@@ -4261,7 +4261,7 @@ static enum MoveEndResult MoveEndMoveBlock(struct BattleCalcValues *cv)
                 CheckSetUnburden(battlerDef);
 
                 // In Gen 5+, Knock Off removes the target's item rather than rendering it unusable
-                if (B_KNOCK_OFF_REMOVAL >= GEN_5)
+                if (GetConfig(B_KNOCK_OFF_REMOVAL) >= GEN_5)
                 {
                     BtlController_EmitSetMonData(battlerDef, B_COMM_TO_CONTROLLER, REQUEST_HELDITEM_BATTLE, 0, sizeof(gBattleMons[battlerDef].item), &gBattleMons[battlerDef].item);
                     MarkBattlerForControllerExec(battlerDef);

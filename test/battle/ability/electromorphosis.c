@@ -10,6 +10,7 @@ SINGLE_BATTLE_TEST("Electromorphosis sets up Charge when hit by any move")
     PARAMETRIZE { move = MOVE_GUST; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         ASSUME(GetMoveCategory(MOVE_GUST) == DAMAGE_CATEGORY_SPECIAL);
         ASSUME(GetMoveCategory(MOVE_SCRATCH) == DAMAGE_CATEGORY_PHYSICAL);
         ASSUME(GetMoveCategory(MOVE_THUNDER_SHOCK) != DAMAGE_CATEGORY_STATUS);
@@ -56,6 +57,7 @@ SINGLE_BATTLE_TEST("Electromorphosis sets up Charge when hit by any move")
 SINGLE_BATTLE_TEST("Electromorphosis displays its message before fainting when triggered")
 {
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_BELLIBOLT) { Ability(ABILITY_ELECTROMORPHOSIS); HP(1); Speed(1); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(10); }
     } WHEN {
@@ -73,6 +75,7 @@ SINGLE_BATTLE_TEST("Electromorphosis triggers on each multistrike hit but Charge
 {
     s16 dmgBefore, dmgAfterSingleHit, dmgAfterMultiHit;
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         ASSUME(GetMoveCategory(MOVE_SCRATCH) == DAMAGE_CATEGORY_PHYSICAL);
         ASSUME(GetMoveCategory(MOVE_DOUBLE_HIT) == DAMAGE_CATEGORY_PHYSICAL);
         ASSUME(GetMoveCategory(MOVE_THUNDER_SHOCK) != DAMAGE_CATEGORY_STATUS);

@@ -181,6 +181,7 @@ SINGLE_BATTLE_TEST("Psychic Terrain lasts for 5 turns")
 DOUBLE_BATTLE_TEST("Psychic Terrain protects grounded battlers from priority moves in doubles - Left")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         PLAYER(SPECIES_CLAYDOL) { Ability(ABILITY_LEVITATE); }
         PLAYER(SPECIES_TAPU_LELE) { Ability(ABILITY_PSYCHIC_SURGE); }
         OPPONENT(SPECIES_VOLBEAT) { Ability(ABILITY_PRANKSTER); }
@@ -198,6 +199,7 @@ DOUBLE_BATTLE_TEST("Psychic Terrain protects grounded battlers from priority mov
 DOUBLE_BATTLE_TEST("Psychic Terrain protects grounded battlers from priority moves in doubles - Right")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         PLAYER(SPECIES_TAPU_LELE) { Ability(ABILITY_PSYCHIC_SURGE); }
         PLAYER(SPECIES_CLAYDOL) { Ability(ABILITY_LEVITATE); }
         OPPONENT(SPECIES_VOLBEAT) { Ability(ABILITY_PRANKSTER); }

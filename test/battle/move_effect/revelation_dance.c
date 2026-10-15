@@ -118,9 +118,9 @@ SINGLE_BATTLE_TEST("Revelation Dance becomes Normal type if used by a Typeless P
     PARAMETRIZE { speciesOpponent = SPECIES_SABLEYE; }
     PARAMETRIZE { speciesOpponent = SPECIES_AGGRON; }
 
-    ASSUME(B_ROOST_PURE_FLYING >= GEN_5);
 
     GIVEN {
+        WITH_CONFIG(B_ROOST_PURE_FLYING, GEN_5);
         PLAYER(SPECIES_ORICORIO_BAILE) { Ability(ABILITY_DANCER); }
         OPPONENT(speciesOpponent);
     } WHEN {

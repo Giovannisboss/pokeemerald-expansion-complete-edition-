@@ -4,6 +4,7 @@
 SINGLE_BATTLE_TEST("Sand Spit sets up sandstorm for 5 turns when hit")
 {
     GIVEN {
+        WITH_CONFIG(B_ABILITY_WEATHER, GEN_6);
         PLAYER(SPECIES_SANDACONDA) { Ability(ABILITY_SAND_SPIT); }
         OPPONENT(SPECIES_LANDORUS);
     } WHEN {
@@ -28,6 +29,7 @@ SINGLE_BATTLE_TEST("Sand Spit sets up sandstorm for 5 turns when hit")
 SINGLE_BATTLE_TEST("Sand Spit sets up sandstorm for 8 turns when hit with Smooth Rock")
 {
     GIVEN {
+        WITH_CONFIG(B_ABILITY_WEATHER, GEN_6);
         ASSUME(gItemsInfo[ITEM_SMOOTH_ROCK].holdEffect == HOLD_EFFECT_SMOOTH_ROCK);
         PLAYER(SPECIES_SANDACONDA) { Ability(ABILITY_SAND_SPIT); Item(ITEM_SMOOTH_ROCK); }
         OPPONENT(SPECIES_LANDORUS);

@@ -271,6 +271,10 @@ static inline const u8 *GetMoveDescription(enum Move moveId)
 
 static inline enum Type GetMoveType(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_CURSE)
+        return GetConfig(B_UPDATED_MOVE_TYPES) >= GEN_5 ? TYPE_GHOST : TYPE_MYSTERY;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].type;
 }
 
@@ -281,6 +285,17 @@ static inline enum DamageCategory GetMoveCategory(enum Move moveId)
 
 static inline u32 GetMovePower(enum Move moveId)
 {
+    #if TESTING
+    // These fixtures compare generations without rebuilding the move table.
+    if (moveId == MOVE_KNOCK_OFF)
+        return GetConfig(B_UPDATED_MOVE_DATA) >= GEN_6 ? 65 : 20;
+    if (moveId == MOVE_BULLET_SEED)
+        return GetConfig(B_UPDATED_MOVE_DATA) >= GEN_5 ? 25 : 10;
+    if (moveId == MOVE_JUMP_KICK)
+        return GetConfig(B_UPDATED_MOVE_DATA) >= GEN_5 ? 100 : (GetConfig(B_UPDATED_MOVE_DATA) >= GEN_4 ? 85 : 70);
+    if (moveId == MOVE_DRAIN_PUNCH)
+        return GetConfig(B_UPDATED_MOVE_DATA) >= GEN_5 ? 75 : 60;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].power;
 }
 
@@ -295,6 +310,10 @@ static inline enum MoveTarget GetMoveTarget(enum Move moveId)
     enum MoveTarget target = gMovesInfo[moveId].target;
     if (moveId == MOVE_CONVERSION_2)
         target = GetConfig(B_UPDATED_CONVERSION_2) >= GEN_5 ? TARGET_SELECTED : TARGET_USER;
+    #if TESTING
+    if (moveId == MOVE_COTTON_SPORE)
+        target = GetConfig(B_UPDATED_MOVE_DATA) >= GEN_6 ? TARGET_BOTH : TARGET_SELECTED;
+    #endif
     assertf(target != TARGET_SMART || gMovesInfo[moveId].strikeCount > 1, "Smart target requires strikeCount > 1: %S", gMovesInfo[moveId].name);
     return target;
 }
@@ -320,6 +339,10 @@ static inline u32 GetMoveZPowerOverride(enum Move moveId)
 
 static inline s32 GetMovePriority(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_WONDER_ROOM || moveId == MOVE_MAGIC_ROOM)
+        return GetConfig(B_UPDATED_MOVE_DATA) >= GEN_6 ? 0 : -7;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].priority;
 }
 
@@ -335,6 +358,10 @@ static inline u32 IsMultiHitMove(enum Move moveId)
 
 static inline u32 IsExplosionMove(enum Move move)
 {
+    #if TESTING
+    if (move == MOVE_FINAL_GAMBIT)
+        return GetConfig(B_UPDATED_MOVE_FLAGS) < GEN_6;
+    #endif
     return gMovesInfo[SanitizeMoveId(move)].explosion;
 }
 
@@ -350,6 +377,10 @@ static inline bool32 MoveAlwaysCrits(enum Move moveId)
 
 static inline u32 GetMoveAdditionalEffectCount(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_RAPID_SPIN)
+        return GetConfig(B_SPEED_BUFFING_RAPID_SPIN) >= GEN_8 ? 1 : 0;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].numAdditionalEffects;
 }
 
@@ -360,6 +391,10 @@ static inline bool32 MoveMakesContact(enum Move moveId)
 
 static inline bool32 MoveIgnoresProtect(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_COUNTER || moveId == MOVE_MIRROR_COAT)
+        return GetConfig(B_UPDATED_MOVE_FLAGS) < GEN_5;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].ignoresProtect;
 }
 
@@ -485,6 +520,8 @@ static inline bool32 MoveIgnoresSubstitute(enum Move moveId)
         return GetConfig(B_TRANSFORM_SUBSTITUTE_FAIL) < GEN_5;
     if (moveId == MOVE_DEFOG)
         return GetConfig(B_DEFOG_EFFECT_CLEARING) < GEN_5;
+    if (IsSoundMove(moveId))
+        return GetConfig(B_UPDATED_MOVE_FLAGS) >= GEN_6;
     #endif
     return gMovesInfo[SanitizeMoveId(moveId)].ignoresSubstitute;
 }
@@ -517,8 +554,8 @@ static inline bool32 MoveAlwaysHitsInHailSnow(enum Move moveId)
 static inline bool32 MoveAlwaysHitsOnSameType(enum Move moveId)
 {
     #if TESTING
-    if (moveId == MOVE_TOXIC && GetConfig(B_TOXIC_NEVER_MISS) < GEN_6)
-       return FALSE;
+    if (moveId == MOVE_TOXIC)
+       return GetConfig(B_TOXIC_NEVER_MISS) >= GEN_6;
     #endif
     return gMovesInfo[SanitizeMoveId(moveId)].alwaysHitsOnSameType;
 }
@@ -838,6 +875,13 @@ static inline enum BattleTerrain GetMoveTerrainType(enum Move move)
 static inline const struct AdditionalEffect *GetMoveAdditionalEffectById(enum Move moveId, u32 effect)
 {
     #if TESTING
+    if (moveId == MOVE_RAPID_SPIN && effect == 0)
+    {
+        static const struct AdditionalEffect speedSpin = {
+            .moveEffect = MOVE_EFFECT_STAT_PLUS, .speed = 1, .self = TRUE, .chance = 100,
+        };
+        return &speedSpin;
+    }
     if (moveId == MOVE_GROWTH && effect == 0)
     {
         static const struct AdditionalEffect oldGrowth = {

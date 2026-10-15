@@ -24,6 +24,7 @@ SINGLE_BATTLE_TEST("Wind Power sets up Charge for player when hit by a wind move
     PARAMETRIZE { move = MOVE_AIR_CUTTER; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); Speed(10); }
         OPPONENT(SPECIES_PERSIAN) { Ability(ABILITY_LIMBER); Speed(5); } // Limber, so it doesn't get paralyzed.
     } WHEN {
@@ -69,6 +70,7 @@ SINGLE_BATTLE_TEST("Wind Power sets up Charge for opponent when hit by a wind mo
     PARAMETRIZE { move = MOVE_AIR_CUTTER; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_PERSIAN) { Ability(ABILITY_LIMBER); Speed(5); } // Limber, so it doesn't get paralyzed.
         OPPONENT(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); Speed(10); }
     } WHEN {
@@ -114,6 +116,7 @@ SINGLE_BATTLE_TEST("Wind Power sets up Charge for only one attack when hit by a 
     PARAMETRIZE { move = MOVE_AIR_CUTTER; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); Speed(5); }
         OPPONENT(SPECIES_PERSIAN) { Ability(ABILITY_LIMBER); Speed(10); } // Limber, so it doesn't get paralyzed.
     } WHEN {
@@ -152,6 +155,7 @@ DOUBLE_BATTLE_TEST("Wind Power activates correctly for every battler with the ab
     PARAMETRIZE { abilityLeft = ABILITY_WIND_POWER, abilityRight = ABILITY_WIND_POWER; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WATTREL) { Ability(abilityLeft); Speed(10); }
         PLAYER(SPECIES_WATTREL) { Ability(abilityRight); Speed(5); }
         OPPONENT(SPECIES_PERSIAN) { Ability(ABILITY_LIMBER); Speed(20); }
@@ -193,6 +197,7 @@ DOUBLE_BATTLE_TEST("Wind Power activates correctly for every battler with the ab
     PARAMETRIZE { abilityLeft = ABILITY_WIND_POWER, abilityRight = ABILITY_WIND_POWER; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WATTREL) { Ability(abilityLeft); Speed(10); }
         PLAYER(SPECIES_WATTREL) { Ability(abilityRight); Speed(5); }
         OPPONENT(SPECIES_PERSIAN) { Ability(ABILITY_LIMBER); Speed(20); }
@@ -231,6 +236,7 @@ DOUBLE_BATTLE_TEST("Wind Power activates correctly when Tailwind is used")
     PARAMETRIZE { opponentSide = FALSE; }
 
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         ASSUME(GetMoveEffect(MOVE_TAILWIND) == EFFECT_TAILWIND);
         PLAYER(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); Speed(10); }
         PLAYER(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); Speed(5); }
@@ -263,6 +269,7 @@ DOUBLE_BATTLE_TEST("Wind Power activates correctly when Tailwind is used")
 SINGLE_BATTLE_TEST("Wind Power displays its message before fainting when triggered")
 {
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         PLAYER(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); HP(1); Speed(1); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(10); }
     } WHEN {
@@ -279,6 +286,7 @@ SINGLE_BATTLE_TEST("Wind Power displays its message before fainting when trigger
 DOUBLE_BATTLE_TEST("Tailwind does not trigger Wind Power on an absent ally battler")
 {
     GIVEN {
+        WITH_CONFIG(B_CHARGE, GEN_9);
         ASSUME(GetMoveEffect(MOVE_TAILWIND) == EFFECT_TAILWIND);
         PLAYER(SPECIES_WOBBUFFET) { Speed(10); }
         PLAYER(SPECIES_WATTREL) { Ability(ABILITY_WIND_POWER); HP(1); Speed(1); }

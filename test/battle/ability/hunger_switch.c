@@ -26,6 +26,7 @@ SINGLE_BATTLE_TEST("Hunger Switch switches Morpeko's forms at the end of the tur
 SINGLE_BATTLE_TEST("Hunger Switch does not switch a mon transformed into Morpeko's form")
 {
     GIVEN {
+        WITH_CONFIG(B_TRANSFORM_FORM_CHANGES, GEN_5);
         ASSUME(GetMoveEffect(MOVE_TRANSFORM) == EFFECT_TRANSFORM);
         PLAYER(SPECIES_MORPEKO) { Ability(ABILITY_HUNGER_SWITCH); }
         OPPONENT(SPECIES_WOBBUFFET);

@@ -276,6 +276,7 @@ SINGLE_BATTLE_TEST("Punching Glove vs Muscle Band Damage calculation")
     PARAMETRIZE { expectedDamagePlayer = 174, expectedDamageOpponent = 172; }
     PARAMETRIZE { expectedDamagePlayer = 172, expectedDamageOpponent = 169; }
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_9);
         PLAYER(SPECIES_MAKUHITA) { Item(ITEM_PUNCHING_GLOVE); }
         OPPONENT(SPECIES_MAKUHITA) { Item(ITEM_MUSCLE_BAND); }
     } WHEN {
@@ -336,6 +337,7 @@ SINGLE_BATTLE_TEST("Gem boosted Damage calculation")
     PARAMETRIZE { expectedDamage = 231; }
 #endif
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_9);
         PLAYER(SPECIES_MAKUHITA) { Item(ITEM_FIGHTING_GEM); }
         OPPONENT(SPECIES_MAKUHITA) { MaxHP(999); HP(999); }
     } WHEN {
@@ -383,6 +385,7 @@ DOUBLE_BATTLE_TEST("Transistor Damage calculation", s16 damage)
                     }
     }
     GIVEN {
+        WITH_CONFIG(B_PARALYZE_ELECTRIC, GEN_6);
         WITH_CONFIG(B_TRANSISTOR_BOOST, gen);
         ASSUME(GetMoveType(MOVE_WILD_CHARGE) == TYPE_ELECTRIC);
         ASSUME(GetMoveType(MOVE_THUNDER_SHOCK) == TYPE_ELECTRIC);

@@ -234,6 +234,7 @@ SINGLE_BATTLE_TEST("Dancer-called attacks have their type updated")
 SINGLE_BATTLE_TEST("Dancer-called attacks do not trigger Life Orb if target is immune")
 {
     GIVEN {
+        WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, GEN_5);
         ASSUME(IsDanceMove(MOVE_REVELATION_DANCE));
         ASSUME(GetMoveEffect(MOVE_REVELATION_DANCE) == EFFECT_REVELATION_DANCE);
         ASSUME(GetMoveEffect(MOVE_ROOST) == EFFECT_ROOST);

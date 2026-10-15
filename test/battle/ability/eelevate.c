@@ -269,6 +269,7 @@ SINGLE_BATTLE_TEST("Eelevate considers Power Trick")
 SINGLE_BATTLE_TEST("Eelevate considers Wonder Room")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         ASSUME(GetMoveEffect(MOVE_WONDER_ROOM) == EFFECT_WONDER_ROOM);
         ASSUME(GetMovePower(MOVE_SCRATCH) > 0);
         PLAYER(SPECIES_EELEKTROSS_MEGA) { Ability(ABILITY_EELEVATE); Attack(100); Defense(50); SpAttack(70); SpDefense(200); Speed(120); Moves(MOVE_SPLASH, MOVE_EXTREME_SPEED); }

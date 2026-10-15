@@ -233,6 +233,7 @@ SINGLE_BATTLE_TEST("Gulp Missile triggered by explosion doesn't freeze the game"
 SINGLE_BATTLE_TEST("(Gulp Missile) Cramorant in Gorging damages an electric type without paralysing")
 {
     GIVEN {
+        WITH_CONFIG(B_PARALYZE_ELECTRIC, GEN_6);
         PLAYER(SPECIES_CRAMORANT) { HP(120); MaxHP(250); Ability(ABILITY_GULP_MISSILE); }
         OPPONENT(SPECIES_EELEKTROSS);
     } WHEN {

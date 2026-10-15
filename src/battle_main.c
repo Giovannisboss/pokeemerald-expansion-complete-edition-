@@ -5639,7 +5639,7 @@ enum Type GetDynamicMoveType(struct Pokemon *mon, enum Move move, enum BattlerId
                 if (types[1] != TYPE_MYSTERY && !(gBattleMons[battler].volatiles.roostActive && types[1] == TYPE_FLYING))
                     return types[1];
                 if (gBattleMons[battler].volatiles.roostActive)
-                    return (B_ROOST_PURE_FLYING >= GEN_5 ? TYPE_NORMAL : TYPE_MYSTERY);
+                    return (GetConfig(B_ROOST_PURE_FLYING) >= GEN_5 ? TYPE_NORMAL : TYPE_MYSTERY);
                 if (types[2] != TYPE_MYSTERY)
                     return types[2];
 

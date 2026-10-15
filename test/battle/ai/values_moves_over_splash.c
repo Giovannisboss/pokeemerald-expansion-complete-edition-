@@ -138,6 +138,11 @@ AI_DOUBLE_BATTLE_TEST("AI values moves above Splash, 101-200")
     } WHEN {
         switch (GetMoveEffect(move))
         {
+        case EFFECT_CONVERSION_2:
+            // No landed move exists at the first decision. Its usable-history
+            // case is covered for Gen4/Gen5 in check_bad_move.c.
+            TURN { SCORE_LT_VAL(opponentLeft, move, AI_SCORE_DEFAULT, target: playerLeft); }
+            break;
         case EFFECT_DO_NOTHING:
             TURN { SCORE_LT_VAL(opponentLeft, move, AI_SCORE_DEFAULT, target: playerLeft); }
             break;

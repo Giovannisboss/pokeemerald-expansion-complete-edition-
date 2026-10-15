@@ -9,6 +9,7 @@ SINGLE_BATTLE_TEST("Psycho Shift burn is blocked by Substitute unless the user h
     PARAMETRIZE { ability = ABILITY_INFILTRATOR; }
 
     GIVEN {
+        WITH_CONFIG(B_INFILTRATOR_SUBSTITUTE, GEN_6);
         ASSUME(GetMoveEffect(MOVE_PSYCHO_SHIFT) == EFFECT_PSYCHO_SHIFT);
         ASSUME(GetMoveEffect(MOVE_SUBSTITUTE) == EFFECT_SUBSTITUTE);
         PLAYER(SPECIES_DRAGAPULT) { Ability(ability); Status1(STATUS1_BURN); }

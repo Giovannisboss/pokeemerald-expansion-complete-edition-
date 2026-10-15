@@ -108,6 +108,7 @@ SINGLE_BATTLE_TEST("Chilly Reception changes the weather, even if the user canno
 SINGLE_BATTLE_TEST("Chilly Reception switches the user out even if it can't change the weather")
 {
     GIVEN {
+        WITH_CONFIG(B_SNOW_WARNING, GEN_9);
         PLAYER(SPECIES_SLOWKING_GALAR);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_NINETALES_ALOLA) { Ability(ABILITY_SNOW_WARNING); }
@@ -125,6 +126,7 @@ SINGLE_BATTLE_TEST("Chilly Reception switches the user out even if it can't chan
 SINGLE_BATTLE_TEST("Chilly Reception fails if it can't switch the user out or change the weather")
 {
     GIVEN {
+        WITH_CONFIG(B_SNOW_WARNING, GEN_9);
         PLAYER(SPECIES_SLOWKING_GALAR);
         OPPONENT(SPECIES_NINETALES_ALOLA) { Ability(ABILITY_SNOW_WARNING); }
     } WHEN {

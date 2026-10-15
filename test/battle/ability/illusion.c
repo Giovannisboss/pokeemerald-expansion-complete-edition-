@@ -42,6 +42,7 @@ SINGLE_BATTLE_TEST("Illusion breaks if the target faints")
 SINGLE_BATTLE_TEST("Illusion does not break if the attacker faints without taking damage")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(GetMoveEffect(MOVE_FINAL_GAMBIT) == EFFECT_FINAL_GAMBIT);
         PLAYER(SPECIES_ZOROARK) { HP(1); }
         PLAYER(SPECIES_WYNAUT);

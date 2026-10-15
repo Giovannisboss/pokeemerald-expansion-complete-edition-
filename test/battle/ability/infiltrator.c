@@ -232,6 +232,7 @@ SINGLE_BATTLE_TEST("Infiltrator doesn't ignore a battler's Substitute when using
     PARAMETRIZE { ability = ABILITY_INFILTRATOR; move = MOVE_SKY_DROP;  }
 
     GIVEN {
+        WITH_CONFIG(B_TRANSFORM_SUBSTITUTE_FAIL, GEN_5);
         WITH_CONFIG(B_INFILTRATOR_SUBSTITUTE, GEN_6);
         ASSUME(GetMoveEffect(MOVE_SUBSTITUTE) == EFFECT_SUBSTITUTE);
         ASSUME(GetMoveEffect(MOVE_TRANSFORM) == EFFECT_TRANSFORM);

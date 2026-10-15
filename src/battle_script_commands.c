@@ -6208,7 +6208,8 @@ static void Cmd_settypetorandomresistance(void)
     if (GetConfig(B_UPDATED_CONVERSION_2) < GEN_5)
     {
         moveToCheck = gLastLandedMoves[gBattlerAttacker];
-        if (GetMoveEffect(moveToCheck) == EFFECT_STRUGGLE)
+        if (moveToCheck != MOVE_NONE && moveToCheck != MOVE_UNAVAILABLE
+         && GetMoveEffect(moveToCheck) == EFFECT_STRUGGLE)
             typeToCheck = TYPE_NORMAL;
         else
             typeToCheck = gLastHitByType[gBattlerAttacker];
@@ -7150,6 +7151,25 @@ static bool32 CanAbilityShieldActivateForBattler(enum BattlerId battler)
     return TRUE;
 }
 
+// Generation-dependent table flags must follow the selected test profile.
+static bool32 IsAbilitySuppressionBlocked(enum Ability ability)
+{
+    #if TESTING
+    if (ability == ABILITY_ZEN_MODE)
+        return GetConfig(B_UPDATED_ABILITY_DATA) >= GEN_7;
+    #endif
+    return gAbilitiesInfo[ability].cantBeSuppressed;
+}
+
+static bool32 IsAbilitySwapBlocked(enum Ability ability)
+{
+    #if TESTING
+    if (ability == ABILITY_ZEN_MODE)
+        return GetConfig(B_UPDATED_ABILITY_DATA) >= GEN_7;
+    #endif
+    return gAbilitiesInfo[ability].cantBeSwapped;
+}
+
 // Role Play, Doodle
 static void Cmd_trycopyability(void)
 {
@@ -7162,8 +7182,8 @@ static void Cmd_trycopyability(void)
 
     if (gBattleMons[battler].ability == defAbility
       || defAbility == ABILITY_NONE
-      || gAbilitiesInfo[gBattleMons[battler].ability].cantBeSuppressed
-      || (shouldConsiderPartner && gAbilitiesInfo[gBattleMons[partner].ability].cantBeSuppressed)
+      || IsAbilitySuppressionBlocked(gBattleMons[battler].ability)
+      || (shouldConsiderPartner && IsAbilitySuppressionBlocked(gBattleMons[partner].ability))
       || gAbilitiesInfo[defAbility].cantBeCopied)
     {
         gBattlescriptCurrInstr = cmd->failInstr;
@@ -7318,12 +7338,12 @@ static void Cmd_tryswapabilities(void)
 {
     CMD_ARGS(const u8 *failInstr);
 
-    if (gAbilitiesInfo[gBattleMons[gBattlerAttacker].ability].cantBeSwapped)
+    if (IsAbilitySwapBlocked(gBattleMons[gBattlerAttacker].ability))
     {
         RecordAbilityBattle(gBattlerAttacker, gBattleMons[gBattlerAttacker].ability);
         gBattlescriptCurrInstr = cmd->failInstr;
     }
-    else if (gAbilitiesInfo[gBattleMons[gBattlerTarget].ability].cantBeSwapped)
+    else if (IsAbilitySwapBlocked(gBattleMons[gBattlerTarget].ability))
     {
         RecordAbilityBattle(gBattlerTarget, gBattleMons[gBattlerTarget].ability);
         gBattlescriptCurrInstr = cmd->failInstr;
@@ -7362,7 +7382,7 @@ static void Cmd_tryimprison(void)
     {
         gBattlescriptCurrInstr = cmd->failInstr;
     }
-    else if (B_IMPRISON >= GEN_5)
+    else if (GetConfig(B_IMPRISON) >= GEN_5)
     {
         gBattleMons[gBattlerAttacker].volatiles.imprison = TRUE;
         gBattlescriptCurrInstr = cmd->nextInstr;

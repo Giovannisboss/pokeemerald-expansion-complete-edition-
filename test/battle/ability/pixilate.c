@@ -33,10 +33,10 @@ SINGLE_BATTLE_TEST("Pixilate boosts power of affected moves by 20% (Gen7+) or 30
 
     GIVEN {
         WITH_CONFIG(B_ATE_MULTIPLIER, genConfig);
-        PLAYER(SPECIES_SYLVEON) { Ability(ability); Moves(MOVE_TACKLE); }
-        OPPONENT(SPECIES_WOBBUFFET);
+        PLAYER(SPECIES_SYLVEON) { Ability(ability); Moves(MOVE_STRENGTH); }
+        OPPONENT(SPECIES_WOBBUFFET) { MaxHP(1000); HP(1000); }
     } WHEN {
-        TURN { MOVE(player, MOVE_TACKLE); }
+        TURN { MOVE(player, MOVE_STRENGTH); }
     } SCENE {
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {

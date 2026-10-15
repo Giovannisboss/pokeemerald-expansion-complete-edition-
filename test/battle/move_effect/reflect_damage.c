@@ -65,6 +65,7 @@ DOUBLE_BATTLE_TEST("Reflect Damage: Counter is affected by Protect effects if it
     // PARAMETRIZE { move = MOVE_OBSTRUCT; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { Speed(1); }
         PLAYER(SPECIES_WYNAUT) { Speed(2); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(5); }

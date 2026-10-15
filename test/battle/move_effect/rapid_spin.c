@@ -148,6 +148,7 @@ SINGLE_BATTLE_TEST("Sheer Force boosted Rapid Spin doesn't trigger Eject Button 
 SINGLE_BATTLE_TEST("Rapid Spin doesn't blow away Wrap, hazards or raise Speed when Sheer Force boosted (Gen 9+)")
 {
     GIVEN {
+        WITH_CONFIG(B_SPEED_BUFFING_RAPID_SPIN, GEN_9);
         #if B_SPEED_BUFFING_RAPID_SPIN >= GEN_8
         ASSUME_MOVE_EFFECT_STAT_CHANGE(MOVE_RAPID_SPIN, self: TRUE, speed: 1);
         #endif

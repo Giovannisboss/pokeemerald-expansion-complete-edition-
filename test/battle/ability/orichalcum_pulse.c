@@ -4,6 +4,7 @@
 SINGLE_BATTLE_TEST("Orichalcum Pulse sets up sun for 5 turns")
 {
     GIVEN {
+        WITH_CONFIG(B_ABILITY_WEATHER, GEN_6);
         PLAYER(SPECIES_KORAIDON) { Ability(ABILITY_ORICHALCUM_PULSE); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -27,6 +28,7 @@ SINGLE_BATTLE_TEST("Orichalcum Pulse sets up sun for 5 turns")
 SINGLE_BATTLE_TEST("Orichalcum Pulse sets up sun for 8 turns with Heat Rock")
 {
     GIVEN {
+        WITH_CONFIG(B_ABILITY_WEATHER, GEN_6);
         ASSUME(gItemsInfo[ITEM_HEAT_ROCK].holdEffect == HOLD_EFFECT_HEAT_ROCK);
         PLAYER(SPECIES_KORAIDON) { Ability(ABILITY_ORICHALCUM_PULSE); Item(ITEM_HEAT_ROCK); }
         OPPONENT(SPECIES_WOBBUFFET);

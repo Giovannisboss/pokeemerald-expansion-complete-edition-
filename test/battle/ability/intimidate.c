@@ -220,6 +220,7 @@ SINGLE_BATTLE_TEST("Intimidate can not further lower opponents Atk stat if it is
 DOUBLE_BATTLE_TEST("Intimidate is not going to trigger if a mon switches out through u-turn and the opposing field is empty")
 {
     GIVEN {
+        WITH_CONFIG(B_HEALING_WISH_SWITCH, GEN_5);
         PLAYER(SPECIES_WYNAUT);
         PLAYER(SPECIES_WOBBUFFET);
         PLAYER(SPECIES_EKANS) { Ability(ABILITY_INTIMIDATE); }

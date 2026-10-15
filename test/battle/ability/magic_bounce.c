@@ -165,6 +165,7 @@ DOUBLE_BATTLE_TEST("Magic Bounce bounces back moves hitting foes field")
                   battlerTwo = SPECIES_ESPEON; abilityBattlerTwo = ABILITY_MAGIC_BOUNCE; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_5);
         ASSUME(GetMoveTarget(MOVE_STEALTH_ROCK) == TARGET_OPPONENTS_FIELD);
         PLAYER(SPECIES_ABRA);
         PLAYER(SPECIES_KADABRA);

@@ -151,6 +151,7 @@ SINGLE_BATTLE_TEST("Mega Sol ignores Snow's Ice-type Defense boost")
     s16 damage[2];
 
     GIVEN {
+        WITH_CONFIG(B_SNOW_WARNING, GEN_9);
         ASSUME(IsBattleMovePhysical(MOVE_SCRATCH));
         ASSUME(GetMoveEffect(MOVE_SKILL_SWAP) == EFFECT_SKILL_SWAP);
         ASSUME(GetSpeciesType(SPECIES_VANILLUXE, 0) == TYPE_ICE || GetSpeciesType(SPECIES_VANILLUXE, 1) == TYPE_ICE);
@@ -331,7 +332,7 @@ SINGLE_BATTLE_TEST("Mega Sol: Solar Beam does not need a charging turn if user h
 SINGLE_BATTLE_TEST("Mega Sol: Growth increases Attack and Sp. Atk by 2 stages under Mega Sol (Gen 5+)")
 {
     GIVEN {
-        WITH_CONFIG(B_GROWTH_STAT_RAISE, GEN_1);
+        WITH_CONFIG(B_GROWTH_STAT_RAISE, GEN_5);
         ASSUME(GetMoveEffect(MOVE_GROWTH) == EFFECT_GROWTH);
         PLAYER(SPECIES_MEGANIUM) { Item(ITEM_MEGANIUMITE); }
         OPPONENT(SPECIES_WOBBUFFET);

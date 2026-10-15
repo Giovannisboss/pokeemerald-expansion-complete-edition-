@@ -99,6 +99,7 @@ SINGLE_BATTLE_TEST("Skill Swap fails if user or target has an ability that can't
     PARAMETRIZE { species = SPECIES_TERAPAGOS_STELLAR; ability = ABILITY_TERAFORM_ZERO; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_ABILITY_DATA, GEN_9);
         PLAYER(SPECIES_WOBBUFFET) { Ability(ABILITY_TELEPATHY); }
         OPPONENT(species) { Ability(ability); }
     } WHEN {

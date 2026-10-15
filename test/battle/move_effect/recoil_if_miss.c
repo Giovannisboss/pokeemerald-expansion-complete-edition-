@@ -9,6 +9,7 @@ ASSUMPTIONS
 SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick has 50% recoil on miss")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -25,6 +26,7 @@ SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick has 50% recoil on miss")
 SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick has 50% recoil on protect")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         ASSUME(!MoveIgnoresProtect(MOVE_JUMP_KICK));
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
@@ -41,6 +43,7 @@ SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick has 50% recoil on protect")
 SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick has no recoil if no target")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         WITH_CONFIG(B_HEALING_WISH_SWITCH, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
@@ -64,6 +67,7 @@ SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick's recoil happens after Spiky Shiel
     PARAMETRIZE { hp = maxHp / 8; faintOnSpiky = TRUE; } // Faints after Spiky Shield's recoil
 
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         ASSUME(GetMoveEffect(MOVE_SPIKY_SHIELD) == EFFECT_PROTECT);
         PLAYER(SPECIES_WOBBUFFET) { HP(hp); MaxHP(maxHp); }
         PLAYER(SPECIES_WYNAUT);
@@ -102,6 +106,7 @@ SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick's recoil happens after Spiky Shiel
 SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick recoil happens after Spiky Shield damage")
 {
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         ASSUME(!MoveIgnoresProtect(MOVE_JUMP_KICK));
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
@@ -120,6 +125,8 @@ SINGLE_BATTLE_TEST("Recoil if miss: Jump Kick recoil happens after Spiky Shield 
 SINGLE_BATTLE_TEST("Recoil if miss: Supercell Slam causes recoil if it is absorbed")
 {
     GIVEN {
+        WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, GEN_5);
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_PIKACHU) { Ability(ABILITY_LIGHTNING_ROD); }
     } WHEN {
@@ -139,6 +146,7 @@ SINGLE_BATTLE_TEST("Recoil if miss: Disguise doesn't prevent crash damage from J
     PARAMETRIZE { ability = ABILITY_SCRAPPY; }
 
     GIVEN {
+        WITH_CONFIG(B_RECOIL_IF_MISS_DMG, GEN_5);
         PLAYER(SPECIES_KANGASKHAN) { Ability(ability); }
         OPPONENT(SPECIES_MIMIKYU_DISGUISED) { Ability(ABILITY_DISGUISE); }
     } WHEN {

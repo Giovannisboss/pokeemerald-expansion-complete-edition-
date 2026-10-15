@@ -7,6 +7,7 @@ SINGLE_BATTLE_TEST("Frostbite reduces the special attack by 50 percent")
     s16 normaleDamage;
 
     GIVEN {
+        WITH_CONFIG(B_HIT_THAW, GEN_6);
         ASSUME(GetMoveCategory(MOVE_SWIFT) == DAMAGE_CATEGORY_SPECIAL);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET) { Status1(STATUS1_FROSTBITE); }
@@ -55,6 +56,7 @@ SINGLE_BATTLE_TEST("Frostbite is healed if hit with a thawing move")
     PARAMETRIZE { move = MOVE_EMBER; }
 
     GIVEN {
+        WITH_CONFIG(B_HIT_THAW, GEN_6);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET) { Status1(STATUS1_FROSTBITE); }
     } WHEN {

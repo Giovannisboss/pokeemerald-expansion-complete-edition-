@@ -9,6 +9,7 @@ ASSUMPTIONS
 WILD_BATTLE_TEST("Knock Off does not remove item when used by Wild Pokemon (Gen 5+)")
 {
     GIVEN {
+        WITH_CONFIG(B_KNOCK_OFF_REMOVAL, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_LEFTOVERS); }
         OPPONENT(SPECIES_WOBBUFFET) { Item(ITEM_EVIOLITE); }
     } WHEN {
@@ -17,7 +18,7 @@ WILD_BATTLE_TEST("Knock Off does not remove item when used by Wild Pokemon (Gen 
     } SCENE {
         // Turn 1
         ANIMATION(ANIM_TYPE_MOVE, MOVE_KNOCK_OFF, opponent);
-        if (B_KNOCK_OFF_REMOVAL >= GEN_5)
+        if (GetConfig(B_KNOCK_OFF_REMOVAL) >= GEN_5)
             NOT ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_ITEM_KNOCKOFF, player);
         else
             ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_ITEM_KNOCKOFF, player);
@@ -26,7 +27,7 @@ WILD_BATTLE_TEST("Knock Off does not remove item when used by Wild Pokemon (Gen 
         ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_ITEM_KNOCKOFF, opponent);
     } THEN {
         EXPECT(player->item == ITEM_LEFTOVERS);
-        if (B_KNOCK_OFF_REMOVAL >= GEN_5)
+        if (GetConfig(B_KNOCK_OFF_REMOVAL) >= GEN_5)
             EXPECT(opponent->item == ITEM_NONE);
         else
             EXPECT(opponent->item == ITEM_EVIOLITE);
@@ -212,7 +213,7 @@ SINGLE_BATTLE_TEST("Knock Off does not prevent targets from receiving another it
         ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_ITEM_KNOCKOFF);
         MESSAGE("Wobbuffet knocked off the opposing Wobbuffet's Leftovers!");
         // turn 2
-        if (B_KNOCK_OFF_REMOVAL >= GEN_5) {
+        if (GetConfig(B_KNOCK_OFF_REMOVAL) >= GEN_5) {
             ANIMATION(ANIM_TYPE_MOVE, MOVE_BESTOW, player);
             ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_EFFECT);
         } else {
@@ -220,7 +221,7 @@ SINGLE_BATTLE_TEST("Knock Off does not prevent targets from receiving another it
             MESSAGE("But it failed!");
         }
     } THEN {
-        if (B_KNOCK_OFF_REMOVAL >= GEN_5)
+        if (GetConfig(B_KNOCK_OFF_REMOVAL) >= GEN_5)
             EXPECT(opponent->item == ITEM_LEFTOVERS);
         else
             EXPECT(opponent->item == ITEM_NONE);

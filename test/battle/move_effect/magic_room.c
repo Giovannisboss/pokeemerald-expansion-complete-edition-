@@ -39,6 +39,7 @@ DOUBLE_BATTLE_TEST("Magic Room prevents item hold effects")
 SINGLE_BATTLE_TEST("Magic Room: An item that can activate will activate once Magic Room is over")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_WHITE_HERB); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

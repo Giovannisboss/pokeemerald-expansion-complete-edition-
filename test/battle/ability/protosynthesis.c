@@ -137,6 +137,7 @@ SINGLE_BATTLE_TEST("Protosynthesis prioritizes stats in the case of a tie in the
 SINGLE_BATTLE_TEST("Protosynthesis uses Wonder Room swapped defenses when choosing boosted stat")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         ASSUME(GetMoveEffect(MOVE_WONDER_ROOM) == EFFECT_WONDER_ROOM);
         PLAYER(SPECIES_ROARING_MOON) { Ability(ABILITY_PROTOSYNTHESIS); Attack(50); Defense(200); SpAttack(40); SpDefense(60); Speed(70); Moves(MOVE_WONDER_ROOM); }
         OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_SUNNY_DAY); Speed(60); }

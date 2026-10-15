@@ -420,3 +420,19 @@ AI_SINGLE_BATTLE_TEST("AI avoids toxic when it can not poison target")
         TURN { SCORE_EQ(opponent, MOVE_CELEBRATE, MOVE_TOXIC); } // Both get -10
     }
 }
+
+AI_SINGLE_BATTLE_TEST("AI values Conversion 2 after an observed hit, not before")
+{
+    u32 gen;
+    PARAMETRIZE { gen = GEN_4; }
+    PARAMETRIZE { gen = GEN_5; }
+    GIVEN {
+        WITH_CONFIG(B_UPDATED_CONVERSION_2, gen);
+        AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY);
+        PLAYER(SPECIES_WOBBUFFET) { Speed(2); }
+        OPPONENT(SPECIES_WOBBUFFET) { Speed(1); Moves(MOVE_CONVERSION_2, MOVE_SPLASH); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_TACKLE); SCORE_LT_VAL(opponent, MOVE_CONVERSION_2, AI_SCORE_DEFAULT); }
+        TURN { MOVE(player, MOVE_TACKLE); EXPECT_MOVE(opponent, MOVE_CONVERSION_2); }
+    }
+}

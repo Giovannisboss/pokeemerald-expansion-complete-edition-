@@ -12,6 +12,7 @@ SINGLE_BATTLE_TEST("Final Gambit faints the user, and the target receives damage
     PARAMETRIZE { hp = 32; }
     PARAMETRIZE { hp = 40; }
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         PLAYER(SPECIES_WOBBUFFET) { HP(hp); }
         PLAYER(SPECIES_WYNAUT);
         OPPONENT(SPECIES_WOBBUFFET) { MaxHP(400); HP(400); }
@@ -30,6 +31,7 @@ SINGLE_BATTLE_TEST("Final Gambit faints the user, and the target receives damage
 SINGLE_BATTLE_TEST("Final Gambit faints user and target")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         PLAYER(SPECIES_WOBBUFFET);
         PLAYER(SPECIES_WYNAUT);
         OPPONENT(SPECIES_WOBBUFFET);
@@ -49,6 +51,7 @@ SINGLE_BATTLE_TEST("Final Gambit faints user and target")
 SINGLE_BATTLE_TEST("Final Gambit does not faint user if target protects")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -65,6 +68,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not faint user if target protects")
 SINGLE_BATTLE_TEST("Final Gambit does not faint user if attacker fails to attack")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(GetMoveEffect(MOVE_CONFUSE_RAY) == EFFECT_CONFUSE);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET);
@@ -82,6 +86,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not faint user if attacker fails to attack
 SINGLE_BATTLE_TEST("Final Gambit does not faint user if target is immune")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_GASTLY);
     } WHEN {
@@ -128,6 +133,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not faint user if target is immune")
 SINGLE_BATTLE_TEST("Final Gambit does not faint the user if it misses")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(10); HP(10); Speed(1); }
         OPPONENT(SPECIES_WOBBUFFET) { MaxHP(10); HP(10); Speed(2); }
     } WHEN {
@@ -141,6 +147,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not faint the user if it misses")
 SINGLE_BATTLE_TEST("Final Gambit does not trigger the user's Focus Band")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(GetItemHoldEffect(ITEM_FOCUS_BAND) == HOLD_EFFECT_FOCUS_BAND);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(3); HP(3); Item(ITEM_FOCUS_BAND); }
         PLAYER(SPECIES_WYNAUT);
@@ -161,6 +168,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not trigger the user's Focus Band")
 SINGLE_BATTLE_TEST("Final Gambit does not trigger the user's Focus Sash")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(GetItemHoldEffect(ITEM_FOCUS_SASH) == HOLD_EFFECT_FOCUS_SASH);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(3); HP(3); Item(ITEM_FOCUS_SASH); }
         PLAYER(SPECIES_WYNAUT);
@@ -181,6 +189,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not trigger the user's Focus Sash")
 SINGLE_BATTLE_TEST("Final Gambit does not trigger the user's Sturdy")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         WITH_CONFIG(B_STURDY, GEN_5);
         PLAYER(SPECIES_GEODUDE) { MaxHP(3); HP(3); Ability(ABILITY_STURDY); }
         PLAYER(SPECIES_GRAVELER);
@@ -200,6 +209,7 @@ SINGLE_BATTLE_TEST("Final Gambit does not trigger the user's Sturdy")
 SINGLE_BATTLE_TEST("Final Gambit triggers the target's Focus Band")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(GetItemHoldEffect(ITEM_FOCUS_BAND) == HOLD_EFFECT_FOCUS_BAND);
         RNGSeed(((rng_value_t){ .ctr = 1 })); // Force Focus Band's 10% check to succeed.
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(3); HP(3); }
@@ -220,6 +230,7 @@ SINGLE_BATTLE_TEST("Final Gambit triggers the target's Focus Band")
 SINGLE_BATTLE_TEST("Final Gambit triggers the target's Focus Sash")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         ASSUME(GetItemHoldEffect(ITEM_FOCUS_SASH) == HOLD_EFFECT_FOCUS_SASH);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(3); HP(3); }
         PLAYER(SPECIES_WYNAUT);
@@ -240,6 +251,7 @@ SINGLE_BATTLE_TEST("Final Gambit triggers the target's Focus Sash")
 SINGLE_BATTLE_TEST("Final Gambit triggers the target's Sturdy")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         WITH_CONFIG(B_STURDY, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(3); HP(3); }
         PLAYER(SPECIES_WYNAUT);
@@ -259,6 +271,7 @@ SINGLE_BATTLE_TEST("Final Gambit triggers the target's Sturdy")
 SINGLE_BATTLE_TEST("Final Gambit triggers the target's Endure")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_6);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(3); HP(3); Speed(1); }
         PLAYER(SPECIES_WYNAUT) { Speed(1); }
         OPPONENT(SPECIES_WOBBUFFET) { MaxHP(2); HP(2); Speed(2); }

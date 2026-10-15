@@ -45,6 +45,7 @@ SINGLE_BATTLE_TEST("Curse applies to the user if used with Protean/Libero")
     PARAMETRIZE { ability = ABILITY_PROTEAN; species = SPECIES_KECLEON; }
     PARAMETRIZE { ability = ABILITY_LIBERO;  species = SPECIES_RABOOT; }
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, GEN_5);
         PLAYER(species) { Ability(ability); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

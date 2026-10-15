@@ -32,10 +32,10 @@ SINGLE_BATTLE_TEST("Dragonize boosts power of affected moves by 20% (Gen7+) or 3
 
     GIVEN {
         WITH_CONFIG(B_ATE_MULTIPLIER, genConfig);
-        PLAYER(SPECIES_DRUDDIGON) { Ability(ability); Moves(MOVE_TACKLE); }
-        OPPONENT(SPECIES_WOBBUFFET);
+        PLAYER(SPECIES_DRUDDIGON) { Ability(ability); Moves(MOVE_STRENGTH); }
+        OPPONENT(SPECIES_WOBBUFFET) { MaxHP(1000); HP(1000); }
     } WHEN {
-        TURN { MOVE(player, MOVE_TACKLE); }
+        TURN { MOVE(player, MOVE_STRENGTH); }
     } SCENE {
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {

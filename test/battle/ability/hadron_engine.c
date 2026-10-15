@@ -59,8 +59,8 @@ SINGLE_BATTLE_TEST("Hadron Engine boosts the Pokemon's Special Attack on Electri
         ASSUME(GetMoveEffect(MOVE_GRASSY_TERRAIN) == EFFECT_TERRAIN);
         ASSUME(GetMoveTerrainType(MOVE_GRASSY_TERRAIN) == B_TERRAIN_GRASSY);
         ASSUME(GetMoveCategory(MOVE_POWER_GEM) == DAMAGE_CATEGORY_SPECIAL);
-        PLAYER(SPECIES_MIRAIDON) { Ability(ABILITY_HADRON_ENGINE); Item(airBalloon ? ITEM_AIR_BALLOON : ITEM_NONE); }
-        OPPONENT(SPECIES_WOBBUFFET);
+        PLAYER(SPECIES_MIRAIDON) { Ability(ABILITY_HADRON_ENGINE); SpAttack(300); Item(airBalloon ? ITEM_AIR_BALLOON : ITEM_NONE); }
+        OPPONENT(SPECIES_WOBBUFFET) { MaxHP(1000); HP(1000); }
     } WHEN {
         if (overrideTerrain)
             TURN { MOVE(opponent, MOVE_GRASSY_TERRAIN); }

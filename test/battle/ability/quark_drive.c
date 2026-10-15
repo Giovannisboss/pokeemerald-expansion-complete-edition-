@@ -204,6 +204,7 @@ SINGLE_BATTLE_TEST("Quark Drive prioritizes stats in the case of a tie in the fo
 SINGLE_BATTLE_TEST("Quark Drive uses Wonder Room swapped defenses when choosing boosted stat")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         ASSUME(GetMoveEffect(MOVE_WONDER_ROOM) == EFFECT_WONDER_ROOM);
         PLAYER(SPECIES_IRON_LEAVES) { Ability(ABILITY_QUARK_DRIVE); Attack(50); Defense(200); SpAttack(40); SpDefense(60); Speed(70); Moves(MOVE_WONDER_ROOM); }
         OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_ELECTRIC_TERRAIN); Speed(60); }

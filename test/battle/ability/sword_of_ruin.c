@@ -85,6 +85,7 @@ DOUBLE_BATTLE_TEST("Sword of Ruin increases damage taken by special moves in Won
     PARAMETRIZE { useWonderRoom = TRUE;  move = MOVE_ROUND;   }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_6);
         ASSUME(GetMoveEffect(MOVE_WONDER_ROOM) == EFFECT_WONDER_ROOM);
         ASSUME(GetMoveCategory(MOVE_ROUND) == DAMAGE_CATEGORY_SPECIAL);
         ASSUME(GetMoveEffect(MOVE_ROUND) != EFFECT_PSYSHOCK);

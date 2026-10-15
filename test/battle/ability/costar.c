@@ -73,6 +73,7 @@ DOUBLE_BATTLE_TEST("Costar copies an ally's Focus Energy critical hit boost")
 {
     PASSES_RANDOMLY(1, 2, RNG_CRITICAL_HIT);
     GIVEN {
+        WITH_CONFIG(B_CRIT_CHANCE, GEN_7);
         ASSUME(gMovesInfo[MOVE_FOCUS_ENERGY].effect == EFFECT_FOCUS_ENERGY);
         ASSUME(gMovesInfo[MOVE_TACKLE].criticalHitStage == 0);
         PLAYER(SPECIES_WOBBUFFET);
