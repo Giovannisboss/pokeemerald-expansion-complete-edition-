@@ -117,7 +117,8 @@ TEST("Complete Edition: every research encounter is a real shiny Gen 1-4 Pokemon
         PARAMETRIZE_LABEL("dex %u", i) { dex = i; }
     EXPECT(!CompleteEditionCanResearch(dex, FALSE));
     EXPECT(CompleteEditionCanResearch(dex, TRUE));
-    FlagSet(FLAG_SYS_GAME_CLEAR);
+    FlagClear(FLAG_SYS_GAME_CLEAR);
+    FlagSet(FLAG_BADGE07_GET);
     gSpecialVar_Result = dex + 1024;
     Script_CEPrepareEncounter();
     EXPECT_EQ(gSpecialVar_Result, TRUE);
@@ -174,4 +175,22 @@ TEST("Complete Edition: EV menu permits every value from 0 to 252 without cancel
         EXPECT_NE(id, MULTI_B_PRESSED);
     }
     FreeResearchTestMenu();
+}
+
+TEST("Complete Edition: catalogue unlocks with the seventh badge before becoming Champion")
+{
+    u32 badges = 0;
+    for (u32 i = 0; i <= 8; i++)
+        PARAMETRIZE { badges = i; }
+    FlagClear(FLAG_SYS_GAME_CLEAR);
+    for (u32 i = 0; i < 8; i++)
+        FlagClear(FLAG_BADGE01_GET + i);
+    for (u32 i = 0; i < badges; i++)
+        FlagSet(FLAG_BADGE01_GET + i);
+    CreateRandomMon(&gParties[B_TRAINER_OPPONENT_A][0], SPECIES_SENTRET, 5);
+    gSpecialVar_Result = 493 + 1024;
+    Script_CEPrepareEncounter();
+    EXPECT_EQ(gSpecialVar_Result, badges >= 7);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_SPECIES), badges >= 7 ? SPECIES_ARCEUS : SPECIES_SENTRET);
+    EXPECT(!FlagGet(FLAG_SYS_GAME_CLEAR));
 }

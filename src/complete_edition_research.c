@@ -8,9 +8,9 @@
 #include "script_pokemon_util.h"
 #include "string_util.h"
 
-bool32 CompleteEditionCanResearch(u32 dex, bool32 champion)
+bool32 CompleteEditionCanResearch(u32 dex, bool32 hasMindBadge)
 {
-    return champion && dex >= 1 && dex <= 493;
+    return hasMindBadge && dex >= 1 && dex <= 493;
 }
 
 static void PushSpeciesChoice(u32 species, u32 id)
@@ -39,7 +39,7 @@ void Script_CEPrepareEncounter(void)
 {
     u32 dex = gSpecialVar_Result - 1024;
     gSpecialVar_Result = FALSE;
-    if (!CompleteEditionCanResearch(dex, FlagGet(FLAG_SYS_GAME_CLEAR)))
+    if (!CompleteEditionCanResearch(dex, FlagGet(FLAG_BADGE07_GET)))
         return;
     // Research encounters are real, catchable wild battles, not party injections.
     // Repeats are intentional: running away, losing or failing a capture never locks a species.

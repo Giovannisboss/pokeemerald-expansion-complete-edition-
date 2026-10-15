@@ -86,9 +86,10 @@ DOUBLE_BATTLE_TEST("Lightning Rod forces single-target Electric-type moves to ta
     }
 }
 
-DOUBLE_BATTLE_TEST("Lightning Rod redirects an ally's attack")
+DOUBLE_BATTLE_TEST("Lightning Rod redirects and absorbs an ally's attack (Gen5+)")
 {
     GIVEN {
+        WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, GEN_5);
         ASSUME(GetMoveType(MOVE_THUNDERBOLT) == TYPE_ELECTRIC);
         PLAYER(SPECIES_WOBBUFFET);
         PLAYER(SPECIES_WOBBUFFET);

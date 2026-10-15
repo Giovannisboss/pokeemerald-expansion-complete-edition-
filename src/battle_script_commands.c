@@ -7914,7 +7914,7 @@ static void ComputeBallData(u32 wildMonBattler, u32 playerBattler, struct BallDa
         break;
     case BALL_QUICK:
         if (gBattleResults.battleTurnCounter == 0)
-            ball->multiplier = (B_QUICK_BALL_MODIFIER >= GEN_5 ? 500 : 400);
+            ball->multiplier = (GetConfig(B_QUICK_BALL_MODIFIER) >= GEN_5 ? 500 : 400);
         break;
     case BALL_REPEAT:
         if (GetSetPokedexFlag(SpeciesToNationalPokedexNum(battleMon->species), FLAG_GET_CAUGHT))

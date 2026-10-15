@@ -128,6 +128,7 @@ WILD_BATTLE_TEST("Capture: Missing badge malus apply correcly in gen 9")
                 FlagClear(FLAG_BADGE01_GET + j);
         }
         WITH_CONFIG(B_MISSING_BADGE_CATCH_MALUS, GEN_9);
+        WITH_CONFIG(B_QUICK_BALL_MODIFIER, GEN_9);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_CLEFFA)  {Level(level);};
     } WHEN {
@@ -265,5 +266,27 @@ WILD_BATTLE_TEST("Capture: ball data is properly set in captured pokemon")
         }
     } THEN {
         EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][1], MON_DATA_POKEBALL), GetItemSecondaryId(item));
+    }
+}
+
+WILD_BATTLE_TEST("Quick Ball uses the Gen4 multiplier independently of later capture rules")
+{
+    u32 generation = GEN_4;
+    u32 expectedOdds = 200;
+    u32 recordedOdds;
+    PARAMETRIZE { generation = GEN_4; expectedOdds = 200; }
+    PARAMETRIZE { generation = GEN_5; expectedOdds = 250; }
+    GIVEN {
+        WITH_CONFIG(B_QUICK_BALL_MODIFIER, generation);
+        WITH_CONFIG(B_MISSING_BADGE_CATCH_MALUS, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_CLEFFA) { Level(50); }
+    } WHEN {
+        TURN { USE_ITEM(player, ITEM_QUICK_BALL); }
+    } SCENE {
+        CATCHING_CHANCE(&recordedOdds);
+    } THEN {
+        // Cleffa has catch rate 150: full HP gives 150 / 3, then 4x or 5x.
+        EXPECT_EQ(recordedOdds, expectedOdds);
     }
 }

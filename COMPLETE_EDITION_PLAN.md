@@ -8,6 +8,7 @@ Fan-made ROM hack built on RHH pokeemerald-expansion.
 - Every Pokémon shiny, including wild, gift, egg, static and trainer Pokémon.
 - Generation 4 physical/special move split and Gen 1–4 mechanics; no Fairy type.
 - Steven replaces Wallace as Champion; moderate main-story difficulty.
+- Birch's research catalogue unlocks after the seventh Gym (Mind Badge), retaining its level-50 catchable encounters and existing menus.
 - All starter families obtainable; all Gen 1–4 legendary and mythical Pokémon obtainable through events.
 - 24 optional visiting Gym Leaders from Kanto, Johto and Sinnoh, plus postgame World Tournament with all 32 regional leaders.
 - Postgame superbosses Red, Blue, Silver and Gold with competitive teams.
@@ -34,4 +35,4 @@ Fan-made ROM hack built on RHH pokeemerald-expansion.
 - [x] Adapt title art to GBA hardware constraints.
 - [ ] Regression-test story, saves, Battle Frontier and final patch.
 
-**Status:** Alpha 2 compiles and passes focused native emulator checks. It adds natural Gen 1–4 habitats, twelve catchable starter sites, 24 individually placed visiting leaders, 510 PC slots with tested flash-save recovery, and new shiny-Rayquaza title artwork. Legendary/mythical access still includes the postgame research catalogue; bespoke quests remain unfinished. Full-suite regressions and complete story/Frontier playthroughs remain open. Checkmarks denote implemented alpha systems, not final-release QA. See [status and limitations](docs/COMPLETE_EDITION_STATUS.md) and [the field guide](docs/COMPLETE_EDITION_FIELD_GUIDE.md).
+**Status:** Alpha 2.1 compiles and passes focused native emulator checks. It adds natural Gen 1–4 habitats, twelve catchable starter sites, 24 individually placed visiting leaders, 510 PC slots with tested flash-save recovery, and new shiny-Rayquaza title artwork. Legendary/mythical access still includes the research catalogue, now unlocked by the seventh (Mind) badge; bespoke quests remain unfinished. Full-suite regressions and complete story/Frontier playthroughs remain open. Checkmarks denote implemented alpha systems, not final-release QA. See [status and limitations](docs/COMPLETE_EDITION_STATUS.md) and [the field guide](docs/COMPLETE_EDITION_FIELD_GUIDE.md).

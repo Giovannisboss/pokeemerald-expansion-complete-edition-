@@ -1,6 +1,6 @@
-# Pokémon Emerald: Complete Edition — Alpha 2 field guide
+# Pokémon Emerald: Complete Edition — Alpha 2.1 field guide
 
-**Start a new game for Alpha 2. Its 17-box save format cannot load Alpha 1 saves. Keep your Alpha 1 ROM and save together under their existing filenames.**
+**Alpha 2.1 can use Alpha 2 battery saves. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
 
 ## Other generations in the wild
 
@@ -66,10 +66,16 @@ All 24 visiting leaders now stand individually around Hoenn; the Pokémon Centre
 
 ## Postgame and limits
 
-The Battle Frontier World Tournament and repeatable Red, Blue, Silver and Gold battles retain their Alpha 1 locations. Every legendary and mythical remains catchable through the original events or Birch's repeatable postgame research encounters; bespoke world events for the remaining legends are still future work.
+The Battle Frontier World Tournament and repeatable Red, Blue, Silver and Gold battles retain their Alpha 1 locations. Every legendary and mythical remains catchable through the original events or Birch's repeatable research encounters, unlocked by the MIND BADGE from Tate and Liza in Mossdeep; bespoke world events for the remaining legends are still future work.
 
 The new Press Start screen shows shiny Rayquaza over Hoenn, with the Complete Edition title, a blinking prompt and looping Emerald title music. Press A or Start to enter the normal menu. The original intro and title button combinations are retained.
 
 Storage is now **17 boxes / 510 Pokémon**, allowing all 493 to be kept simultaneously. The save still uses standard 128 KiB flash and two alternating save slots. The format reclaims old Mystery Gift/e-Reader/distribution, chat and multiplayer-record buffers; it preserves story, Match Call, Trainer Hill, Hall of Fame and Battle Frontier data. These removed legacy wireless/event record services are not supported by this build.
 
 This remains an alpha. Native focused checks and title/menu smoke checks pass; complete story/Frontier travel testing, real-hardware testing, and the outstanding upstream full-suite failures have not been resolved. Several Johto/Sinnoh portraits remain temporary.
+
+## Research catalogue unlock in Alpha 2.1
+
+After defeating Tate and Liza and receiving the seventh Gym Badge (MIND BADGE), return to the researcher in Professor Birch's lab in Littleroot Town. Choose **Research encounters**, then a region and species. Champion status is no longer required. The species list, level-50 battles, Poké Ball requirement and repeat attempts are unchanged. The World Tournament and superbosses still require the postgame.
+
+If you already earned the Mind Badge in an Alpha 2 save, the catalogue becomes available immediately when that save is loaded in Alpha 2.1. Load a normal battery save rather than an emulator save state from the earlier ROM. If the emulator associates saves with the ROM filename, copy your backed-up Alpha 2 `.sav` alongside the new ROM using the new ROM's basename.

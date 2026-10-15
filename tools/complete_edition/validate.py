@@ -59,3 +59,8 @@ wild = json.loads((root / "src/data/wild_encounters.json").read_text())["wild_en
 r101 = next(e for e in wild if e["map"] == "MAP_ROUTE101")
 assert {"SPECIES_PIDGEY", "SPECIES_SENTRET", "SPECIES_STARLY", "SPECIES_BIDOOF"} <= {m["species"] for m in r101["land_mons"]["mons"]}
 print("Validated 24 independent leader battles, 12 capture-only starter flags and early multi-generation encounters")
+
+assert "goto_if_unset FLAG_BADGE07_GET, CE_Research_NeedMindBadge" in research
+assert "FLAG_SYS_GAME_CLEAR" not in research
+assert "FlagGet(FLAG_BADGE07_GET)" in (root / "src/complete_edition_research.c").read_text()
+print("Validated matching seventh-badge catalogue gates in script and native encounter creation")

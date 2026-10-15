@@ -14,7 +14,7 @@ CE_Research_Starters:
 	msgbox CE_Research_Text_Habitats, MSGBOX_DEFAULT
 	goto CE_Research_End
 CE_Research_Expeditions:
-	goto_if_unset FLAG_SYS_GAME_CLEAR, CE_Research_NotChampion
+	goto_if_unset FLAG_BADGE07_GET, CE_Research_NeedMindBadge
 	msgbox CE_Research_Text_Explanation, MSGBOX_DEFAULT
 	dynmultipush CE_Research_Text_Kanto, 0
 	dynmultipush CE_Research_Text_Johto, 1
@@ -30,8 +30,8 @@ CE_Research_Expeditions:
 	goto_if_eq VAR_RESULT, FALSE, CE_Research_End
 	dowildbattle
 	goto CE_Research_End
-CE_Research_NotChampion:
-	msgbox CE_Research_Text_NotChampion, MSGBOX_DEFAULT
+CE_Research_NeedMindBadge:
+	msgbox CE_Research_Text_NeedMindBadge, MSGBOX_DEFAULT
 CE_Research_End:
 	release
 	end
@@ -51,8 +51,8 @@ CE_Research_Text_Sinnoh:
 	.string "SINNOH$"
 CE_Research_Text_Explanation:
 	.string "Choose a species for a research battle.\nBring your own POKé BALLS!\pAll 493 species can be researched,\nincluding rare legends. Level: 50.\pYou may try again if a capture fails.$"
-CE_Research_Text_NotChampion:
-	.string "Research encounters are reserved\nfor the HOENN CHAMPION.$"
+CE_Research_Text_NeedMindBadge:
+	.string "Earn the MIND BADGE in MOSSDEEP\nto unlock research encounters.$"
 
 CE_Research_EvolutionShop:
 	pokemart CE_Research_EvolutionItems
