@@ -2,6 +2,48 @@
 #include "test/battle.h"
 #include "battle_stat_change.h"
 
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 Mental Herb retains its original limited effect")
+{
+    enum Move move;
+    PARAMETRIZE { move = MOVE_TORMENT; }
+    PARAMETRIZE { move = MOVE_TAUNT; }
+    PARAMETRIZE { move = MOVE_HEAL_BLOCK; }
+    GIVEN {
+        WITH_CONFIG(B_MENTAL_HERB, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_MENTAL_HERB); Speed(2); }
+        OPPONENT(SPECIES_WOBBUFFET) { Speed(1); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_CELEBRATE); MOVE(opponent, move); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, move, opponent);
+        NOT ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_EFFECT, player);
+    } THEN {
+        EXPECT_EQ(player->item, ITEM_MENTAL_HERB);
+        if (move == MOVE_TORMENT)
+            EXPECT(player->volatiles.torment);
+        else if (move == MOVE_TAUNT)
+            EXPECT(player->volatiles.tauntTimer);
+        else
+            EXPECT(player->volatiles.healBlockTimer);
+    }
+}
+
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 Illuminate does not block accuracy reductions")
+{
+    GIVEN {
+        WITH_CONFIG(B_ILLUMINATE_EFFECT, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_STARYU) { Ability(ABILITY_ILLUMINATE); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_SAND_ATTACK); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_SAND_ATTACK, player);
+        MESSAGE("The opposing Staryu's accuracy fell!");
+    } THEN {
+        EXPECT_EQ(opponent->statStages[STAT_ACC], DEFAULT_STAT_STAGE - 1);
+    }
+}
+
 SINGLE_BATTLE_TEST("Complete Edition: Gen4 sleep supports one to four immobile turns")
 {
     u32 turns;
@@ -144,5 +186,69 @@ SINGLE_BATTLE_TEST("Complete Edition: special Ghost moves use Special Attack", s
         HP_BAR(opponent, captureDamage: &results[i].damage);
     } FINALLY {
         EXPECT_GT(results[1].damage, results[0].damage * 3 / 2);
+    }
+}
+
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 Growth raises only Special Attack even in sunlight")
+{
+    enum Move weatherMove;
+    PARAMETRIZE { weatherMove = MOVE_CELEBRATE; }
+    PARAMETRIZE { weatherMove = MOVE_SUNNY_DAY; }
+    GIVEN {
+        PLAYER(SPECIES_BULBASAUR);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, weatherMove); }
+        TURN { MOVE(player, MOVE_GROWTH); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_GROWTH, player);
+        MESSAGE("Bulbasaur's Sp. Atk rose!");
+    } THEN {
+        EXPECT_EQ(player->statStages[STAT_ATK], DEFAULT_STAT_STAGE);
+        EXPECT_EQ(player->statStages[STAT_SPATK], DEFAULT_STAT_STAGE + 1);
+    }
+}
+
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 Embargo is not reflected by Magic Coat")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_MAGIC_COAT); MOVE(opponent, MOVE_EMBARGO); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_MAGIC_COAT, player);
+        MESSAGE("Wobbuffet can't use items anymore!");
+    } THEN {
+        EXPECT_GT((u32)player->volatiles.embargoTimer, 0);
+        EXPECT_EQ((u32)opponent->volatiles.embargoTimer, 0);
+    }
+}
+
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 Sheer Cold retains 30 percent accuracy for non Ice users")
+{
+    PASSES_RANDOMLY(30, 100, RNG_ACCURACY);
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_SHEER_COLD); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_SHEER_COLD, player);
+        HP_BAR(opponent, hp: 0);
+    }
+}
+
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 Transform preserves Ditto identity after fainting")
+{
+    GIVEN {
+        PLAYER(SPECIES_DITTO) { HP(1); }
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_PIDGEOT);
+    } WHEN {
+        TURN { MOVE(opponent, MOVE_CELEBRATE); MOVE(player, MOVE_TRANSFORM); }
+        TURN { MOVE(opponent, MOVE_SCRATCH); SEND_OUT(player, 1); }
+    } THEN {
+        EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), SPECIES_DITTO);
     }
 }

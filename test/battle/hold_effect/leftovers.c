@@ -39,6 +39,7 @@ SINGLE_BATTLE_TEST("Leftovers does nothing if max HP")
 SINGLE_BATTLE_TEST("Leftovers does nothing if Heal Block applies")
 {
     GIVEN {
+        WITH_CONFIG(B_HEAL_BLOCKING, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(100); HP(1); Item(ITEM_LEFTOVERS); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

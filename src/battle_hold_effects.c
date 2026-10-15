@@ -395,7 +395,7 @@ static enum ItemEffect TryMentalHerb(enum BattlerId battler, ActivationTiming ti
         gBattleCommunication[MULTISTRING_CHOOSER] |= 1 << B_MSG_MENTALHERBCURE_INFATUATION;
         effect = ITEM_EFFECT_OTHER;
     }
-    if (B_MENTAL_HERB >= GEN_5)
+    if (GetConfig(B_MENTAL_HERB) >= GEN_5)
     {
         // Check torment
         if (gBattleMons[battler].volatiles.torment == TRUE)

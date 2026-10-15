@@ -124,7 +124,7 @@ SINGLE_BATTLE_TEST("Encore forces the last move used while asleep")
         PLAYER(SPECIES_WOBBUFFET) { Speed(50); Moves(MOVE_CELEBRATE, MOVE_SPORE, MOVE_ENCORE); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(100); Moves(MOVE_GRASS_KNOT, MOVE_SCRATCH, MOVE_CELEBRATE); }
     } WHEN {
-        TURN { MOVE(player, MOVE_SPORE); MOVE(opponent, MOVE_GRASS_KNOT); }
+        TURN { MOVE(player, MOVE_SPORE, WITH_RNG(RNG_SLEEP_TURNS, 2)); MOVE(opponent, MOVE_GRASS_KNOT); }
         TURN { MOVE(player, MOVE_ENCORE); MOVE(opponent, MOVE_SCRATCH); }
         TURN { FORCED_MOVE(opponent); }
         TURN { FORCED_MOVE(opponent); }
@@ -392,6 +392,8 @@ DOUBLE_BATTLE_TEST("Encore uses the priority of the Encored move on the turn the
 {
     GIVEN {
         WITH_CONFIG(B_ENCORE_PRIORITY, GEN_CHAMPIONS);
+        WITH_CONFIG(B_RECALC_TURN_AFTER_ACTIONS, GEN_CHAMPIONS);
+        WITH_CONFIG(B_ENCORE_TARGET, GEN_CHAMPIONS);
         PLAYER(SPECIES_WHIMSICOTT) { Ability(ABILITY_PRANKSTER); Speed(500); }
         PLAYER(SPECIES_WOBBUFFET) { Speed(200); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(2); };

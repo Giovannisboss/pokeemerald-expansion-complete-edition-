@@ -219,7 +219,19 @@ AI_ONE_VS_TWO_BATTLE_TEST("Both opponent's Pokemon give experience in battle aga
     u32 expectedXp = 1; // level 1 xp
     expectedXp += gSpeciesInfo[SPECIES_WYNAUT].expYield * 100 / 7; // level (100) * scaling multipler (1 / 7)
     expectedXp += gSpeciesInfo[SPECIES_WOBBUFFET].expYield * 100 / 7;
+    u32 gen;
+    PARAMETRIZE { gen = GEN_4; }
+    PARAMETRIZE { gen = GEN_9; }
+    if (gen == GEN_4)
+    {
+        // Both active party members share each trainer's 1.5x award.
+        expectedXp = 1;
+        expectedXp += (gSpeciesInfo[SPECIES_WYNAUT].expYield * 100 / 7 * 150 / 100) / 2;
+        expectedXp += (gSpeciesInfo[SPECIES_WOBBUFFET].expYield * 100 / 7 * 150 / 100) / 2;
+    }
     GIVEN {
+        WITH_CONFIG(B_TRAINER_EXP_MULTIPLIER, gen);
+        WITH_CONFIG(B_SPLIT_EXP, gen);
         WITH_CONFIG(B_SCALED_EXP, GEN_3);
         WITH_CONFIG(B_UNEVOLVED_EXP_MULTIPLIER, GEN_3);
         PLAYER(SPECIES_METAPOD) { Level(1); Speed(3); }

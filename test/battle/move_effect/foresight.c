@@ -65,7 +65,7 @@ SINGLE_BATTLE_TEST("Foresight causes moves against the target to ignore positive
         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_FORESIGHT, MOVE_SCRATCH); Speed(10); }
         OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_DOUBLE_TEAM, MOVE_SPLASH); Speed(20); }
     } WHEN {
-        TURN { MOVE(player, MOVE_FORESIGHT); MOVE(opponent, MOVE_DOUBLE_TEAM); }
+        TURN { MOVE(player, MOVE_FORESIGHT, WITH_RNG(RNG_ACCURACY, TRUE)); MOVE(opponent, MOVE_DOUBLE_TEAM); }
         TURN { MOVE(player, MOVE_SCRATCH); MOVE(opponent, MOVE_SPLASH); }
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DOUBLE_TEAM, opponent);

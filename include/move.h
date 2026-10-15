@@ -363,6 +363,10 @@ static inline bool32 MoveIgnoresProtect(enum Move moveId)
 
 static inline bool32 MoveCanBeBouncedBack(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_EMBARGO)
+        return GetConfig(B_UPDATED_MOVE_FLAGS) >= GEN_5;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].magicCoatAffected;
 }
 
@@ -473,6 +477,10 @@ static inline bool32 MoveThawsUser(enum Move moveId)
 
 static inline bool32 MoveIgnoresSubstitute(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_TRANSFORM)
+        return GetConfig(B_TRANSFORM_SUBSTITUTE_FAIL) < GEN_5;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].ignoresSubstitute;
 }
 
@@ -513,14 +521,18 @@ static inline bool32 MoveAlwaysHitsOnSameType(enum Move moveId)
 static inline bool32 MoveHasNoEffectOnSameType(enum Move moveId)
 {
     #if TESTING
-    if (moveId == MOVE_SHEER_COLD && GetConfig(B_SHEER_COLD_IMMUNITY) < GEN_7)
-       return FALSE;
+    if (moveId == MOVE_SHEER_COLD)
+       return GetConfig(B_SHEER_COLD_IMMUNITY) >= GEN_7;
     #endif
     return gMovesInfo[SanitizeMoveId(moveId)].noAffectOnSameTypeTarget;
 }
 
 static inline bool32 MoveDecreasesAccIfUserNotSameType(enum Move moveId)
 {
+    #if TESTING
+    if (moveId == MOVE_SHEER_COLD)
+        return GetConfig(B_SHEER_COLD_ACC) >= GEN_7;
+    #endif
     return gMovesInfo[SanitizeMoveId(moveId)].accDecreaseIfUserNotSameType;
 }
 
@@ -820,6 +832,18 @@ static inline enum BattleTerrain GetMoveTerrainType(enum Move move)
 
 static inline const struct AdditionalEffect *GetMoveAdditionalEffectById(enum Move moveId, u32 effect)
 {
+    #if TESTING
+    if (moveId == MOVE_GROWTH && effect == 0)
+    {
+        static const struct AdditionalEffect oldGrowth = {
+            .moveEffect = STAT_CHANGE_EFFECT_PLUS, .spAtk = 1,
+        };
+        static const struct AdditionalEffect newGrowth = {
+            .moveEffect = STAT_CHANGE_EFFECT_PLUS, .attack = 1, .spAtk = 1,
+        };
+        return GetConfig(B_GROWTH_STAT_RAISE) >= GEN_5 ? &newGrowth : &oldGrowth;
+    }
+    #endif
     return &gMovesInfo[SanitizeMoveId(moveId)].additionalEffects[effect];
 }
 

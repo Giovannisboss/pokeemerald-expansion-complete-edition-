@@ -6,7 +6,7 @@
 #elif B_UPDATED_MOVE_DATA >= GEN_5
     #define FUTURE_SIGHT_EQUIVALENT MOVE_DYNAMAX_CANNON /* 100 power */
 #else
-    #define FUTURE_SIGHT_EQUIVALENT MOVE_EXTRASENSORY /* 80 power */
+    #define FUTURE_SIGHT_EQUIVALENT MOVE_SHADOW_BALL /* 80 power; no Psychic STAB or Spoon/Gem boost */
 #endif
 
 ASSUMPTIONS
@@ -111,6 +111,7 @@ SINGLE_BATTLE_TEST("Future Sight receives STAB from party mon (Gen 5+)")
     s16 futureSightDmg;
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, GEN_5);
         PLAYER(SPECIES_RALTS);
         PLAYER(SPECIES_RAICHU);
         OPPONENT(SPECIES_REGICE);
@@ -171,6 +172,7 @@ SINGLE_BATTLE_TEST("Future Sight is not affected by type effectiveness (Gen 2-4)
 SINGLE_BATTLE_TEST("Future Sight is affected by type effectiveness (Gen 5+)")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, GEN_5);
         PLAYER(SPECIES_PIKACHU);
         PLAYER(SPECIES_RAICHU);
         OPPONENT(SPECIES_HOUNDOOM);
@@ -214,6 +216,7 @@ SINGLE_BATTLE_TEST("Future Sight ignores Wonder Guard (Gen 2-4)")
 SINGLE_BATTLE_TEST("Future Sight doesn't ignore Wonder Guard (Gen 5+)")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_SHEDINJA) { Ability(ABILITY_WONDER_GUARD); }
     } WHEN {
@@ -405,6 +408,7 @@ SINGLE_BATTLE_TEST("Future Sight flying type attacker in party receives no boost
     PARAMETRIZE { species = SPECIES_WOBBUFFET; terrain = TRUE; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, GEN_5);
         ASSUME(GetMoveEffect(MOVE_PSYCHIC_TERRAIN) == EFFECT_TERRAIN);
         ASSUME(GetMoveTerrainType(MOVE_PSYCHIC_TERRAIN) == B_TERRAIN_PSYCHIC);
         ASSUME(gSpeciesInfo[SPECIES_PIDGEY].types[0] == TYPE_FLYING || gSpeciesInfo[SPECIES_PIDGEY].types[1] == TYPE_FLYING);

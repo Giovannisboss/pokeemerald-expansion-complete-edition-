@@ -1,0 +1,234 @@
+{
+  "note": "Intermediate targeted triage before final Sheer Cold, Embargo and Mega Transform fixture corrections; retains failures explicitly.",
+  "groups": [
+    {
+      "log": "00.log",
+      "complete": true,
+      "recorded_results": 9,
+      "reported_total": 9,
+      "statuses": {
+        "PASS": 9
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "01.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "02.log",
+      "complete": true,
+      "recorded_results": 75,
+      "reported_total": 75,
+      "statuses": {
+        "PASS": 75
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "03.log",
+      "complete": true,
+      "recorded_results": 12,
+      "reported_total": 12,
+      "statuses": {
+        "KNOWN_FAILING": 1,
+        "PASS": 11
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "04.log",
+      "complete": true,
+      "recorded_results": 21,
+      "reported_total": 21,
+      "statuses": {
+        "PASS": 21
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "05.log",
+      "complete": true,
+      "recorded_results": 1,
+      "reported_total": 1,
+      "statuses": {
+        "PASS": 1
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "06.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "07.log",
+      "complete": true,
+      "recorded_results": 20,
+      "reported_total": 20,
+      "statuses": {
+        "FAIL": 1,
+        "PASS": 15,
+        "TO_DO": 4
+      },
+      "failing_outcomes": 1,
+      "no_failing_outcomes": false,
+      "failures": [
+        {
+          "name": "Sheer Cold's accuracy decreasaes by 10% if the user is not Ice type (2/2)",
+          "status": "FAIL",
+          "detail": "test/battle/move_effect/ohko.c:225: Expected 0.199 passes/successes, observed 0.299"
+        }
+      ]
+    },
+    {
+      "log": "08.log",
+      "complete": true,
+      "recorded_results": 12,
+      "reported_total": 12,
+      "statuses": {
+        "PASS": 5,
+        "TO_DO": 7
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "09.log",
+      "complete": true,
+      "recorded_results": 3,
+      "reported_total": 3,
+      "statuses": {
+        "PASS": 3
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "10.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "11.log",
+      "complete": true,
+      "recorded_results": 9,
+      "reported_total": 9,
+      "statuses": {
+        "PASS": 9
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "12.log",
+      "complete": true,
+      "recorded_results": 10,
+      "reported_total": 10,
+      "statuses": {
+        "PASS": 10
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "13.log",
+      "complete": true,
+      "recorded_results": 18,
+      "reported_total": 18,
+      "statuses": {
+        "FAIL": 1,
+        "KNOWN_FAILING": 1,
+        "PASS": 16
+      },
+      "failing_outcomes": 1,
+      "no_failing_outcomes": false,
+      "failures": [
+        {
+          "name": "Embargo can be reflected by Magic Coat",
+          "status": "FAIL",
+          "detail": "test/battle/move_effect/embargo.c:333: Unmatched MESSAGE(\"Wobbuffet bounced the Embargo back!\")"
+        }
+      ]
+    },
+    {
+      "log": "14.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "15.log",
+      "complete": true,
+      "recorded_results": 6,
+      "reported_total": 6,
+      "statuses": {
+        "PASS": 6
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "16.log",
+      "complete": true,
+      "recorded_results": 13,
+      "reported_total": 13,
+      "statuses": {
+        "FAIL": 1,
+        "PASS": 12
+      },
+      "failing_outcomes": 1,
+      "no_failing_outcomes": false,
+      "failures": [
+        {
+          "name": "Transform returns the user to normal at the end of the battle after fainting",
+          "status": "FAIL",
+          "detail": "test/battle/move_effect/transform.c:170: EXPECT_EQ(18, 132) failed"
+        }
+      ]
+    }
+  ]
+}

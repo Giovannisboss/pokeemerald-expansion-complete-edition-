@@ -132,6 +132,7 @@ SINGLE_BATTLE_TEST("White Herb wont have time to activate if it is knocked off o
     PARAMETRIZE { move = MOVE_KNOCK_OFF; }
 
     GIVEN {
+        WITH_CONFIG(B_WEAK_ARMOR_SPEED, GEN_7);
         ASSUME(GetMoveEffect(MOVE_KNOCK_OFF) == EFFECT_KNOCK_OFF);
         ASSUME(GetMoveEffect(MOVE_THIEF) == EFFECT_STEAL_ITEM);
         PLAYER(SPECIES_SLUGMA) { Ability(ABILITY_WEAK_ARMOR); Item(ITEM_WHITE_HERB); }
@@ -162,6 +163,7 @@ SINGLE_BATTLE_TEST("White Herb wont have time to activate if it is knocked off o
 SINGLE_BATTLE_TEST("White Herb wont have time to activate if Magician steals it")
 {
     GIVEN {
+        WITH_CONFIG(B_WEAK_ARMOR_SPEED, GEN_7);
         PLAYER(SPECIES_SLUGMA) { Ability(ABILITY_WEAK_ARMOR); Item(ITEM_WHITE_HERB); }
         OPPONENT(SPECIES_FENNEKIN) { Ability(ABILITY_MAGICIAN); }
     } WHEN {

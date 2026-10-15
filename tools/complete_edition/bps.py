@@ -31,7 +31,7 @@ def read_number(data, offset):
         value += shift
 
 def create(source, target):
-    metadata = b"Pokemon Emerald: Complete Edition development alpha; new save required"
+    metadata = b"Pokemon Emerald: Complete Edition development alpha; Alpha 2 save format"
     patch = bytearray(b"BPS1") + number(len(source)) + number(len(target)) + number(len(metadata)) + metadata
     pos = 0
     while pos < len(target):

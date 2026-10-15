@@ -10418,7 +10418,7 @@ bool32 CanMoveSkipAccuracyCalc(struct BattleCalcValues *cv, u32 weather, enum Re
     {
         effect = TRUE;
     }
-    else if (B_MINIMIZE_DMG_ACC >= GEN_6
+    else if (GetConfig(B_MINIMIZE_DMG_ACC) >= GEN_6
      && gBattleMons[battlerDef].volatiles.minimize
      && MoveIncreasesPowerToMinimizedTargets(cv->move))
     {

@@ -226,6 +226,7 @@ SINGLE_BATTLE_TEST("Sheer Cold's accuracy decreasaes by 10% if the user is not I
 {
     PASSES_RANDOMLY(20, 100, RNG_ACCURACY);
     GIVEN {
+        WITH_CONFIG(B_SHEER_COLD_ACC, GEN_7);
         ASSUME(GetSpeciesType(SPECIES_WOBBUFFET, 0) != TYPE_ICE);
         ASSUME(GetSpeciesType(SPECIES_WOBBUFFET, 1) != TYPE_ICE);
         PLAYER(SPECIES_WOBBUFFET);

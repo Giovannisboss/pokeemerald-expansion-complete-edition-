@@ -160,6 +160,7 @@ SINGLE_BATTLE_TEST("(TERA) Transform does not copy the target's Tera Type, and i
 SINGLE_BATTLE_TEST("Transform returns the user to normal at the end of the battle after fainting")
 {
     GIVEN {
+        WITH_CONFIG(B_TRANSFORM_FORM_CHANGES, GEN_5); // This fixture uses Gen 6 Mega Evolution.
         PLAYER(SPECIES_DITTO) { HP(1); }
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_PIDGEOT) { Item(ITEM_PIDGEOTITE); }
@@ -301,6 +302,6 @@ SINGLE_BATTLE_TEST("Transform copies the target's shiny state in Gen4+")
     } WHEN {
         TURN { MOVE(player, MOVE_TRANSFORM); }
     } THEN {
-        EXPECT(player->volatiles.isTransformedMonShiny == targetIsShiny);
+        EXPECT(player->volatiles.isTransformedMonShiny == (P_ALL_POKEMON_SHINY || targetIsShiny));
     }
 }

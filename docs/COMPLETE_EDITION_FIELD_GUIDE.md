@@ -1,6 +1,6 @@
-# Pokémon Emerald: Complete Edition — Alpha 2.1 field guide
+# Pokémon Emerald: Complete Edition — Alpha 2.2 field guide
 
-**Alpha 2.1 can use Alpha 2 battery saves. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
+**Alpha 2.2 can use Alpha 2 / 2.1 battery saves. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
 
 ## Other generations in the wild
 
@@ -66,7 +66,7 @@ All 24 visiting leaders now stand individually around Hoenn; the Pokémon Centre
 
 ## Postgame and limits
 
-The Battle Frontier World Tournament and repeatable Red, Blue, Silver and Gold battles retain their Alpha 1 locations. Every legendary and mythical remains catchable through the original events or Birch's repeatable research encounters, unlocked by the MIND BADGE from Tate and Liza in Mossdeep; bespoke world events for the remaining legends are still future work.
+The Battle Frontier World Tournament and repeatable Red, Blue, Silver and Gold battles retain their Alpha 1 locations. Every legendary and mythical remains catchable through the original events or Birch's repeatable research encounters, unlocked by the MIND BADGE from Tate and Liza in Mossdeep; 29 new world trails and linked quests now supplement the original six Hoenn legendary events. See [the legendary trails guide](COMPLETE_EDITION_LEGEND_TRAILS.md). Full travel and interaction QA remains unfinished.
 
 The new Press Start screen shows shiny Rayquaza over Hoenn, with the Complete Edition title, a blinking prompt and looping Emerald title music. Press A or Start to enter the normal menu. The original intro and title button combinations are retained.
 
@@ -79,3 +79,7 @@ This remains an alpha. Native focused checks and title/menu smoke checks pass; c
 After defeating Tate and Liza and receiving the seventh Gym Badge (MIND BADGE), return to the researcher in Professor Birch's lab in Littleroot Town. Choose **Research encounters**, then a region and species. Champion status is no longer required. The species list, level-50 battles, Poké Ball requirement and repeat attempts are unchanged. The World Tournament and superbosses still require the postgame.
 
 If you already earned the Mind Badge in an Alpha 2 save, the catalogue becomes available immediately when that save is loaded in Alpha 2.1. Load a normal battery save rather than an emulator save state from the earlier ROM. If the emulator associates saves with the ROM filename, copy your backed-up Alpha 2 `.sav` alongside the new ROM using the new ROM's basename.
+
+## Legendary trails in the development build
+
+The new **Legendary trails** option at Birch's researcher provides hints for 29 additional world encounters. See [the trail guide](COMPLETE_EDITION_LEGEND_TRAILS.md) for locations and linked unlocks. The Mind Badge remains the minimum; stronger encounters also require the Hall of Fame. These additions are still undergoing verification. The delivered Alpha 2.1 ROM does not include them.

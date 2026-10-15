@@ -798,6 +798,7 @@ SINGLE_BATTLE_TEST("Dancer can still copy a move even if it's being forced into 
 SINGLE_BATTLE_TEST("Dancer can still copy a move even if it's being forced into a different move - Encore")
 {
     GIVEN {
+        WITH_CONFIG(B_ENCORE_TARGET, GEN_5);
         ASSUME(IsDanceMove(MOVE_SWORDS_DANCE));
         ASSUME(GetMoveEffect(MOVE_ENCORE) == EFFECT_ENCORE);
         PLAYER(SPECIES_WOBBUFFET) { Speed(30); }

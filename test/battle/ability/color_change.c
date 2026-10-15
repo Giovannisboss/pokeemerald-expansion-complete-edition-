@@ -83,9 +83,13 @@ SINGLE_BATTLE_TEST("Color Change changes the user to Electric type if hit by a m
     }
 }
 
-SINGLE_BATTLE_TEST("Color Change changes the type when a Pokemon is hit by Future Sight")
+SINGLE_BATTLE_TEST("Color Change uses generation-specific typing for Future Sight")
 {
+    u32 gen;
+    PARAMETRIZE { gen = GEN_4; }
+    PARAMETRIZE { gen = GEN_5; }
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, gen);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_KECLEON) { Ability(ABILITY_COLOR_CHANGE); }
     } WHEN {
@@ -95,14 +99,22 @@ SINGLE_BATTLE_TEST("Color Change changes the type when a Pokemon is hit by Futur
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_FUTURE_SIGHT, player);
         MESSAGE("The opposing Kecleon took the Future Sight attack!");
-        ABILITY_POPUP(opponent, ABILITY_COLOR_CHANGE);
-        MESSAGE("The opposing Kecleon's type changed to Psychic!");
+        if (gen >= GEN_5) {
+            ABILITY_POPUP(opponent, ABILITY_COLOR_CHANGE);
+            MESSAGE("The opposing Kecleon's type changed to Psychic!");
+        } else {
+            NOT ABILITY_POPUP(opponent, ABILITY_COLOR_CHANGE);
+        }
     }
 }
 
-SINGLE_BATTLE_TEST("Color Change changes the type when a Pokemon is hit by Doom Desire")
+SINGLE_BATTLE_TEST("Color Change uses generation-specific typing for Doom Desire")
 {
+    u32 gen;
+    PARAMETRIZE { gen = GEN_4; }
+    PARAMETRIZE { gen = GEN_5; }
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_TYPES, gen);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_KECLEON) { Ability(ABILITY_COLOR_CHANGE); }
     } WHEN {
@@ -112,8 +124,12 @@ SINGLE_BATTLE_TEST("Color Change changes the type when a Pokemon is hit by Doom 
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DOOM_DESIRE, player);
         MESSAGE("The opposing Kecleon took the Doom Desire attack!");
-        ABILITY_POPUP(opponent, ABILITY_COLOR_CHANGE);
-        MESSAGE("The opposing Kecleon's type changed to Steel!");
+        if (gen >= GEN_5) {
+            ABILITY_POPUP(opponent, ABILITY_COLOR_CHANGE);
+            MESSAGE("The opposing Kecleon's type changed to Steel!");
+        } else {
+            NOT ABILITY_POPUP(opponent, ABILITY_COLOR_CHANGE);
+        }
     }
 }
 

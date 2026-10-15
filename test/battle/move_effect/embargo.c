@@ -74,7 +74,7 @@ WILD_BATTLE_TEST("Embargo doesn't block held item effects that affect effort val
     u32 finalHPEVAmount;
 
     GIVEN {
-        PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_POWER_WEIGHT); }
+        PLAYER(SPECIES_WOBBUFFET) { Level(50); Item(ITEM_POWER_WEIGHT); }
         OPPONENT(SPECIES_CATERPIE) { HP(1); }
         ASSUME(gItemsInfo[ITEM_POWER_WEIGHT].holdEffect == HOLD_EFFECT_POWER_ITEM);
         ASSUME(gItemsInfo[ITEM_POWER_WEIGHT].holdEffectParam != 0);
@@ -320,6 +320,7 @@ SINGLE_BATTLE_TEST("Embargo disables the effect of the Memory items on the move 
 SINGLE_BATTLE_TEST("Embargo can be reflected by Magic Coat")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_5);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET) { Item(ITEM_LIGHT_BALL); }
     } WHEN {

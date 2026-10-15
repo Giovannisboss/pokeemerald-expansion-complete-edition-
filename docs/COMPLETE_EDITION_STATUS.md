@@ -1,9 +1,17 @@
-# Complete Edition — Alpha 2.1
+# Complete Edition — Alpha 2.2
 
 
-Current stability corrections and the latest completed broad audit are recorded in [stability work](COMPLETE_EDITION_STABILITY.md). Full story/Frontier QA remains unfinished.
+**Development milestone, not a finished game.** Alpha 2.2 adds 29 legendary
+world trails and linked prerequisites, fixes the Charge battle hang and Gen 4
+Growth sunlight behavior, and includes the earlier stability corrections.
+Alpha 2 / 2.1 battery saves remain compatible; back them up first.
 
-This is a boot-tested development milestone, not a completed or release-certified game.
+The [stability report](COMPLETE_EDITION_STABILITY.md) records the exact audit
+snapshots and current limits. Native and ordinary-input checks are distinct.
+Full story, all seven Frontier facilities, all event interactions, portrait
+replacement and hardware testing remain unfinished.
+
+Current verification: **403 focused passes; 139 failing outcomes in the full native suite (5,253 passes / 5,905 results).** The focused profile also records four assumption skips, two known upstream failures and eleven TODO cases. These figures are not a finished-release certification.
 
 ## Implemented
 
@@ -12,7 +20,7 @@ This is a boot-tested development milestone, not a completed or release-certifie
 - Reusable original TMs. Plain trade evolutions become level-37 evolutions; held-item trade evolutions occur on the next level with the appropriate held item, which is consumed. Original location and other evolution alternatives remain.
 - Training adviser in each of 16 Hoenn Pokémon Centres: battle-nature changes for 3,000; Silver Bottle Caps for one IV; Gold Bottle Caps for all IVs; free EV reset and exact 0–252 allocation, with the 510 total enforced. Caps cost 20,000/60,000. The nature service works like a Mint: the stat nature changes while breeding personality remains intact.
 - 105 encounter tables now add other generations to Hoenn, starting with Pidgey, Sentret, Starly and Bidoof on Route 101. Twelve fixed, catchable starter sites replace the extra gift menu; badge gates, levels and locations are in the [field guide](COMPLETE_EDITION_FIELD_GUIDE.md). Failed captures remain retryable. The original opening starter choice and Castform gift remain. Birch's researcher sells evolution supplies and gives habitat advice.
-- After earning the seventh Gym Badge (MIND BADGE from Tate and Liza), the researcher offers real, repeatable level-50 wild encounters for each of National Dex #1–493, including every legendary and mythical. These require ordinary capture and your own Poké Balls. This catalogue is an initial availability implementation; it is not a set of bespoke legendary quests or natural route placements.
+- After earning the seventh Gym Badge (MIND BADGE from Tate and Liza), the researcher offers real, repeatable level-50 wild encounters for each of National Dex #1–493, including every legendary and mythical. These require ordinary capture and your own Poké Balls. The catalogue remains a repeatable fallback alongside the 29 new world trails and six original Hoenn legendary events.
 - Steven is the Champion with a separate level-58–60 team. Champion-room and Hall of Fame sprites/dialogue name updated; original story movement scripts and Meteor Falls Steven encounter retained.
 - Modest trainer level increase: levels 10–70 gain approximately 5%, at least one level. Tutorials and levels below 10 are unchanged.
 - 24 optional visiting leaders now stand individually in appropriate locations around Hoenn, with original badge gates and three-Pokémon teams, levels 18–54. The Centre visitor desks are removed. Full locations are in the field guide.
@@ -32,33 +40,40 @@ Both the script menu and native encounter factory now check `FLAG_BADGE07_GET`. 
 
 ## Verification
 
-Ubuntu 24.04, GCC ARM 13.2.1, binutils 2.42. Baseline build and new-game menu/Birch introduction verified in mGBA 0.10.2. The Alpha 2 artwork, blinking Start prompt and transition to the ordinary new-game menu were visually inspected at 240×160 after the original intro.
+Ubuntu 24.04, GCC ARM 13.2.1, binutils 2.42 and mGBA 0.10.2. Production
+compilation passes the ARM object-integrity guard. Native emulator tests cover
+all 493 shiny creations, trainer teams, Gen 4 mechanics, all 510 storage slots,
+actual flash saves and damaged-sector fallback, research gates, starter flags,
+and legendary prerequisites/completion flags. The Complete Edition group now
+passes 34 tests. The physical/special split remains enabled; no move or ability
+has been removed.
 
-| Focused mGBA test group | Passed | Inapplicable assumptions |
-| --- | ---: | ---: |
-| Complete Edition | 17 | 0 |
-| Pokémon | 25 | 3 |
-| Daycare/breeding | 38 | 0 |
-| Save layout | 4 | 0 |
-| Trainer control | 20 | 1 |
-| Total | 104 | 4 |
+Targeted reruns pass all 75 trainer-slide cases, 21 Future Sight cases, 9
+experience cases, and 13 Transform cases, alongside the other regression groups
+recorded in the stability report. Upstream TODO/KNOWN_FAILING outcomes remain
+explicit and are not passes.
 
-Feature tests include all 493 species with three OT-ID methods, 493 actual research-mon creations, all 61 custom production trainer parties, exact cap consumption, invalid/Egg handling, EV limits, all 253 EV menu values, catalogue cancel-ID collisions and a complete 32-opponent tournament draw without repeats. A compiled wild-table/evolution check covers all 458 ordinary species via wild encounters, the twelve starter sites and the original Castform gift.
+The first complete continued audit had 5,212 passes and 170 failing outcomes
+across 5,897 results, with no TIMEOUT or ERROR outcomes. Its exact
+backlog is retained in `qa/2026-10-15-before-final-fixture-fixes.json`. That
+snapshot precedes the latest Growth and fixture fixes; a new broad run is
+required to measure their aggregate result. It cannot be called release-clean.
 
-Actual emulated flash tests restore a trained party and the final PC slot; fill all 510 slots and preserve complete storage metadata; deliberately corrupt footer data or a sector ID and recover the previous snapshot; and preserve PC consistency during partial Frontier/link saves.
+Ordinary button-input QA includes the opening story, first rival victory,
+Pokédex handover, running shoes, nature/EV service transactions, BOX17, healing,
+catching a shiny Sentret on Route 101, and Calvin/Rick trainer victories.
+A fresh emulator process loaded the ordinary battery save with Pokédex
+progress intact. Legendary hints and the pre-badge catalogue refusal work in
+the production ROM. This is early-game testing, not a complete story or
+Frontier playthrough.
 
-All 55 added NPC placements pass static checks for passable floor, compatible elevation, adjacent access, overlapping objects and the 64 map-template limit. The engine still limits simultaneously active objects to 16; normal spatial activation applies. Starter scripts are checked to set their hide flag only after `B_OUTCOME_CAUGHT`. Complete travel and interaction QA remains necessary.
-
-The Alpha 2.1 full-suite rerun ended before producing final totals. It recorded 5182 completed test results; the partial log is included in the patch package. The targeted capture and ally Lightning Rod corrections pass, resolving two previously failing cases in focused runs. A complete new broad-profile failure count is not yet verified. Previous Alpha 2 full upstream run: **5,163 passed / 5,899 total; 218 failed, 18 known failing, 70 assumption failures, 421 TODO and 9 expected failures**. The 218 failing test names are identical to Alpha 1's recorded full-profile failures; the three extra passing tests reflect the replacement of the gift test with new storage and availability checks. The full suite still exits with failure, so a final-release claim would be premature.
-
-The new flash-save tests initially left the test runner's Timer 2 watchdog replaced by the flash handler. Their fixture now restores the interrupt handler, timer registers and interrupt-enable mask before returning. The corrected full run completed; this fixture fix does not change the production ROM.
-
-Several full-suite failures are configuration mismatches: for example newer-generation damage/experience expectations and Future Sight typing. Not all failures have been triaged; they must not all be dismissed as harmless. The focused CI workflow is explicit about its scope; it does not imply the full upstream suite passes.
+All 84 added placements pass floor, stable-terrain, elevation, adjacent-access,
+overlap and map-template checks. Map checks do not replace travel testing.
 
 ## Build and patch
 
-- ROM SHA-256: `6140e28c56f6e5ab954ae94df8a468cb266c21d49ee022a10230c654a4498f57`.
-- ROM before padding: 16,544,892 bytes; padded file: 16 MiB, within the 32 MiB GBA limit.
+- ROM SHA-256: `bb70e00f7e17c5e99018e5e8d2d4c4672640accb864f75a121d625bfe32d8fb0`.
+- Linked ROM region: 16,557,076 bytes; padded file: 16 MiB, within the 32 MiB GBA limit.
 - EWRAM: 235,496/262,144 bytes. IWRAM: 28,364/32,768 bytes.
 - Patch input: clean Emerald US/EU revision 0, 16 MiB; SHA-1 `f3ae088181bf583e55daf962a92bb46f4f1d07b7`; CRC32 `1f1c08fb`.
 - BPS creation validates the input and an exact patch-application round trip against the compiled target.
@@ -66,11 +81,42 @@ Several full-suite failures are configuration mismatches: for example newer-gene
 
 ## Required before a final release
 
-- Start a **new game**. Alpha 1, original Emerald and earlier experimental saves are incompatible with the new storage/save format.
+- Start a new game if coming from Alpha 1, original Emerald or an incompatible experimental build. Alpha 2 / 2.1 battery saves remain supported; keep a backup.
 - The 510-slot storage expansion passes actual flash tests; its UI and all facility-specific save paths still need normal-play QA.
 - Play through all story gates, Champion defeat/Hall of Fame, postgame unlocks and save/reload. Size checks are not a save/reload playthrough.
 - Exercise all new menus, captures, loss/whiteout paths, full-party/full-PC gifts, and an entire tournament in normal play.
 - Resolve or explicitly classify the full-suite failures, then run the agreed regression profile cleanly.
 - Test all seven Battle Frontier facilities, timing/audio and a flashcart on real GBA hardware. Hardware compatibility is a design constraint, not yet a hardware-tested claim.
 - Replace temporary existing portraits used for Johto/Sinnoh leaders and Gold/Silver; improve event presentation and balance the teams through playtesting.
-- Add bespoke world events/quests for legends still using the research catalogue. Natural ordinary habitats now exist; the catalogue unlocks after the seventh badge.
+- Complete travel, interaction and capture/save/reload QA for all 29 new legendary trails. The catalogue continues to unlock after the seventh badge.
+
+## Final Alpha 2.2 audit snapshot
+
+The final native rerun completed **5,905 outcomes**: **5,253 PASS; 139 failing
+outcomes (123 FAIL, 10 FLAKY, 6 INVALID); no TIMEOUT or ERROR**. It also recorded
+65 ASSUMPTION_FAIL, 18 KNOWN_FAILING, 421 TO_DO and 9 expected outcomes.
+See `qa/2026-10-15-alpha-2-2-full.json` for every unresolved case.
+This improves on the prior 185-outcome snapshot but does not pass the full suite.
+The 10 flaky outcomes include repeated outcomes from unstable tests, not ten
+confirmed independent gameplay defects. Every unresolved result remains visible.
+
+Native totals agree with all 5,905 recorded outcomes and ARM-object integrity
+passes. Editing the long-running shell wrapper during execution caused a
+trailing parse error after these totals were saved; the current wrapper passes
+`bash -n`. This trailing wrapper error is separate from the native failures.
+
+The expanded focused profile completed **37 groups, with 403 PASS, 4 assumption
+skips, 2 upstream KNOWN_FAILING and 11 TODO outcomes; no unexpected failures**.
+This is a scoped gate, not a replacement for the 139-failure broad backlog.
+Its group-by-group report is `qa/2026-10-15-alpha-2-2-focused.json`.
+
+The ordinary-input run also defeated Allen, then lost to Tiana with both
+party Pokémon fainted. The normal whiteout sequence returned the player to
+Oldale and Nurse Joy restored both Pokémon. This exercises the loss/recovery
+path; it is not a Tiana victory or further story progress.
+
+The unchanged current shell wrapper was then executed normally and completed
+all 37 focused groups with exit status 0, reproducing the 403-pass profile.
+The final Alpha 2.2 production ROM was loaded in a fresh mGBA process using the
+ordinary battery save after whiteout/recovery. Mudkip (level 9, 36/36 HP) and
+the caught Sentret (level 3, 15/15 HP) were both present and healed.

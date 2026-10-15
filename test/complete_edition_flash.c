@@ -55,12 +55,14 @@ TEST("Complete Edition: flash save restores trained party, final PC slot, and ca
     EXPECT_EQ(CompleteEditionSetEV(mon, STAT_HP, 4), CE_SERVICE_OK);
     gPokemonStoragePtr->boxes[TOTAL_BOXES_COUNT - 1][IN_BOX_COUNT - 1] = mon->box;
     FlagSet(FLAG_CE_STARTER_PIPLUP);
+    FlagSet(FLAG_CE_LEGEND_ARCEUS);
     EXPECT_EQ(TrySavingData(SAVE_NORMAL), SAVE_STATUS_OK);
 
     ZeroPlayerPartyMons();
     gPartiesCount[B_TRAINER_PLAYER] = 0;
     memset(gPokemonStoragePtr, 0, sizeof(*gPokemonStoragePtr));
     FlagClear(FLAG_CE_STARTER_PIPLUP);
+    FlagClear(FLAG_CE_LEGEND_ARCEUS);
     EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
     EXPECT_EQ(gPartiesCount[B_TRAINER_PLAYER], 1);
     EXPECT_EQ(GetMonData(mon, MON_DATA_SPECIES), SPECIES_GARCHOMP);
@@ -78,6 +80,7 @@ TEST("Complete Edition: flash save restores trained party, final PC slot, and ca
     EXPECT_EQ(GetBoxMonData(boxed, MON_DATA_SPEED_IV), 31);
     EXPECT(GetBoxMonData(boxed, MON_DATA_IS_SHINY));
     EXPECT(FlagGet(FLAG_CE_STARTER_PIPLUP));
+    EXPECT(FlagGet(FLAG_CE_LEGEND_ARCEUS));
     EndFlashTest(&clock);
 }
 

@@ -63,35 +63,35 @@
 #define FLAG_CE_STARTER_TURTWIG    0x29 // Unused Flag
 #define FLAG_CE_STARTER_CHIMCHAR    0x2A // Unused Flag
 #define FLAG_CE_STARTER_PIPLUP    0x2B // Unused Flag
-#define FLAG_UNUSED_0x02C    0x2C // Unused Flag
-#define FLAG_UNUSED_0x02D    0x2D // Unused Flag
-#define FLAG_UNUSED_0x02E    0x2E // Unused Flag
-#define FLAG_UNUSED_0x02F    0x2F // Unused Flag
-#define FLAG_UNUSED_0x030    0x30 // Unused Flag
-#define FLAG_UNUSED_0x031    0x31 // Unused Flag
-#define FLAG_UNUSED_0x032    0x32 // Unused Flag
-#define FLAG_UNUSED_0x033    0x33 // Unused Flag
-#define FLAG_UNUSED_0x034    0x34 // Unused Flag
-#define FLAG_UNUSED_0x035    0x35 // Unused Flag
-#define FLAG_UNUSED_0x036    0x36 // Unused Flag
-#define FLAG_UNUSED_0x037    0x37 // Unused Flag
-#define FLAG_UNUSED_0x038    0x38 // Unused Flag
-#define FLAG_UNUSED_0x039    0x39 // Unused Flag
-#define FLAG_UNUSED_0x03A    0x3A // Unused Flag
-#define FLAG_UNUSED_0x03B    0x3B // Unused Flag
-#define FLAG_UNUSED_0x03C    0x3C // Unused Flag
-#define FLAG_UNUSED_0x03D    0x3D // Unused Flag
-#define FLAG_UNUSED_0x03E    0x3E // Unused Flag
-#define FLAG_UNUSED_0x03F    0x3F // Unused Flag
-#define FLAG_UNUSED_0x040    0x40 // Unused Flag
-#define FLAG_UNUSED_0x041    0x41 // Unused Flag
-#define FLAG_UNUSED_0x042    0x42 // Unused Flag
-#define FLAG_UNUSED_0x043    0x43 // Unused Flag
-#define FLAG_UNUSED_0x044    0x44 // Unused Flag
-#define FLAG_UNUSED_0x045    0x45 // Unused Flag
-#define FLAG_UNUSED_0x046    0x46 // Unused Flag
-#define FLAG_UNUSED_0x047    0x47 // Unused Flag
-#define FLAG_UNUSED_0x048    0x48 // Unused Flag
+#define FLAG_CE_LEGEND_ARTICUNO                0x2C // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_ZAPDOS                  0x2D // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_MOLTRES                 0x2E // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_MEWTWO                  0x2F // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_MEW                     0x30 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_RAIKOU                  0x31 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_ENTEI                   0x32 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_SUICUNE                 0x33 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_LUGIA                   0x34 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_HO_OH                   0x35 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_CELEBI                  0x36 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_LATIAS                  0x37 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_LATIOS                  0x38 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_JIRACHI                 0x39 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_DEOXYS                  0x3A // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_UXIE                    0x3B // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_MESPRIT                 0x3C // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_AZELF                   0x3D // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_DIALGA                  0x3E // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_PALKIA                  0x3F // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_HEATRAN                 0x40 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_REGIGIGAS               0x41 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_GIRATINA                0x42 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_CRESSELIA               0x43 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_PHIONE                  0x44 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_MANAPHY                 0x45 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_DARKRAI                 0x46 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_SHAYMIN                 0x47 // Complete Edition legendary trail
+#define FLAG_CE_LEGEND_ARCEUS                  0x48 // Complete Edition legendary trail
 #define FLAG_UNUSED_0x049    0x49 // Unused Flag
 #define FLAG_UNUSED_0x04A    0x4A // Unused Flag
 #define FLAG_UNUSED_0x04B    0x4B // Unused Flag

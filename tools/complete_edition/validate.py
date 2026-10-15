@@ -3,6 +3,7 @@
 import json
 import struct
 from pathlib import Path
+from map_tiles import MapTiles, STABLE_GROUND
 
 root = Path(__file__).resolve().parents[2]
 layouts = {entry["id"]: entry for entry in json.loads((root / "data/layouts/layouts.json").read_text())["layouts"]}
@@ -15,6 +16,7 @@ for path in sorted((root / "data/maps").glob("*/map.json")):
         continue
     assert len(objects) <= 64, f"Too many NPCs: {path}"
     layout = layouts[game_map["layout"]]
+    behavior_tiles = MapTiles(game_map)
     data = (root / layout["blockdata_filepath"]).read_bytes()
     width, height = layout["width"], layout["height"]
 
@@ -28,17 +30,19 @@ for path in sorted((root / "data/maps").glob("*/map.json")):
         x, y = obj["x"], obj["y"]
         collision, elevation = tile(x, y)
         assert collision == 0, f"NPC placed on solid tile: {path} {obj['script']}"
+        assert behavior_tiles.tile(x, y)[2] in STABLE_GROUND, f"NPC placed on moving/unstable terrain: {path} {obj['script']}"
         assert obj["elevation"] in (0, elevation), f"Wrong NPC elevation: {path}"
         assert any(tile(x + dx, y + dy)[0] == 0 for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]), f"Inaccessible NPC: {path}"
         assert sum(other.get("x") == x and other.get("y") == y for other in objects) == 1, f"Overlapping NPC: {path}"
         count += 1
-assert count == 55, f"Expected 55 new service/leader/starter NPCs; found {count}"
+assert count == 84, f"Expected 84 new service/leader/starter/legend NPCs; found {count}"
 print(f"Validated {count} new NPC placements: floor, elevation, adjacent access and event limits")
 
 manifest = json.loads((root / "data/complete_edition_world.json").read_text())
 assert len(manifest["leaders"]) == 24
 assert len(manifest["starters"]) == 12
-for kind in ("leaders", "starters"):
+assert len(manifest["legends"]) == 29
+for kind in ("leaders", "starters", "legends"):
     for site in manifest[kind]:
         m = json.loads((root / "data/maps" / site["map"] / "map.json").read_text())
         assert "PokemonCenter" not in site["map"]
@@ -64,3 +68,27 @@ assert "goto_if_unset FLAG_BADGE07_GET, CE_Research_NeedMindBadge" in research
 assert "FLAG_SYS_GAME_CLEAR" not in research
 assert "FlagGet(FLAG_BADGE07_GET)" in (root / "src/complete_edition_research.c").read_text()
 print("Validated matching seventh-badge catalogue gates in script and native encounter creation")
+
+scripts = (root / "data/scripts/complete_edition_legends.inc").read_text()
+flags = set()
+species = set()
+for site in manifest["legends"]:
+    assert site["flag"] not in flags and site["species"] not in species
+    flags.add(site["flag"])
+    species.add(site["species"])
+    block = scripts.split(site["script"] + "::", 1)[1].split("\n\n", 1)[0]
+    assert block.index("Script_CELegendIsReady") < block.index("dowildbattle")
+    assert block.index("B_OUTCOME_CAUGHT") < block.index("setflag " + site["flag"])
+    assert f"setvar VAR_0x8005, {site['id']}" in block
+    assert site["species"] not in site["requires"]
+    assert set(site["requires"]) <= {s["species"] for s in manifest["legends"]}
+print("Validated 29 distinct shiny legendary trails, prerequisites and capture-only completion")
+
+trail_by_name = {s["species"]: s for s in manifest["legends"]}
+def visit_trail(name, stack):
+    assert name not in stack, f"Cyclic trail: {stack + [name]}"
+    for dependency in trail_by_name[name]["requires"]:
+        visit_trail(dependency, stack + [name])
+for name in trail_by_name:
+    visit_trail(name, [])
+print("Validated acyclic legendary quest chains")

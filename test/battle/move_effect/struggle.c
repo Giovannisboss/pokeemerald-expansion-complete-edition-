@@ -152,6 +152,7 @@ SINGLE_BATTLE_TEST("Struggle recoil is subject to standard rounding (Gen 5+)")
     PARAMETRIZE { hpStat = 203; }
 
     GIVEN {
+        WITH_CONFIG(B_STRUGGLE_RECOIL, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { MaxHP(hpStat); HP(hpStat); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

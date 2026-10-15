@@ -42,6 +42,7 @@ SINGLE_BATTLE_TEST("Enigma Berry does nothing if not hit by super effective move
 SINGLE_BATTLE_TEST("Enigma Berry does nothing if Heal Block applies")
 {
     GIVEN {
+        WITH_CONFIG(B_HEAL_BLOCKING, GEN_5);
         PLAYER(SPECIES_WYNAUT) { MaxHP(100); HP(2); Item(ITEM_ENIGMA_BERRY); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

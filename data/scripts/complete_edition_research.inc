@@ -5,10 +5,12 @@ CE_Research_EventScript::
 	dynmultipush CE_Research_Text_Starters, 0
 	dynmultipush CE_Research_Text_Expeditions, 1
 	dynmultipush CE_Research_Text_EvolutionShop, 2
+	dynmultipush CE_Research_Text_LegendTrails, 3
 	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
 	goto_if_eq VAR_RESULT, 0, CE_Research_Starters
 	goto_if_eq VAR_RESULT, 1, CE_Research_Expeditions
 	goto_if_eq VAR_RESULT, 2, CE_Research_EvolutionShop
+	goto_if_eq VAR_RESULT, 3, CE_Legend_Hints
 	goto CE_Research_End
 CE_Research_Starters:
 	msgbox CE_Research_Text_Habitats, MSGBOX_DEFAULT
@@ -41,6 +43,8 @@ CE_Research_Text_Starters:
 	.string "Starter habitats$"
 CE_Research_Text_Expeditions:
 	.string "Research encounters$"
+CE_Research_Text_LegendTrails:
+	.string "Legendary trails$"
 CE_Research_Text_Kanto:
 	.string "KANTO$"
 CE_Research_Text_Johto:

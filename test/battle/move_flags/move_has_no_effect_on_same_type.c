@@ -1,11 +1,6 @@
 #include "global.h"
 #include "test/battle.h"
 
-ASSUMPTIONS
-{
-    ASSUME(MoveHasNoEffectOnSameType(MOVE_SHEER_COLD));
-}
-
 SINGLE_BATTLE_TEST("Sheer Cold does affect Ice-type Pokémon (Gen3-6)")
 {
     GIVEN {

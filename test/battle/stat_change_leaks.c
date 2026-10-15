@@ -13,6 +13,7 @@ AI_SINGLE_BATTLE_TEST("Type-absorbing ability checks don't queue stat increases"
     PARAMETRIZE { species = SPECIES_MARILL;    ability = ABILITY_SAP_SIPPER;    absorbedMove = MOVE_VINE_WHIP;   boostedStat = STAT_ATK; }
 
     GIVEN {
+        WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, GEN_5);
         ASSUME(GetMoveType(MOVE_WATER_GUN) == TYPE_WATER);
         ASSUME(GetMoveType(MOVE_THUNDERBOLT) == TYPE_ELECTRIC);
         ASSUME(GetMoveType(MOVE_VINE_WHIP) == TYPE_GRASS);
@@ -41,6 +42,7 @@ AI_SINGLE_BATTLE_TEST("Type-absorbing abilities only increase a stat once after 
     PARAMETRIZE { species = SPECIES_MARILL;    ability = ABILITY_SAP_SIPPER;    absorbedMove = MOVE_VINE_WHIP;   boostedStat = STAT_ATK; }
 
     GIVEN {
+        WITH_CONFIG(B_REDIRECT_ABILITY_IMMUNITY, GEN_5);
         ASSUME(GetMoveType(MOVE_WATER_GUN) == TYPE_WATER);
         ASSUME(GetMoveType(MOVE_THUNDERBOLT) == TYPE_ELECTRIC);
         ASSUME(GetMoveType(MOVE_VINE_WHIP) == TYPE_GRASS);

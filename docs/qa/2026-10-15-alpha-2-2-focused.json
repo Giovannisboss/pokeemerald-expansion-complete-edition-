@@ -1,0 +1,465 @@
+{
+  "runner": "tools/complete_edition/test.sh",
+  "runner_exit_code": 0,
+  "groups": 37,
+  "statuses": {
+    "PASS": 403,
+    "ASSUMPTION_FAIL": 4,
+    "KNOWN_FAILING": 2,
+    "TO_DO": 11
+  },
+  "all_groups_complete": true,
+  "no_unexpected_failures": true,
+  "reports": [
+    {
+      "log": "tests-0.log",
+      "complete": true,
+      "recorded_results": 34,
+      "reported_total": 34,
+      "statuses": {
+        "PASS": 34
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-1.log",
+      "complete": true,
+      "recorded_results": 28,
+      "reported_total": 28,
+      "statuses": {
+        "ASSUMPTION_FAIL": 3,
+        "PASS": 25
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-2.log",
+      "complete": true,
+      "recorded_results": 38,
+      "reported_total": 38,
+      "statuses": {
+        "PASS": 38
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-3.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-4.log",
+      "complete": true,
+      "recorded_results": 21,
+      "reported_total": 21,
+      "statuses": {
+        "ASSUMPTION_FAIL": 1,
+        "PASS": 20
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-5.log",
+      "complete": true,
+      "recorded_results": 9,
+      "reported_total": 9,
+      "statuses": {
+        "PASS": 9
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-6.log",
+      "complete": true,
+      "recorded_results": 1,
+      "reported_total": 1,
+      "statuses": {
+        "PASS": 1
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-7.log",
+      "complete": true,
+      "recorded_results": 5,
+      "reported_total": 5,
+      "statuses": {
+        "PASS": 5
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-8.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-9.log",
+      "complete": true,
+      "recorded_results": 1,
+      "reported_total": 1,
+      "statuses": {
+        "PASS": 1
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-10.log",
+      "complete": true,
+      "recorded_results": 1,
+      "reported_total": 1,
+      "statuses": {
+        "PASS": 1
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-11.log",
+      "complete": true,
+      "recorded_results": 7,
+      "reported_total": 7,
+      "statuses": {
+        "PASS": 7
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-12.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-13.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-14.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-15.log",
+      "complete": true,
+      "recorded_results": 18,
+      "reported_total": 18,
+      "statuses": {
+        "PASS": 18
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-16.log",
+      "complete": true,
+      "recorded_results": 8,
+      "reported_total": 8,
+      "statuses": {
+        "PASS": 8
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-17.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-18.log",
+      "complete": true,
+      "recorded_results": 6,
+      "reported_total": 6,
+      "statuses": {
+        "PASS": 6
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-19.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-20.log",
+      "complete": true,
+      "recorded_results": 9,
+      "reported_total": 9,
+      "statuses": {
+        "PASS": 9
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-21.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-22.log",
+      "complete": true,
+      "recorded_results": 75,
+      "reported_total": 75,
+      "statuses": {
+        "PASS": 75
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-23.log",
+      "complete": true,
+      "recorded_results": 12,
+      "reported_total": 12,
+      "statuses": {
+        "KNOWN_FAILING": 1,
+        "PASS": 11
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-24.log",
+      "complete": true,
+      "recorded_results": 21,
+      "reported_total": 21,
+      "statuses": {
+        "PASS": 21
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-25.log",
+      "complete": true,
+      "recorded_results": 1,
+      "reported_total": 1,
+      "statuses": {
+        "PASS": 1
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-26.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-27.log",
+      "complete": true,
+      "recorded_results": 20,
+      "reported_total": 20,
+      "statuses": {
+        "PASS": 16,
+        "TO_DO": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-28.log",
+      "complete": true,
+      "recorded_results": 12,
+      "reported_total": 12,
+      "statuses": {
+        "PASS": 5,
+        "TO_DO": 7
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-29.log",
+      "complete": true,
+      "recorded_results": 3,
+      "reported_total": 3,
+      "statuses": {
+        "PASS": 3
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-30.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-31.log",
+      "complete": true,
+      "recorded_results": 9,
+      "reported_total": 9,
+      "statuses": {
+        "PASS": 9
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-32.log",
+      "complete": true,
+      "recorded_results": 10,
+      "reported_total": 10,
+      "statuses": {
+        "PASS": 10
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-33.log",
+      "complete": true,
+      "recorded_results": 18,
+      "reported_total": 18,
+      "statuses": {
+        "KNOWN_FAILING": 1,
+        "PASS": 17
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-34.log",
+      "complete": true,
+      "recorded_results": 2,
+      "reported_total": 2,
+      "statuses": {
+        "PASS": 2
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-35.log",
+      "complete": true,
+      "recorded_results": 6,
+      "reported_total": 6,
+      "statuses": {
+        "PASS": 6
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "tests-36.log",
+      "complete": true,
+      "recorded_results": 13,
+      "reported_total": 13,
+      "statuses": {
+        "PASS": 13
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    }
+  ]
+}

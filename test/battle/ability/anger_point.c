@@ -69,6 +69,7 @@ SINGLE_BATTLE_TEST("Anger Point triggers when a substitute takes the hit (Gen4)"
 SINGLE_BATTLE_TEST("Anger Point does not trigger when a substitute takes the hit (Gen5+)")
 {
     GIVEN {
+        WITH_CONFIG(B_UPDATED_ABILITY_DATA, GEN_5);
         ASSUME(MoveAlwaysCrits(MOVE_FROST_BREATH));
         ASSUME(GetMoveEffect(MOVE_SUBSTITUTE) == EFFECT_SUBSTITUTE);
         PLAYER(SPECIES_PRIMEAPE) { Ability(ABILITY_ANGER_POINT); Speed(2); }

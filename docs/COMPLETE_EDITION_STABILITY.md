@@ -81,3 +81,104 @@ read-only position inspection and a command journal. Emulator checkpoints are
 private test aids; the native battery-save check above used a fresh process.
 The controller now attaches the ordinary battery-save file, can advance dialogue
 until field controls unlock, and stops walking when a wild battle begins.
+
+## Additional regression triage
+
+Encore's modern duration fixtures now explicitly select modern target/input
+rules. Its sleep fixture fixes the sleep RNG because sleep length is not what
+that case tests. The Champions priority fixture enables dynamic turn order.
+All 18 Encore cases pass. Dancer's four forced-move interaction cases also pass.
+Mental Herb and Illuminate now honour runtime configuration consistently in
+battle/AI checks; production Gen 4 defaults are unchanged. Mental Herb (8),
+Anger Point (4) and Keen Eye (6) groups pass. New production regressions confirm
+that Gen 4 Mental Herb does not cure Torment/Taunt/Heal Block and that Illuminate
+does not block Sand Attack. The Complete Edition group passes 26 tests before
+adding the new legendary-trail tests. These targeted counts are not a replacement
+for a completed new broad run.
+
+## Legendary trails under verification
+
+Twenty-nine distinct world encounters supplement the six original Hoenn legend
+events. Their hints, locations, capture-only completion and quest prerequisites
+are authored in data/complete_edition_world.json. See the legendary trails guide.
+Generation is timestamp-idempotent. Static checks cover 84 added object placements,
+unique encounters, cancel-safe hints and an acyclic prerequisite graph. The new
+native gates/encounter factories and ordinary event interactions are being checked;
+this is not completed event/playthrough QA.
+
+The ordinary new-game run defeated the first rival on Route 103 and completed
+her following dialogue. This remains an early-game playthrough.
+
+## Continued development — Alpha 2.2
+
+The first complete audit of this continued work recorded **5,897 outcomes**:
+5,212 PASS; 170 failing outcomes (158 FAIL, 6 FLAKY, 6 INVALID);
+67 ASSUMPTION_FAIL, 18 KNOWN_FAILING, 421 TO_DO and 9 expected outcomes.
+There were no TIMEOUT or ERROR outcomes. The complete machine-readable backlog
+is in `qa/2026-10-15-before-final-fixture-fixes.json`. This snapshot precedes
+the Growth correction and the final targeted fixture corrections.
+
+A real production defect was found in Growth: sunlight incorrectly doubled
+its stat boost under Gen 4. Both battle execution and AI now restrict that
+bonus to Gen 5+. Gen 4 Growth raises Special Attack by one, with or without sun.
+Its Attack data now follows the same generation switch as its description.
+
+Generation-aware test accessors now handle Growth, Sheer Cold and Transform
+consistently in the Gen 4 build. Modern Embargo reflection tests explicitly
+select modern flags; a separate production-default regression verifies that
+Gen 4 Magic Coat does not reflect Embargo. The Mega Transform fixture selects
+Gen 5+ form-change rules, while a separate Gen 4 battle verifies Ditto identity
+after fainting. Universal-shiny expectations also apply to Transform.
+
+The experience fixture now verifies both Gen 4 trainer bonus/shared awards and
+modern full awards. Future Sight comparisons use an equally powerful non-Psychic
+move so that STAB, Twisted Spoon and Psychic Gem do not contaminate the baseline.
+Color Change explicitly checks typeless Gen 4 and typed Gen 5 delayed attacks.
+Healing Wish trainer-slide cases select their required end-of-turn replacement
+rules. All 75 trainer-slide cases pass; Future Sight (21), experience (9),
+stat-change leak checks (2), Sheer Cold/OHKO (16), Embargo (17) and Transform (13)
+pass in focused reruns. Upstream TODO and KNOWN_FAILING cases remain recorded.
+The Complete Edition group passes **34 tests**. No move or ability was removed.
+
+Normal-input QA now includes Pokédex handover, running shoes, a shiny Sentret
+caught on Route 101 and added to the party/Dex, healing both party members,
+and victories over Calvin and Rick on Route 102. A fresh production emulator
+process loaded the ordinary battery save with the Pokédex progress intact.
+The legendary hints menu and pre-Mind-Badge catalogue refusal were checked
+in the production ROM. The tester selected Fast text through the ordinary
+Options menu. This is still early-game QA, not a full story playthrough.
+
+The artwork service rejected the requested Gold sprite; no replacement trainer
+portrait is claimed. Remaining portraits, full story/Frontier/event interaction
+QA and unresolved broad failures continue to block a final release.
+
+## Final Alpha 2.2 audit snapshot
+
+The final native rerun completed **5,905 outcomes**: **5,253 PASS; 139 failing
+outcomes (123 FAIL, 10 FLAKY, 6 INVALID); no TIMEOUT or ERROR**. It also recorded
+65 ASSUMPTION_FAIL, 18 KNOWN_FAILING, 421 TO_DO and 9 expected outcomes.
+See `qa/2026-10-15-alpha-2-2-full.json` for every unresolved case.
+This improves on the prior 185-outcome snapshot but does not pass the full suite.
+The 10 flaky outcomes include repeated outcomes from unstable tests, not ten
+confirmed independent gameplay defects. Every unresolved result remains visible.
+
+Native totals agree with all 5,905 recorded outcomes and ARM-object integrity
+passes. Editing the long-running shell wrapper during execution caused a
+trailing parse error after these totals were saved; the current wrapper passes
+`bash -n`. This trailing wrapper error is separate from the native failures.
+
+The expanded focused profile completed **37 groups, with 403 PASS, 4 assumption
+skips, 2 upstream KNOWN_FAILING and 11 TODO outcomes; no unexpected failures**.
+This is a scoped gate, not a replacement for the 139-failure broad backlog.
+Its group-by-group report is `qa/2026-10-15-alpha-2-2-focused.json`.
+
+The ordinary-input run also defeated Allen, then lost to Tiana with both
+party Pokémon fainted. The normal whiteout sequence returned the player to
+Oldale and Nurse Joy restored both Pokémon. This exercises the loss/recovery
+path; it is not a Tiana victory or further story progress.
+
+The unchanged current shell wrapper was then executed normally and completed
+all 37 focused groups with exit status 0, reproducing the 403-pass profile.
+The final Alpha 2.2 production ROM was loaded in a fresh mGBA process using the
+ordinary battery save after whiteout/recovery. Mudkip (level 9, 36/36 HP) and
+the caught Sentret (level 3, 15/15 HP) were both present and healed.

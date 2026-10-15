@@ -151,6 +151,7 @@ SINGLE_BATTLE_TEST("Cheek Pouch doesn't activate when using a berry from the bag
 SINGLE_BATTLE_TEST("Cheek Pouch doesn't activate under Heal Block's effect")
 {
     GIVEN {
+        WITH_CONFIG(B_HEAL_BLOCKING, GEN_5);
         ASSUME(GetMoveEffect(MOVE_HEAL_BLOCK) == EFFECT_HEAL_BLOCK);
         ASSUME(GetMoveEffect(MOVE_SUPER_FANG) == EFFECT_FIXED_PERCENT_DAMAGE);
         ASSUME(gItemsInfo[ITEM_ORAN_BERRY].holdEffect == HOLD_EFFECT_RESTORE_HP);
