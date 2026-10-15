@@ -1,0 +1,6 @@
+{
+  "name": "Emerald Complete Edition",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential git binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3",
+  "customizations": {"vscode": {"extensions": ["ms-vscode.cpptools"]}}
+}

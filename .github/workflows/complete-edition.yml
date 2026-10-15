@@ -1,0 +1,28 @@
+name: Complete Edition
+on:
+  push:
+    branches: [complete-edition-development]
+  pull_request:
+    branches: [complete-edition-development]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ARM toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+      - name: Build
+        run: ./tools/complete_edition/build.sh
+      - name: Game tests in headless mGBA
+        run: make -j4 -O KEEP_TEMPS=1 check
+      - name: Save verification logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: complete-edition-verification
+          path: build/complete-edition-logs/
