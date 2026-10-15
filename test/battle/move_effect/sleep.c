@@ -10,7 +10,6 @@ ASSUMPTIONS
 SINGLE_BATTLE_TEST("Hypnosis inflicts 1-3 turns of sleep (Gen9-)")
 {
     u32 turns, count;
-    ASSUME(B_SLEEP_TURNS >= GEN_5);
     PARAMETRIZE { turns = 1; }
     PARAMETRIZE { turns = 2; }
     PARAMETRIZE { turns = 3; }
@@ -42,7 +41,6 @@ SINGLE_BATTLE_TEST("Hypnosis inflicts 1-3 turns of sleep (Gen9-)")
 SINGLE_BATTLE_TEST("Hypnosis inflicts 1-2 turns of sleep (Champions)")
 {
     u32 turns, count;
-    ASSUME(B_SLEEP_TURNS >= GEN_5);
     PARAMETRIZE { turns = 1; }
     PARAMETRIZE { turns = 2; }
     GIVEN {

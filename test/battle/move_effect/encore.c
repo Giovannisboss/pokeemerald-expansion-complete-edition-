@@ -15,6 +15,7 @@ SINGLE_BATTLE_TEST("Encore forces consecutive move uses for 3 turns: Encore used
     PARAMETRIZE { encoreUser = player; encoreTarget = opponent; speedPlayer = 20; speedOpponent = 10; }
     GIVEN {
         WITH_CONFIG(B_ENCORE_TURNS, GEN_5);
+        WITH_CONFIG(B_ENCORE_TARGET, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { Speed(speedPlayer); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(speedOpponent); }
     } WHEN {
@@ -43,6 +44,7 @@ SINGLE_BATTLE_TEST("Encore forces consecutive move uses for 4 turns: Encore used
     PARAMETRIZE { encoreUser = player; encoreTarget = opponent; speedPlayer = 10; speedOpponent = 20; }
     GIVEN {
         WITH_CONFIG(B_ENCORE_TURNS, GEN_5);
+        WITH_CONFIG(B_ENCORE_TARGET, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { Speed(speedPlayer); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(speedOpponent); }
     } WHEN {

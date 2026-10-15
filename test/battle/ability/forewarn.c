@@ -20,15 +20,15 @@ SINGLE_BATTLE_TEST("Forewarn randomly chooses between same-power moves on one op
 {
     PASSES_RANDOMLY(1, 3, RNG_FOREWARN);
     GIVEN {
-        ASSUME(GetMovePower(MOVE_TACKLE) == GetMovePower(MOVE_POUND));
-        ASSUME(GetMovePower(MOVE_TACKLE) == GetMovePower(MOVE_SCRATCH));
+        ASSUME(GetMovePower(MOVE_QUICK_ATTACK) == GetMovePower(MOVE_POUND));
+        ASSUME(GetMovePower(MOVE_QUICK_ATTACK) == GetMovePower(MOVE_SCRATCH));
         PLAYER(SPECIES_MUSHARNA) { Ability(ABILITY_FOREWARN); }
-        OPPONENT(SPECIES_ZUBAT) { Moves(MOVE_TACKLE, MOVE_POUND, MOVE_SCRATCH, MOVE_CELEBRATE); }
+        OPPONENT(SPECIES_ZUBAT) { Moves(MOVE_QUICK_ATTACK, MOVE_POUND, MOVE_SCRATCH, MOVE_CELEBRATE); }
     } WHEN {
         TURN {}
     } SCENE {
         ABILITY_POPUP(player, ABILITY_FOREWARN);
-        MESSAGE("Forewarn alerted Musharna to the opposing Zubat's Tackle!");
+        MESSAGE("Forewarn alerted Musharna to the opposing Zubat's Quick Attack!");
     }
 }
 
@@ -36,24 +36,25 @@ DOUBLE_BATTLE_TEST("Forewarn randomly chooses between opponents with same-power 
 {
     PASSES_RANDOMLY(1, 4, RNG_FOREWARN);
     GIVEN {
-        ASSUME(GetMovePower(MOVE_TACKLE) == GetMovePower(MOVE_POUND));
-        ASSUME(GetMovePower(MOVE_TACKLE) == GetMovePower(MOVE_SCRATCH));
-        ASSUME(GetMovePower(MOVE_TACKLE) == GetMovePower(MOVE_QUICK_ATTACK));
+        ASSUME(GetMovePower(MOVE_SCRATCH) == GetMovePower(MOVE_POUND));
+        ASSUME(GetMovePower(MOVE_SCRATCH) == GetMovePower(MOVE_SCRATCH));
+        ASSUME(GetMovePower(MOVE_SCRATCH) == GetMovePower(MOVE_QUICK_ATTACK));
         PLAYER(SPECIES_MUSHARNA) { Ability(ABILITY_FOREWARN); }
         PLAYER(SPECIES_WYNAUT);
-        OPPONENT(SPECIES_ZUBAT) { Moves(MOVE_TACKLE, MOVE_POUND, MOVE_PECK, MOVE_CELEBRATE); }
+        OPPONENT(SPECIES_ZUBAT) { Moves(MOVE_SCRATCH, MOVE_POUND, MOVE_PECK, MOVE_CELEBRATE); }
         OPPONENT(SPECIES_EXCADRILL) { Moves(MOVE_SCRATCH, MOVE_QUICK_ATTACK, MOVE_ABSORB, MOVE_CELEBRATE); }
     } WHEN {
         TURN {}
     } SCENE {
         ABILITY_POPUP(playerLeft, ABILITY_FOREWARN);
-        MESSAGE("Forewarn alerted Musharna to the opposing Zubat's Tackle!");
+        MESSAGE("Forewarn alerted Musharna to the opposing Zubat's Scratch!");
     }
 }
 
 DOUBLE_BATTLE_TEST("Forewarn does not trigger if a mon switches in while the opposing field is empty")
 {
     GIVEN {
+        WITH_CONFIG(B_HEALING_WISH_SWITCH, GEN_5);
         ASSUME(GetMoveEffect(MOVE_U_TURN) == EFFECT_HIT_ESCAPE);
         ASSUME(GetMoveEffect(MOVE_HEALING_WISH) == EFFECT_HEALING_WISH);
         PLAYER(SPECIES_WYNAUT);

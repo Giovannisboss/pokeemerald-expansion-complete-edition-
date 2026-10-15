@@ -9,7 +9,6 @@ ASSUMPTIONS
 SINGLE_BATTLE_TEST("Dark Void inflicts 1-3 turns of sleep (Gen9-)")
 {
     u32 turns, count;
-    ASSUME(B_SLEEP_TURNS >= GEN_5);
     PARAMETRIZE { turns = 1; }
     PARAMETRIZE { turns = 2; }
     PARAMETRIZE { turns = 3; }

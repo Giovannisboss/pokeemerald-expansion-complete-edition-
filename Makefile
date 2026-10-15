@@ -489,8 +489,15 @@ endif
 
 ifeq ($(TEST),1)
 $(TEST_BUILDDIR)/%.o: $(TEST_SUBDIR)/%.c
+ifneq ($(KEEP_TEMPS),1)
 	@echo "$(CC1) <flags> -o $@ $<"
 	@$(CPP) $(CPPFLAGS) $< | $(PREPROC) -i -g $(ASSETS_DIR_NAME) $< charmap.txt | $(CC1) $(CFLAGS) -o - - | cat - <(echo -e ".text\n\t.align\t2, 0") | $(AS) $(ASFLAGS) -o $@ -
+else
+	@$(CPP) $(CPPFLAGS) $< -o $(TEST_BUILDDIR)/$*.i
+	@$(PREPROC) -g $(ASSETS_DIR_NAME) $(TEST_BUILDDIR)/$*.i charmap.txt | $(CC1) $(CFLAGS) -o $(TEST_BUILDDIR)/$*.s
+	@echo -e ".text\n\t.align\t2, 0\n" >> $(TEST_BUILDDIR)/$*.s
+	$(AS) $(ASFLAGS) -o $@ $(TEST_BUILDDIR)/$*.s
+endif
 
 $(TEST_BUILDDIR)/%.d: $(TEST_SUBDIR)/%.c
 	$(SCANINC) -M $@ -g $(ASSETS_DIR_NAME) $(INCLUDE_SCANINC_ARGS) -I tools/agbcc/include $<

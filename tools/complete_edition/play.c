@@ -1,7 +1,9 @@
 // Interactive headless mGBA controller for reproducible, button-only play QA.
 // Host build: gcc -O2 -Wall -Wextra play.c -lmgba -o ce-play
 // Commands: run KEY_MASK FRAMES, pulse KEY_MASK FRAMES, shot PATH,
-// save PATH, load PATH, read HEX_ADDRESS BYTE_COUNT, position HEX_POINTER, quit.
+// save PATH, load PATH, read HEX_ADDRESS BYTE_COUNT, position HEX_POINTER,
+// advance HEX_FIELD_LOCK_ADDRESS MAX_FRAMES,
+// walk KEY_MASK MAX_FRAMES HEX_BATTLE_FLAG_ADDRESS, quit.
 #include <mgba/core/core.h>
 #include <mgba/core/config.h>
 #include <mgba/core/log.h>
@@ -33,6 +35,10 @@ int main(int argc, char **argv)
     color_t *pixels = calloc(w * h, sizeof(*pixels));
     if (!pixels || !mCoreLoadFile(core, argv[1])) return 4;
     core->setVideoBuffer(core, pixels, w);
+    if (!mCoreAutoloadSave(core)) {
+        fprintf(stderr, "Could not attach battery save beside the ROM\n");
+        return 5;
+    }
     core->reset(core);
     char line[2048], command[32], path[1900];
     puts("READY"); fflush(stdout);
@@ -49,6 +55,23 @@ int main(int argc, char **argv)
                 core->runFrame(core);
             }
             core->setKeys(core, 0);
+        } else if (!strcmp(command, "walk") && sscanf(line, "%*s %u %u %x", &keys, &frames, &address) == 3
+                   && frames <= 36000 && (keys == 16 || keys == 32 || keys == 64 || keys == 128)) {
+            unsigned i;
+            for (i = 0; i < frames && !(core->busRead8(core, address) & 2); i++) {
+                core->setKeys(core, keys);
+                core->runFrame(core);
+            }
+            core->setKeys(core, 0);
+            printf("WALK %u frames%s\n", i, core->busRead8(core, address) & 2 ? " (battle)" : "");
+        } else if (!strcmp(command, "advance") && sscanf(line, "%*s %x %u", &address, &frames) == 2 && frames <= 36000) {
+            unsigned i;
+            for (i = 0; i < frames && core->busRead8(core, address); i++) {
+                core->setKeys(core, i % 60 < 12 ? 1 : 0);
+                core->runFrame(core);
+            }
+            core->setKeys(core, 0);
+            printf("ADVANCE %u frames; lock=%u%s\n", i, core->busRead8(core, address), i == frames ? " (limit)" : "");
         } else if (!strcmp(command, "shot") && sscanf(line, "%*s %1899s", path) == 1) {
             FILE *out = fopen(path, "wb");
             if (!out) { perror(path); continue; }

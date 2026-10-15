@@ -21,9 +21,13 @@ Frontier and hardware checks in COMPLETE_EDITION_STATUS.md still apply.
 - Added production-default battle regressions for physical Water attacks,
   special Ghost attacks, Technician and Charge. No move or ability was removed.
 
-The complete focused run passed **136 tests, with 4 assumption skips and no
-failures**, across all twelve groups in tools/complete_edition/test.sh.
-The six new battle regressions are included in the 23 Complete Edition tests.
+The complete focused run passed **147 tests, with 4 assumption skips and no
+failures**, across all fifteen groups in tools/complete_edition/test.sh.
+The seven new battle regressions are included in the 24 Complete Edition tests.
+Sleep fixtures now apply their generation settings consistently; an additional
+regression covers all four Gen 4 sleep durations. Forewarn's empty-field fixture
+explicitly selects Gen 5 Healing Wish timing instead of assuming it under Gen 4.
+Its equal-power fixtures now use moves that actually share their power in Gen 4.
 This profile is deliberately scoped; it does not imply the upstream suite passes.
 
 ## Broad audit
@@ -34,8 +38,18 @@ The completed audit before the Charge corrections recorded 5,901 outcomes:
 failures (including two intentional crash tests). The count improves on the
 previous completed audit, but still blocks a finished-release claim.
 
-A subsequent full run is in progress. Do not subtract focused fixes from that
-old total and present the arithmetic as a completed new full run.
+A subsequent run with 5,811 outcomes was rejected as regression evidence: seven
+empty test objects left after an interrupted streaming compile omitted tests.
+All seven were removed and rebuilt. The Makefile now honours KEEP_TEMPS for
+tests as well as production code; object guards validate ARM ELF headers, section
+table bounds and expected source-object coverage. Production objects were intact.
+A deliberately failing compiler is correctly rejected with exit status 2.
+The integrity-checked full run completed with **5,891 outcomes: 5,189 PASS;
+185 failing outcomes (170 FAIL, 6 FLAKY, 6 INVALID, 3 ERROR); no TIMEOUT;
+69 ASSUMPTION_FAIL; 18 KNOWN_FAILING; 421 TO_DO; and 9 expected outcomes**.
+All 1,910 ARM objects were validated, including all 973 test source objects.
+This snapshot preceded the two Forewarn equal-power fixture corrections and
+the starter-preview palette change. The broad suite still exits with failure.
 
 The check script now continues through all focused groups after a failure,
 retains its failing exit status, streams output, and writes machine-readable
@@ -48,9 +62,22 @@ retained explicitly.
 The headless controller uses native button inputs and exposes no memory-write
 command. The opening title/menu, truck exit, house scenes, clock setup, rival
 introduction, Birch rescue sequence and starter-selection UI were exercised.
-Mudkip was selected and the first battle began with a visibly shiny Zigzagoon.
+Mudkip was selected, Birch's rescue battle was won, and the lab dialogue completed.
+An ordinary in-game save was written and loaded in a fresh emulator process with
+the rebuilt ROM, without loading a checkpoint. Location, party, shiny palette,
+level, HP, nature and moves survived. mGBA stores 128 KiB of flash plus its RTC
+trailer. A normal Route 101 grass encounter produced a visibly shiny Pidgey
+before the first badge, confirming natural Kanto availability in play.
 This is opening QA, not a completed story or Frontier playthrough.
+
+Normal play also exercised Centre healing and the paid Modest battle-nature
+service, and displayed BOX17 by scrolling left from BOX1 in the ordinary PC UI.
+The opening starter confirmation used a normal palette despite the actual shiny
+starter; it now follows the universal-shiny configuration. A fresh new game
+visually confirmed the shiny Torchic preview in the rebuilt production ROM.
 
 The optional controller supports image captures, emulator checkpoints,
 read-only position inspection and a command journal. Emulator checkpoints are
-private test aids; actual in-game saving/reloading must also be tested.
+private test aids; the native battery-save check above used a fresh process.
+The controller now attaches the ordinary battery-save file, can advance dialogue
+until field controls unlock, and stops walking when a wild battle begins.

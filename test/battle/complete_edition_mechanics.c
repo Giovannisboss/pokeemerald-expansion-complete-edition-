@@ -2,6 +2,29 @@
 #include "test/battle.h"
 #include "battle_stat_change.h"
 
+SINGLE_BATTLE_TEST("Complete Edition: Gen4 sleep supports one to four immobile turns")
+{
+    u32 turns;
+    PARAMETRIZE { turns = 1; }
+    PARAMETRIZE { turns = 2; }
+    PARAMETRIZE { turns = 3; }
+    PARAMETRIZE { turns = 4; }
+    GIVEN {
+        WITH_CONFIG(B_SLEEP_TURNS, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET) { Speed(2); }
+        OPPONENT(SPECIES_WOBBUFFET) { Speed(1); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_HYPNOSIS, WITH_RNG(RNG_SLEEP_TURNS, turns + 1)); MOVE(opponent, MOVE_CELEBRATE); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_HYPNOSIS, player);
+        MESSAGE("The opposing Wobbuffet fell asleep!");
+        STATUS_ICON(opponent, sleep: TRUE);
+        NOT ANIMATION(ANIM_TYPE_MOVE, MOVE_CELEBRATE, opponent);
+    } THEN {
+        EXPECT_EQ(opponent->status1 & STATUS1_SLEEP, STATUS1_SLEEP_TURN(turns));
+    }
+}
+
 SINGLE_BATTLE_TEST("Complete Edition: empty stat-change queues advance to the next battler")
 {
     GIVEN {
