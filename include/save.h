@@ -12,7 +12,7 @@
 #define NUM_SAVE_SLOTS 2
 
 // If the sector's signature field is not this value then the sector is either invalid or empty.
-#define SECTOR_SIGNATURE 0x8012025
+#define SECTOR_SIGNATURE 0xCE000002 // Complete Edition save format 2; rejects incompatible Alpha 1 layouts.
 
 #define SPECIAL_SECTOR_SENTINEL 0xB39D
 

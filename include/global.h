@@ -143,7 +143,8 @@
 
 #define ROUND_BITS_TO_BYTES(numBits) DIV_ROUND_UP(numBits, 8)
 
-#define NUM_DEX_FLAG_BYTES ROUND_BITS_TO_BYTES(POKEMON_SLOTS_NUMBER)
+// Keep save layout identical in production and the all-species test runner.
+#define NUM_DEX_FLAG_BYTES ROUND_BITS_TO_BYTES(NATIONAL_DEX_HYDRAPPLE + 1)
 #define NUM_FLAG_BYTES ROUND_BITS_TO_BYTES(FLAGS_COUNT)
 #define NUM_TRENDY_SAYING_BYTES ROUND_BITS_TO_BYTES(NUM_TRENDY_SAYINGS)
 
@@ -272,6 +273,7 @@ struct SaveBlock3
 #if APRICORN_TREE_COUNT > 0
     u8 apricornTrees[NUM_APRICORN_TREE_BYTES];
 #endif
+    u8 ceStorageOverflow[CE_PC_OVERFLOW_SAVEBLOCK3];
 }; /* max size 1624 bytes */
 
 extern struct SaveBlock3 *gSaveBlock3Ptr;
@@ -623,7 +625,8 @@ struct SaveBlock2
 #endif //FREE_RECORD_MIXING_HALL_RECORDS
     /*0x624*/ u16 contestLinkResults[CONTEST_CATEGORIES_COUNT][CONTESTANT_COUNT];
     /*0x64C*/ struct BattleFrontier frontier;
-}; // sizeof=0xF2C
+    u8 ceStorageOverflow[CE_PC_OVERFLOW_SAVEBLOCK2];
+}; // Complete Edition: exactly one sector of save data
 
 extern struct SaveBlock2 *gSaveBlock2Ptr;
 
@@ -1210,7 +1213,8 @@ struct SaveBlock1
     u8 rivalName[PLAYER_NAME_LENGTH + 1];
     struct DaycareMon route5DayCareMon;
 #endif
-    // sizeof: 0x3???
+    u8 ceStorageOverflow[CE_PC_OVERFLOW_SAVEBLOCK1];
+    // Complete Edition: exactly four sectors of save data
 };
 
 extern struct SaveBlock1 *gSaveBlock1Ptr;

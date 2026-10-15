@@ -8,16 +8,6 @@
 #include "script_pokemon_util.h"
 #include "string_util.h"
 
-static const u16 sStarters[] = {
-    SPECIES_BULBASAUR, SPECIES_CHARMANDER, SPECIES_SQUIRTLE,
-    SPECIES_CHIKORITA, SPECIES_CYNDAQUIL, SPECIES_TOTODILE,
-    SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP,
-    SPECIES_TURTWIG, SPECIES_CHIMCHAR, SPECIES_PIPLUP,
-};
-
-// Named aliases live in flags.h. This reserved range is never used by upstream scripts.
-#define CE_STARTER_FLAG_FIRST FLAG_CE_STARTER_BULBASAUR
-
 bool32 CompleteEditionCanResearch(u32 dex, bool32 champion)
 {
     return champion && dex >= 1 && dex <= 493;
@@ -55,27 +45,4 @@ void Script_CEPrepareEncounter(void)
     // Repeats are intentional: running away, losing or failing a capture never locks a species.
     CreateScriptedWildMon(NationalPokedexNumToSpecies(dex), 50, ITEM_NONE);
     gSpecialVar_Result = TRUE;
-}
-
-void Script_CEStarterMenu(void)
-{
-    for (u32 i = 0; i < ARRAY_COUNT(sStarters); i++)
-        PushSpeciesChoice(sStarters[i], i);
-}
-
-void Script_CEGiveStarter(void)
-{
-    u32 index = gSpecialVar_Result;
-    gSpecialVar_Result = 1;
-    if (index >= ARRAY_COUNT(sStarters) || !FlagGet(FLAG_BADGE01_GET))
-        return;
-    if (FlagGet(CE_STARTER_FLAG_FIRST + index))
-    {
-        gSpecialVar_Result = 2;
-        return;
-    }
-    if (ScriptGiveMon(sStarters[index], 5, ITEM_NONE) == MON_CANT_GIVE)
-        return;
-    FlagSet(CE_STARTER_FLAG_FIRST + index);
-    gSpecialVar_Result = 0;
 }

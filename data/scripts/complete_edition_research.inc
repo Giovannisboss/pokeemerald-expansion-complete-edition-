@@ -11,14 +11,7 @@ CE_Research_EventScript::
 	goto_if_eq VAR_RESULT, 2, CE_Research_EvolutionShop
 	goto CE_Research_End
 CE_Research_Starters:
-	goto_if_unset FLAG_BADGE01_GET, CE_Research_NotReady
-	callnative Script_CEStarterMenu
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, CE_Research_End
-	callnative Script_CEGiveStarter
-	goto_if_eq VAR_RESULT, 1, CE_Research_NoSpace
-	goto_if_eq VAR_RESULT, 2, CE_Research_Already
-	msgbox CE_Research_Text_Gift, MSGBOX_DEFAULT
+	msgbox CE_Research_Text_Habitats, MSGBOX_DEFAULT
 	goto CE_Research_End
 CE_Research_Expeditions:
 	goto_if_unset FLAG_SYS_GAME_CLEAR, CE_Research_NotChampion
@@ -37,15 +30,6 @@ CE_Research_Expeditions:
 	goto_if_eq VAR_RESULT, FALSE, CE_Research_End
 	dowildbattle
 	goto CE_Research_End
-CE_Research_NoSpace:
-	msgbox CE_Research_Text_NoSpace, MSGBOX_DEFAULT
-	goto CE_Research_End
-CE_Research_Already:
-	msgbox CE_Research_Text_Already, MSGBOX_DEFAULT
-	goto CE_Research_End
-CE_Research_NotReady:
-	msgbox CE_Research_Text_NotReady, MSGBOX_DEFAULT
-	goto CE_Research_End
 CE_Research_NotChampion:
 	msgbox CE_Research_Text_NotChampion, MSGBOX_DEFAULT
 CE_Research_End:
@@ -54,7 +38,7 @@ CE_Research_End:
 CE_Research_Text_Welcome:
 	.string "I coordinate BIRCH's research!\nWe study POKéMON from four regions.$"
 CE_Research_Text_Starters:
-	.string "Starter adoption$"
+	.string "Starter habitats$"
 CE_Research_Text_Expeditions:
 	.string "Research encounters$"
 CE_Research_Text_Kanto:
@@ -67,14 +51,6 @@ CE_Research_Text_Sinnoh:
 	.string "SINNOH$"
 CE_Research_Text_Explanation:
 	.string "Choose a species for a research battle.\nBring your own POKé BALLS!\pAll 493 species can be researched,\nincluding rare legends. Level: 50.\pYou may try again if a capture fails.$"
-CE_Research_Text_Gift:
-	.string "Please look after your new partner!\nIf your party was full, check the PC.$"
-CE_Research_Text_Already:
-	.string "You have already adopted that starter.$"
-CE_Research_Text_NoSpace:
-	.string "Make room in your party or PC first.$"
-CE_Research_Text_NotReady:
-	.string "Earn your first GYM BADGE,\nthen return to adopt starter POKéMON.$"
 CE_Research_Text_NotChampion:
 	.string "Research encounters are reserved\nfor the HOENN CHAMPION.$"
 
@@ -110,3 +86,6 @@ CE_Research_EvolutionItems:
 	.2byte ITEM_NONE
 CE_Research_Text_EvolutionShop:
 	.string "Evolution supplies$"
+
+CE_Research_Text_Habitats:
+	.string "Starters live at special sites across\nHOENN. Approach one to battle it!\pLook in forests, volcanic paths,\ncoastal areas and SHOAL CAVE.\pSome require more GYM BADGES.\nBring POKé BALLS and explore!\pA failed capture does not make\nthem disappear. You can try again.$"

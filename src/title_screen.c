@@ -602,8 +602,15 @@ static void VBlankCB(void)
     SetGpuReg(REG_OFFSET_BG1VOFS, gBattle_BG1_Y);
 }
 
+void CB2_InitCompleteEditionTitle(void);
+
 void CB2_InitTitleScreen(void)
 {
+    if (!IS_FRLG)
+    {
+        CB2_InitCompleteEditionTitle();
+        return;
+    }
     if (IS_FRLG)
     {
         CB2_InitTitleScreenFrlg();

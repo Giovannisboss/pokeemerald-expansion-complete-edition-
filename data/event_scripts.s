@@ -1744,3 +1744,5 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/complete_edition_research.inc"
 
 	.include "data/scripts/complete_edition_battles.inc"
+
+	.include "data/scripts/complete_edition_starters.inc"

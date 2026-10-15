@@ -72,7 +72,7 @@ struct
     SAVEBLOCK_CHUNK(struct PokemonStorage, 5),
     SAVEBLOCK_CHUNK(struct PokemonStorage, 6),
     SAVEBLOCK_CHUNK(struct PokemonStorage, 7),
-    SAVEBLOCK_CHUNK(struct PokemonStorage, 8), // SECTOR_ID_PKMN_STORAGE_END
+    {8 * SECTOR_DATA_SIZE, SECTOR_DATA_SIZE}, // PC tail continues in ceStorageOverflow buffers
 };
 
 // These will produce an error if a save struct is larger than the space
@@ -80,7 +80,39 @@ struct
 STATIC_ASSERT(sizeof(struct SaveBlock3) <= SAVE_BLOCK_3_CHUNK_SIZE * NUM_SECTORS_PER_SLOT, SaveBlock3FreeSpace);
 STATIC_ASSERT(sizeof(struct SaveBlock2) <= SECTOR_DATA_SIZE, SaveBlock2FreeSpace);
 STATIC_ASSERT(sizeof(struct SaveBlock1) <= SECTOR_DATA_SIZE * (SECTOR_ID_SAVEBLOCK1_END - SECTOR_ID_SAVEBLOCK1_START + 1), SaveBlock1FreeSpace);
-STATIC_ASSERT(sizeof(struct PokemonStorage) <= SECTOR_DATA_SIZE * (SECTOR_ID_PKMN_STORAGE_END - SECTOR_ID_PKMN_STORAGE_START + 1), PokemonStorageFreeSpace);
+#define CE_PC_PRIMARY_BYTES (SECTOR_DATA_SIZE * (SECTOR_ID_PKMN_STORAGE_END - SECTOR_ID_PKMN_STORAGE_START + 1))
+#define CE_PC_OVERFLOW_BYTES (CE_PC_OVERFLOW_SAVEBLOCK1 + CE_PC_OVERFLOW_SAVEBLOCK2 + CE_PC_OVERFLOW_SAVEBLOCK3)
+STATIC_ASSERT(sizeof(struct PokemonStorage) == CE_PC_PRIMARY_BYTES + CE_PC_OVERFLOW_BYTES, CompleteEditionStorageFitsExactly);
+STATIC_ASSERT(sizeof(struct SaveBlock1) == 4 * SECTOR_DATA_SIZE, CompleteEditionSaveBlock1Layout);
+STATIC_ASSERT(sizeof(struct SaveBlock2) == SECTOR_DATA_SIZE, CompleteEditionSaveBlock2Layout);
+
+static void PackExtendedStorage(void)
+{
+    const u8 *tail = (const u8 *)gPokemonStoragePtr + CE_PC_PRIMARY_BYTES;
+    memcpy(gSaveBlock1Ptr->ceStorageOverflow, tail, CE_PC_OVERFLOW_SAVEBLOCK1);
+    tail += CE_PC_OVERFLOW_SAVEBLOCK1;
+    memcpy(gSaveBlock2Ptr->ceStorageOverflow, tail, CE_PC_OVERFLOW_SAVEBLOCK2);
+    tail += CE_PC_OVERFLOW_SAVEBLOCK2;
+    memcpy(gSaveblock3.ceStorageOverflow, tail, CE_PC_OVERFLOW_SAVEBLOCK3);
+}
+
+static void UnpackExtendedStorage(void)
+{
+    u8 *tail = (u8 *)gPokemonStoragePtr + CE_PC_PRIMARY_BYTES;
+    memcpy(tail, gSaveBlock1Ptr->ceStorageOverflow, CE_PC_OVERFLOW_SAVEBLOCK1);
+    tail += CE_PC_OVERFLOW_SAVEBLOCK1;
+    memcpy(tail, gSaveBlock2Ptr->ceStorageOverflow, CE_PC_OVERFLOW_SAVEBLOCK2);
+    tail += CE_PC_OVERFLOW_SAVEBLOCK2;
+    memcpy(tail, gSaveblock3.ceStorageOverflow, CE_PC_OVERFLOW_SAVEBLOCK3);
+}
+
+// Unlike the upstream layout, PC data now uses SaveBlock3 footer chunks.
+// Protect those bytes too, so corruption is detected before selecting a slot.
+static u16 CalculateSaveSectorChecksum(const struct SaveSector *sector, u16 size)
+{
+    return CalculateChecksum((void *)sector->data, size)
+        ^ CalculateChecksum((void *)sector->saveBlock3Chunk, SAVE_BLOCK_3_CHUNK_SIZE);
+}
 
 COMMON_DATA u16 gLastWrittenSector = 0;
 COMMON_DATA u32 gLastSaveCounter = 0;
@@ -205,7 +237,7 @@ static u8 HandleWriteSector(u16 sectorId, const struct SaveSectorLocation *locat
 
     CopyFromSaveBlock3(sectorId, gReadWriteSector);
 
-    gReadWriteSector->checksum = CalculateChecksum(data, size);
+    gReadWriteSector->checksum = CalculateSaveSectorChecksum(gReadWriteSector, size);
 
     return TryWriteSector(sector, gReadWriteSector->data);
 }
@@ -341,7 +373,7 @@ static u8 HandleReplaceSector(u16 sectorId, const struct SaveSectorLocation *loc
 
     CopyFromSaveBlock3(sectorId, gReadWriteSector);
 
-    gReadWriteSector->checksum = CalculateChecksum(data, size);
+    gReadWriteSector->checksum = CalculateSaveSectorChecksum(gReadWriteSector, size);
 
     // Erase old save data
     EraseFlashSector(sector);
@@ -499,10 +531,12 @@ static u8 CopySaveSlotData(u16 sectorId, struct SaveSectorLocation *locations)
         ReadFlashSector(i + slotOffset, gReadWriteSector);
 
         id = gReadWriteSector->id;
+        if (id >= NUM_SECTORS_PER_SLOT)
+            continue;
         if (id == 0)
             gLastWrittenSector = i;
 
-        checksum = CalculateChecksum(gReadWriteSector->data, locations[id].size);
+        checksum = CalculateSaveSectorChecksum(gReadWriteSector, locations[id].size);
 
         // Only copy data for sectors whose signature and checksum fields are correct
         if (gReadWriteSector->signature == SECTOR_SIGNATURE && gReadWriteSector->checksum == checksum)
@@ -532,10 +566,11 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
     for (i = 0; i < NUM_SECTORS_PER_SLOT; i++)
     {
         ReadFlashSector(i, gReadWriteSector);
-        if (gReadWriteSector->signature == SECTOR_SIGNATURE)
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE
+            && gReadWriteSector->id < NUM_SECTORS_PER_SLOT)
         {
             signatureValid = TRUE;
-            checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
+            checksum = CalculateSaveSectorChecksum(gReadWriteSector, locations[gReadWriteSector->id].size);
             if (gReadWriteSector->checksum == checksum)
             {
                 saveSlot1Counter = gReadWriteSector->counter;
@@ -564,10 +599,11 @@ static u8 GetSaveValidStatus(const struct SaveSectorLocation *locations)
     for (i = 0; i < NUM_SECTORS_PER_SLOT; i++)
     {
         ReadFlashSector(i + NUM_SECTORS_PER_SLOT, gReadWriteSector);
-        if (gReadWriteSector->signature == SECTOR_SIGNATURE)
+        if (gReadWriteSector->signature == SECTOR_SIGNATURE
+            && gReadWriteSector->id < NUM_SECTORS_PER_SLOT)
         {
             signatureValid = TRUE;
-            checksum = CalculateChecksum(gReadWriteSector->data, locations[gReadWriteSector->id].size);
+            checksum = CalculateSaveSectorChecksum(gReadWriteSector, locations[gReadWriteSector->id].size);
             if (gReadWriteSector->checksum == checksum)
             {
                 saveSlot2Counter = gReadWriteSector->counter;
@@ -716,6 +752,10 @@ u8 HandleSavingData(u8 saveType)
     u32 *backupVar = gTrainerHillVBlankCounter;
 
     gTrainerHillVBlankCounter = NULL;
+    // Partial saves retain the last full-save PC tail, matching the unchanged
+    // primary PC sectors. Packing new PC data here would mix two snapshots.
+    if (saveType != SAVE_LINK && saveType != SAVE_EREADER)
+        PackExtendedStorage();
     UpdateSaveAddresses();
     switch (saveType)
     {
@@ -797,6 +837,7 @@ bool8 LinkFullSave_Init(void)
     if (gFlashMemoryPresent != TRUE)
         return TRUE;
     UpdateSaveAddresses();
+    PackExtendedStorage();
     CopyPartyAndObjectsToSave();
     RestoreSaveBackupVarsAndIncrement(gRamSaveSectorLocations);
     return FALSE;
@@ -892,6 +933,7 @@ u8 LoadGameSave(u8 saveType)
     case SAVE_NORMAL:
     default:
         status = TryLoadSaveSlot(FULL_SAVE_SLOT, gRamSaveSectorLocations);
+        UnpackExtendedStorage();
         CopyPartyAndObjectsFromSave();
         gSaveFileStatus = status;
         gGameContinueCallback = NULL;

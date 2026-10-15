@@ -134,37 +134,6 @@ TEST("Complete Edition: research rejects out-of-range species")
     EXPECT(!CompleteEditionCanResearch(0xFFFFFFFF, TRUE));
 }
 
-TEST("Complete Edition: starter adoption is shiny, badge gated, and once per starter")
-{
-    u32 index = 0;
-    const u16 starters[] = {
-        SPECIES_BULBASAUR, SPECIES_CHARMANDER, SPECIES_SQUIRTLE,
-        SPECIES_CHIKORITA, SPECIES_CYNDAQUIL, SPECIES_TOTODILE,
-        SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP,
-        SPECIES_TURTWIG, SPECIES_CHIMCHAR, SPECIES_PIPLUP,
-    };
-    for (u32 i = 0; i < ARRAY_COUNT(starters); i++)
-        PARAMETRIZE { index = i; }
-    ZeroPlayerPartyMons();
-    gPartiesCount[B_TRAINER_PLAYER] = 0;
-    FlagClear(FLAG_BADGE01_GET);
-    FlagClear(FLAG_CE_STARTER_BULBASAUR + index);
-    gSpecialVar_Result = index;
-    Script_CEGiveStarter();
-    EXPECT_EQ(gSpecialVar_Result, 1);
-    FlagSet(FLAG_BADGE01_GET);
-    gSpecialVar_Result = index;
-    Script_CEGiveStarter();
-    EXPECT_EQ(gSpecialVar_Result, 0);
-    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), starters[index]);
-    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_LEVEL), 5);
-    EXPECT(IsMonShiny(&gParties[B_TRAINER_PLAYER][0]));
-    gSpecialVar_Result = index;
-    Script_CEGiveStarter();
-    EXPECT_EQ(gSpecialVar_Result, 2);
-    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
-}
-
 #include "script_menu.h"
 #include "malloc.h"
 

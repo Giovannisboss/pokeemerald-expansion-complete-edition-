@@ -51,3 +51,13 @@ python3 tools/complete_edition/bps.py /private/clean-emerald.gba pokeemerald.gba
 ```
 
 The tool verifies the input SHA-1, the GBA size limit, and an apply-to-clean-ROM round trip with CRC32 checks before writing the patch. Neither input nor output ROM belongs in Git.
+
+## Alpha 2 save format
+
+Use a new game: Alpha 1 and original Emerald saves are deliberately rejected by the new `0xCE000002` sector signature. Keep earlier ROM/save pairs under their original names. Standard 128 KiB flash, alternating 14-sector snapshots and sectors 28–31 (Hall of Fame, Trainer Hill and recorded battles) remain.
+
+Seventeen boxes provide 510 normal slots. `PokemonStorage` is 41,276 bytes: 35,712 bytes remain in its nine sectors, and the 5,564-byte tail is copied losslessly into reserved SaveBlock1/2/3 buffers (2,584/1,424/1,556 bytes). SaveBlock sizes are 15,872 / 3,968 / 1,560 bytes. Legacy distribution/chat/multiplayer-record buffers and one unused post-Gen-4 fusion slot were reclaimed. Persistent Dex bitsets reserve the same extent in production and the all-species test runner.
+
+Full saves pack the PC tail; partial Frontier/link saves preserve the previous full PC snapshot. Footer chunks are now checksum-protected, and invalid sector IDs cannot index the layout table. `test/complete_edition_flash.c` exercises actual emulated flash writes, all 510 slots, metadata, corrupted newest-slot fallback and partial-save consistency.
+
+The title artwork is a committed indexed PNG with normal automatic asset conversion. Building needs no image-generation service. Artwork provenance and prompt are in `graphics/title_screen/COMPLETE_EDITION_ART.md`.

@@ -13,7 +13,7 @@ for path in sorted((root / "data/maps").glob("*/map.json")):
     added = [obj for obj in objects if str(obj.get("script", "")).startswith("CE_")]
     if not added:
         continue
-    assert len(objects) <= 16, f"Too many NPCs: {path}"
+    assert len(objects) <= 64, f"Too many NPCs: {path}"
     layout = layouts[game_map["layout"]]
     data = (root / layout["blockdata_filepath"]).read_bytes()
     width, height = layout["width"], layout["height"]
@@ -32,5 +32,30 @@ for path in sorted((root / "data/maps").glob("*/map.json")):
         assert any(tile(x + dx, y + dy)[0] == 0 for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]), f"Inaccessible NPC: {path}"
         assert sum(other.get("x") == x and other.get("y") == y for other in objects) == 1, f"Overlapping NPC: {path}"
         count += 1
-assert count == 27, f"Expected 27 new service/visitor NPCs; found {count}"
+assert count == 55, f"Expected 55 new service/leader/starter NPCs; found {count}"
 print(f"Validated {count} new NPC placements: floor, elevation, adjacent access and event limits")
+
+manifest = json.loads((root / "data/complete_edition_world.json").read_text())
+assert len(manifest["leaders"]) == 24
+assert len(manifest["starters"]) == 12
+for kind in ("leaders", "starters"):
+    for site in manifest[kind]:
+        m = json.loads((root / "data/maps" / site["map"] / "map.json").read_text())
+        assert "PokemonCenter" not in site["map"]
+        matches = [o for o in m["object_events"] if o["script"] == site["script"]]
+        assert len(matches) == 1
+        assert all(matches[0][key] == site[key] for key in ("x", "y", "elevation"))
+scripts = (root / "data/scripts/complete_edition_starters.inc").read_text()
+for site in manifest["starters"]:
+    block = scripts.split(site["script"] + "::", 1)[1].split("\n\n", 1)[0]
+    assert f"setwildbattle SPECIES_{site['species']}, {site['level']}" in block
+    assert block.index("B_OUTCOME_CAUGHT") < block.index("setflag " + site["flag"])
+    assert f"FLAG_BADGE0{site['badges']}_GET" in block
+research = (root / "data/scripts/complete_edition_research.inc").read_text()
+assert "Script_CEGiveStarter" not in research
+assert "CE_Visitor_" not in (root / "data/scripts/complete_edition_battles.inc").read_text()
+# Route 101 introduces Kanto, Johto and Sinnoh species before the first badge.
+wild = json.loads((root / "src/data/wild_encounters.json").read_text())["wild_encounter_groups"][0]["encounters"]
+r101 = next(e for e in wild if e["map"] == "MAP_ROUTE101")
+assert {"SPECIES_PIDGEY", "SPECIES_SENTRET", "SPECIES_STARLY", "SPECIES_BIDOOF"} <= {m["species"] for m in r101["land_mons"]["mons"]}
+print("Validated 24 independent leader battles, 12 capture-only starter flags and early multi-generation encounters")

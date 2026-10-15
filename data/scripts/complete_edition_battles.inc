@@ -1,179 +1,266 @@
-CE_Visitor_0::
+CE_Leader_BROCK::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE01_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_BROCK, 0
-	dynmultipush CE_Battles_Text_FALKNER, 1
-	dynmultipush CE_Battles_Text_ROARK, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_0_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_0_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_0_2
-	goto CE_Battles_End
-CE_Visitor_Battle_0_0:
+	msgbox CE_Leader_BROCK_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_BROCK, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_0_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_FALKNER, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_0_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_ROARK, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_1::
+CE_Leader_BROCK_Text:
+	.string "BROCK:\nThese tunnel walls tell a story.\pLet my ROCK POKéMON show you!$"
+
+CE_Leader_MISTY::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE02_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_MISTY, 0
-	dynmultipush CE_Battles_Text_BUGSY, 1
-	dynmultipush CE_Battles_Text_GARDENIA, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_1_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_1_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_1_2
-	goto CE_Battles_End
-CE_Visitor_Battle_1_0:
+	msgbox CE_Leader_MISTY_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_MISTY, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_1_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_BUGSY, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_1_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_GARDENIA, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_2::
+CE_Leader_MISTY_Text:
+	.string "MISTY:\nA beach is perfect for training!\pCare to challenge my WATER team?$"
+
+CE_Leader_LT__SURGE::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE03_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_LT__SURGE, 0
-	dynmultipush CE_Battles_Text_WHITNEY, 1
-	dynmultipush CE_Battles_Text_MAYLENE, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_2_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_2_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_2_2
-	goto CE_Battles_End
-CE_Visitor_Battle_2_0:
+	msgbox CE_Leader_LT__SURGE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_LT__SURGE, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_2_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_WHITNEY, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_2_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_MAYLENE, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_3::
+CE_Leader_LT__SURGE_Text:
+	.string "LT SURGE:\nThis power plant has real spark!\pReady for an electric battle?$"
+
+CE_Leader_ERIKA::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE04_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_ERIKA, 0
-	dynmultipush CE_Battles_Text_MORTY, 1
-	dynmultipush CE_Battles_Text_WAKE, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_3_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_3_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_3_2
-	goto CE_Battles_End
-CE_Visitor_Battle_3_0:
+	msgbox CE_Leader_ERIKA_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_ERIKA, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_3_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_MORTY, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_3_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_WAKE, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_4::
+CE_Leader_ERIKA_Text:
+	.string "ERIKA:\nThese flowers are lovely.\pShall we enjoy a GRASS battle?$"
+
+CE_Leader_KOGA::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE05_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_KOGA, 0
-	dynmultipush CE_Battles_Text_CHUCK, 1
-	dynmultipush CE_Battles_Text_FANTINA, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_4_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_4_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_4_2
-	goto CE_Battles_End
-CE_Visitor_Battle_4_0:
+	msgbox CE_Leader_KOGA_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_KOGA, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_4_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_CHUCK, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_4_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_FANTINA, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_5::
+CE_Leader_KOGA_Text:
+	.string "KOGA:\nRain hides even a ninja!\pCan you overcome my POISON team?$"
+
+CE_Leader_SABRINA::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE06_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_SABRINA, 0
-	dynmultipush CE_Battles_Text_JASMINE, 1
-	dynmultipush CE_Battles_Text_BYRON, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_5_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_5_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_5_2
-	goto CE_Battles_End
-CE_Visitor_Battle_5_0:
+	msgbox CE_Leader_SABRINA_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_SABRINA, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_5_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_JASMINE, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_5_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_BYRON, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_6::
+CE_Leader_SABRINA_Text:
+	.string "SABRINA:\nI sensed your arrival at this\ptower.\nWill you test your focus against\pmine?$"
+
+CE_Leader_BLAINE::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE07_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_BLAINE, 0
-	dynmultipush CE_Battles_Text_PRYCE, 1
-	dynmultipush CE_Battles_Text_CANDICE, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_6_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_6_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_6_2
-	goto CE_Battles_End
-CE_Visitor_Battle_6_0:
+	msgbox CE_Leader_BLAINE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_BLAINE, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_6_1:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_PRYCE, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_Battle_6_2:
-	trainerbattle_no_intro TRAINER_CE_VISITOR_CANDICE, CE_Battles_Text_Defeat
-	goto CE_Battles_End
-CE_Visitor_7::
+CE_Leader_BLAINE_Text:
+	.string "BLAINE:\nVolcanic heat fuels my POKéMON!\pCan you handle my FIRE team?$"
+
+CE_Leader_GIOVANNI::
 	lock
 	faceplayer
 	goto_if_unset FLAG_BADGE08_GET, CE_Battles_NotReady
-	msgbox CE_Battles_Text_Visitors, MSGBOX_DEFAULT
-	dynmultipush CE_Battles_Text_GIOVANNI, 0
-	dynmultipush CE_Battles_Text_CLAIR, 1
-	dynmultipush CE_Battles_Text_VOLKNER, 2
-	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_eq VAR_RESULT, 0, CE_Visitor_Battle_7_0
-	goto_if_eq VAR_RESULT, 1, CE_Visitor_Battle_7_1
-	goto_if_eq VAR_RESULT, 2, CE_Visitor_Battle_7_2
-	goto CE_Battles_End
-CE_Visitor_Battle_7_0:
+	msgbox CE_Leader_GIOVANNI_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_GIOVANNI, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_7_1:
+CE_Leader_GIOVANNI_Text:
+	.string "GIOVANNI:\nThis desert rewards strength.\pShow me the power of your team.$"
+
+CE_Leader_FALKNER::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE01_GET, CE_Battles_NotReady
+	msgbox CE_Leader_FALKNER_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_FALKNER, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_FALKNER_Text:
+	.string "FALKNER:\nHOENN has splendid ocean winds.\pFace my soaring FLYING POKéMON!$"
+
+CE_Leader_BUGSY::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE02_GET, CE_Battles_NotReady
+	msgbox CE_Leader_BUGSY_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_BUGSY, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_BUGSY_Text:
+	.string "BUGSY:\nSo many BUGS live in these woods!\pHelp me test what I have learned.$"
+
+CE_Leader_WHITNEY::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE03_GET, CE_Battles_NotReady
+	msgbox CE_Leader_WHITNEY_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_WHITNEY, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_WHITNEY_Text:
+	.string "WHITNEY:\nThis route is great for raising\pteams!\nMy NORMAL POKéMON are ready!$"
+
+CE_Leader_MORTY::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE04_GET, CE_Battles_NotReady
+	msgbox CE_Leader_MORTY_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_MORTY, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_MORTY_Text:
+	.string "MORTY:\nThe spirits here have much to\pteach.\nWould you face my GHOST POKéMON?$"
+
+CE_Leader_CHUCK::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE05_GET, CE_Battles_NotReady
+	msgbox CE_Leader_CHUCK_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_CHUCK, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_CHUCK_Text:
+	.string "CHUCK:\nI train beside these heavy stones!\pLet us test our FIGHTING spirit!$"
+
+CE_Leader_JASMINE::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE06_GET, CE_Battles_NotReady
+	msgbox CE_Leader_JASMINE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_JASMINE, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_JASMINE_Text:
+	.string "JASMINE:\nThe sea breeze is peaceful here.\pPlease battle my STEEL POKéMON.$"
+
+CE_Leader_PRYCE::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE07_GET, CE_Battles_NotReady
+	msgbox CE_Leader_PRYCE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_PRYCE, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_PRYCE_Text:
+	.string "PRYCE:\nThis cold strengthens body and\pmind.\nWill you challenge my ICE team?$"
+
+CE_Leader_CLAIR::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE08_GET, CE_Battles_NotReady
+	msgbox CE_Leader_CLAIR_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_CLAIR, CE_Battles_Text_Defeat
 	goto CE_Battles_End
-CE_Visitor_Battle_7_2:
+CE_Leader_CLAIR_Text:
+	.string "CLAIR:\nI came to study HOENN dragons.\pProve you can stand against mine!$"
+
+CE_Leader_ROARK::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE01_GET, CE_Battles_NotReady
+	msgbox CE_Leader_ROARK_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_ROARK, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_ROARK_Text:
+	.string "ROARK:\nThese rocks hide ancient secrets!\pWant to battle my excavation team?$"
+
+CE_Leader_GARDENIA::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE02_GET, CE_Battles_NotReady
+	msgbox CE_Leader_GARDENIA_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_GARDENIA, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_GARDENIA_Text:
+	.string "GARDENIA:\nThere are wonderful plants here!\pWill you face my GRASS POKéMON?$"
+
+CE_Leader_MAYLENE::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE03_GET, CE_Battles_NotReady
+	msgbox CE_Leader_MAYLENE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_MAYLENE, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_MAYLENE_Text:
+	.string "MAYLENE:\nClimbing this path is good\ptraining.\nShall we practise our battle\pskills?$"
+
+CE_Leader_WAKE::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE04_GET, CE_Battles_NotReady
+	msgbox CE_Leader_WAKE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_WAKE, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_WAKE_Text:
+	.string "WAKE:\nThe waves roar like a cheering\pcrowd!\nReady to face CRASHER WAKE?$"
+
+CE_Leader_FANTINA::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE05_GET, CE_Battles_NotReady
+	msgbox CE_Leader_FANTINA_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_FANTINA, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_FANTINA_Text:
+	.string "FANTINA:\nSuch a magnificent tower of\pspirits!\nCome, let our POKéMON dance!$"
+
+CE_Leader_BYRON::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE06_GET, CE_Battles_NotReady
+	msgbox CE_Leader_BYRON_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_BYRON, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_BYRON_Text:
+	.string "BYRON:\nEven this old ship has strong\psteel!\nCan your team break my defences?$"
+
+CE_Leader_CANDICE::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE07_GET, CE_Battles_NotReady
+	msgbox CE_Leader_CANDICE_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+	trainerbattle_no_intro TRAINER_CE_VISITOR_CANDICE, CE_Battles_Text_Defeat
+	goto CE_Battles_End
+CE_Leader_CANDICE_Text:
+	.string "CANDICE:\nFocus keeps me warm in this cave!\pLet us have an icy battle!$"
+
+CE_Leader_VOLKNER::
+	lock
+	faceplayer
+	goto_if_unset FLAG_BADGE08_GET, CE_Battles_NotReady
+	msgbox CE_Leader_VOLKNER_Text, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	trainerbattle_no_intro TRAINER_CE_VISITOR_VOLKNER, CE_Battles_Text_Defeat
 	goto CE_Battles_End
+CE_Leader_VOLKNER_Text:
+	.string "VOLKNER:\nI came looking for a fresh\pchallenge.\nCan your team give me a real\pspark?$"
 CE_Tournament_EventScript::
 	lock
 	faceplayer
@@ -452,7 +539,7 @@ CE_Battles_Text_NotChampion:
 	.string "This challenge is for the CHAMPION.$"
 
 CE_Battles_Text_Tournament:
-	.string "WORLD TOURNAMENT: eight rounds!\n32 regional GYM LEADERS may enter.\pOpen level. Opponents are level 75-77.\nYour party is healed between rounds.\pWin all eight to earn a Gold Bottle Cap.\nEnter now?$"
+	.string "WORLD TOURNAMENT:\neight rounds!\p32 regional GYM LEADERS may\nenter.\pOpen level. Opponents are\plevel 75-77.\nYour party is healed between\prounds.\pWin all eight to earn a\nGold Bottle Cap.\pEnter now?$"
 
 CE_Battles_Text_Winner:
 	.string "You are the tournament winner!$"
