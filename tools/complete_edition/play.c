@@ -4,8 +4,10 @@
 // save PATH, load PATH, read HEX_ADDRESS BYTE_COUNT, position HEX_POINTER,
 // advance HEX_FIELD_LOCK_ADDRESS MAX_FRAMES,
 // walk KEY_MASK MAX_FRAMES HEX_BATTLE_FLAG_ADDRESS, quit.
-// fight MOVE_SLOT MAX_FRAMES HEX_BATTLE_FLAG HEX_CONTROLLERS HEX_ACTION_HANDLER
-//       HEX_MOVE_HANDLER HEX_ACTION_CURSOR HEX_MOVE_CURSOR
+// fight MOVE_SLOTS MAX_FRAMES HEX_BATTLE_FLAG HEX_CONTROLLERS HEX_ACTION_HANDLER
+//       HEX_MOVE_HANDLER HEX_ACTION_CURSOR HEX_MOVE_CURSOR HEX_CALLBACK2_ADDRESS HEX_BATTLE_CALLBACK
+// MOVE_SLOTS packs the left move in bits 0-1 and the right move in bits 2-3.
+// The callback guard yields for evolution, move-learning and other menus.
 // Fight uses read-only UI state and ordinary buttons; B declines optional switches.
 #include <mgba/core/core.h>
 #include <mgba/core/config.h>
@@ -76,14 +78,15 @@ int main(int argc, char **argv)
             core->setKeys(core, 0);
             printf("ADVANCE %u frames; lock=%u%s\n", i, core->busRead8(core, address), i == frames ? " (limit)" : "");
         } else if (!strcmp(command, "fight")) {
-            unsigned slot, flag, controllers, actionHandler, moveHandler, actionCursor, moveCursor;
-            if (sscanf(line, "%*s %u %u %x %x %x %x %x %x", &slot, &frames, &flag,
-                       &controllers, &actionHandler, &moveHandler, &actionCursor, &moveCursor) != 8
-                || slot > 3 || frames > 36000) {
+            unsigned slot, flag, controllers, actionHandler, moveHandler, actionCursor, moveCursor, callbackAddress, battleCallback;
+            if (sscanf(line, "%*s %u %u %x %x %x %x %x %x %x %x", &slot, &frames, &flag,
+                       &controllers, &actionHandler, &moveHandler, &actionCursor, &moveCursor, &callbackAddress, &battleCallback) != 10
+                || slot > 15 || frames > 36000) {
                 puts("ERROR fight arguments"); fflush(stdout); continue;
             }
             unsigned i = 0;
-            while (i < frames && (core->busRead8(core, flag) & 2)) {
+            while (i < frames && (core->busRead8(core, flag) & 2)
+                   && (core->busRead32(core, callbackAddress) & ~1u) == (battleCallback & ~1u)) {
                 unsigned button = 2; // B advances text and declines optional party switches.
                 for (unsigned battler = 0; battler < 4; battler += 2) {
                     unsigned handler = core->busRead32(core, controllers + 4 * battler) & ~1u;
@@ -91,20 +94,22 @@ int main(int argc, char **argv)
                     if (handler == (actionHandler & ~1u)) {
                         cursor = core->busRead8(core, actionCursor + battler); wanted = 0;
                     } else if (handler == (moveHandler & ~1u)) {
-                        cursor = core->busRead8(core, moveCursor + battler); wanted = slot;
+                        cursor = core->busRead8(core, moveCursor + battler); wanted = (slot >> (battler == 0 ? 0 : 2)) & 3;
                     } else continue;
                     button = cursor == wanted ? 1 : (cursor % 2 != wanted % 2 ? (wanted % 2 ? 16 : 32)
                                                                                   : (wanted / 2 ? 128 : 64));
                     break;
                 }
                 if (journal) fprintf(journal, "%u FIGHT_BUTTON %u\n", core->frameCounter(core), button);
-                for (unsigned j = 0; j < 30 && i < frames && (core->busRead8(core, flag) & 2); j++, i++) {
+                for (unsigned j = 0; j < 30 && i < frames && (core->busRead8(core, flag) & 2)
+                     && (core->busRead32(core, callbackAddress) & ~1u) == (battleCallback & ~1u); j++, i++) {
                     core->setKeys(core, j < 8 ? button : 0);
                     core->runFrame(core);
                 }
             }
             core->setKeys(core, 0);
-            printf("FIGHT %u frames%s\n", i, i == frames ? " (limit)" : "");
+            printf("FIGHT %u frames%s\n", i, i == frames ? " (limit)" :
+                   ((core->busRead8(core, flag) & 2) ? " (callback changed; manual input required)" : ""));
         } else if (!strcmp(command, "shot") && sscanf(line, "%*s %1899s", path) == 1) {
             FILE *out = fopen(path, "wb");
             if (!out) { perror(path); continue; }

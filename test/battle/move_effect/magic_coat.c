@@ -76,6 +76,7 @@ DOUBLE_BATTLE_TEST("Magic Coat reflects hazards regardless of the user's positio
     PARAMETRIZE { coatUser = playerRight; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_5);
         ASSUME(GetMoveEffect(MOVE_SPIKES) == EFFECT_SPIKES);
         ASSUME(GetMoveEffect(MOVE_STEALTH_ROCK) == EFFECT_STEALTH_ROCK);
         PLAYER(SPECIES_WOBBUFFET);
@@ -106,6 +107,7 @@ DOUBLE_BATTLE_TEST("Magic Coat activates on the fastest opposing mon for hazard 
     PARAMETRIZE { speedPlayerLeft = 1; speedPlayerRight = 2; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_5);
         ASSUME(GetMoveEffect(MOVE_SPIKES) == EFFECT_SPIKES);
         ASSUME(GetMoveEffect(MOVE_STEALTH_ROCK) == EFFECT_STEALTH_ROCK);
         PLAYER(SPECIES_WOBBUFFET) { Speed(speedPlayerLeft); }
@@ -149,6 +151,7 @@ SINGLE_BATTLE_TEST("Magic Coat reflection doesn't activate Protean/Libero")
     PARAMETRIZE { species = SPECIES_CINDERACE; ability = ABILITY_LIBERO; }
 
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, GEN_5);
         ASSUME(GetMoveEffect(MOVE_SPIKES) == EFFECT_SPIKES);
         ASSUME(GetMoveType(MOVE_MAGIC_COAT) == TYPE_PSYCHIC);
         ASSUME(GetMoveType(MOVE_SPIKES) != TYPE_PSYCHIC);
@@ -168,5 +171,22 @@ SINGLE_BATTLE_TEST("Magic Coat reflection doesn't activate Protean/Libero")
     } THEN {
         EXPECT_EQ(player->types[0], TYPE_PSYCHIC);
         EXPECT_EQ(player->types[1], TYPE_PSYCHIC);
+    }
+}
+
+SINGLE_BATTLE_TEST("Magic Coat hazard reflection begins in Gen 5")
+{
+    u32 gen;
+    PARAMETRIZE { gen = GEN_4; }
+    PARAMETRIZE { gen = GEN_5; }
+    GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_FLAGS, gen);
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_MAGIC_COAT); MOVE(opponent, MOVE_SPIKES); }
+    } THEN {
+        EXPECT_EQ(IsHazardOnSide(B_SIDE_PLAYER, HAZARDS_SPIKES), gen == GEN_4);
+        EXPECT_EQ(IsHazardOnSide(B_SIDE_OPPONENT, HAZARDS_SPIKES), gen >= GEN_5);
     }
 }

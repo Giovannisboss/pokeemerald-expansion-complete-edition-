@@ -1,0 +1,58 @@
+{
+  "roms_used": {
+    "gym_trainers": "Alpha 2.3 (451840cb5dc1f0a1d11636f33002d4d8ab72964da57f2dac38dcfb01e75ad4f1)",
+    "Roxanne_TM_UI_city_story": "Alpha 2.4 before badge-dialogue-only polish (c4e10537a6382d3f466e73bfa6aeada4d0af8b5528ec2f2b0c6880f2777263f4)",
+    "release_reload": "7210f3eb6c61b01d286ea96bf12b017c3cfe41022a15579cf1234c00141b11b3"
+  },
+  "normal_input_only": true,
+  "memory_writes": false,
+  "completed": [
+    "Josh, Tommy and Marc Gym battles",
+    "Alpha 2.3 ordinary save loaded by Alpha 2.4 before Roxanne",
+    "Roxanne defeated; Stone Badge and TM39 awarded",
+    "Reusable-TM explanation visibly fits the dialogue box",
+    "Mudkip learned Rock Tomb over Growl through ordinary TM menus",
+    "TM39 remained in the Bag after teaching; moves screen confirmed Rock Tomb",
+    "Normal save reloaded in a fresh process; Continue menu displayed one badge",
+    "Gym exit, Aqua stolen-goods scene and Devon recovery request completed",
+    "Post-Gym stolen-goods event and Devon recovery request completed",
+    "Release ROM loaded the ordinary one-badge save at Rustboro (29,10)"
+  ],
+  "callback_guard_test": {
+    "isolated_save_branch": true,
+    "result": "Stopped at mandatory party menu after a faint; manual input required",
+    "evolution_verified": false
+  },
+  "primary_party": [
+    {
+      "species": "Mudkip",
+      "level": 16,
+      "moves": [
+        "Tackle",
+        "Rock Tomb",
+        "Mud-Slap",
+        "Water Gun"
+      ]
+    },
+    {
+      "species": "Sentret",
+      "level": 4
+    }
+  ],
+  "next_story_task": "Recover Devon Goods and rescue Peeko in Rusturf Tunnel",
+  "journals": [
+    "alpha24-rustboro-gym.log",
+    "alpha24-final-rom-gym.log",
+    "alpha24-badge-reload.log",
+    "alpha24-evolution-check.log",
+    "alpha24-release-battery-check.log"
+  ],
+  "limitations": [
+    "No ordinary-play evolution verification",
+    "No complete Hoenn/Frontier playthrough",
+    "Starter and legendary world-capture QA still open",
+    "Real hardware not tested"
+  ],
+  "portrait_attempt": "Built-in Gold portrait request rejected; no asset produced; existing temporary portraits remain",
+  "checkpoint_location": "Rustboro City (29,10), one badge, Devon Goods recovery requested"
+}

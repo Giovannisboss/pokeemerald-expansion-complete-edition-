@@ -1,0 +1,51 @@
+{
+  "font": "gFontNormalLatinGlyphWidths",
+  "limit_pixels": 208,
+  "max_pixels": 199,
+  "lines": [
+    {
+      "text": "TATE: The MIND BADGE shows the bond",
+      "pixels": 189
+    },
+    {
+      "text": "between you and your POK\u00e9MON.",
+      "pixels": 158
+    },
+    {
+      "text": "DAD: The BALANCE BADGE shows how",
+      "pixels": 174
+    },
+    {
+      "text": "much you and your POK\u00e9MON have grown.",
+      "pixels": 199
+    },
+    {
+      "text": "TMs can be used again and again.",
+      "pixels": 167
+    },
+    {
+      "text": "Try teaching a move to several",
+      "pixels": 159
+    },
+    {
+      "text": "POK\u00e9MON to find a good team!",
+      "pixels": 149
+    },
+    {
+      "text": "The STONE BADGE marks your victory",
+      "pixels": 184
+    },
+    {
+      "text": "in RUSTBORO's POK\u00e9MON GYM.",
+      "pixels": 139
+    },
+    {
+      "text": "Remember, TMs can be used repeatedly,",
+      "pixels": 197
+    },
+    {
+      "text": "so try it with different POK\u00e9MON.",
+      "pixels": 172
+    }
+  ]
+}

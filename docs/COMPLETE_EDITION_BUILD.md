@@ -96,12 +96,23 @@ and menus: repeatedly pressing A can close and reopen a sign.
 ### Button-only battle QA helper
 
 Build the host controller with `gcc -O2 -Wall -Wextra tools/complete_edition/play.c -lmgba -o /tmp/ce-play`.
-Its `fight` command accepts a move slot (0–3), bounded frame budget and read-only
-addresses for the battle flag, controller array, action/move input handlers and
-cursor arrays. Obtain symbols from the matching production ELF using
+Its `fight` command accepts packed move slots (left slot in bits 0–1, right
+slot in bits 2–3), a bounded frame budget and read-only addresses for the battle
+flag, controller array, action/move input handlers, cursor arrays, callback2
+address and expected battle callback. For example, slot value 3 chooses left
+move 3 and right move 0. The callback guard stops automation when another menu
+or evolution callback takes control. Obtain symbols from the matching production ELF using
 `arm-none-eabi-nm`; do not reuse addresses from another ROM revision. The helper
 selects Fight and the requested move using normal buttons, advances messages and
 declines optional switches. It does not refill PP, heal, edit memory or handle
 all fainting/party/learning states. Review screenshots and journal entries when
 it reaches the frame limit. Continue normal saves and fresh-process reload QA;
 internal emulator states do not prove battery-save compatibility.
+
+
+The optional `plan_walk.py MAP START_X START_Y GOAL_X GOAL_Y` helper produces
+conservative foot routes from static map tiles. It respects walking elevation,
+NPC origins and bridges, and prefers paths with less grass. Extra observed NPC
+positions can be supplied with `--blocked X,Y`. Moving NPCs, trainer sight lines,
+encounters and special terrain still require live position checks after each
+segment; the helper never operates or changes game memory.

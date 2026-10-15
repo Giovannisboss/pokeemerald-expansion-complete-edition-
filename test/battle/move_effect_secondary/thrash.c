@@ -118,9 +118,10 @@ SINGLE_BATTLE_TEST("Petal Dance does not lock mons that copy the move with Dance
     }
 }
 
-SINGLE_BATTLE_TEST("Thrash confuses the user after it finishes even if move failed")
+SINGLE_BATTLE_TEST("Thrash confuses the user after it finishes even if move failed (Gen 5+)")
 {
     GIVEN {
+        WITH_CONFIG(B_RAMPAGE_CONFUSION, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { MovesWithPP({MOVE_THRASH, 10}); }
         OPPONENT(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_GASTLY);
@@ -136,5 +137,26 @@ SINGLE_BATTLE_TEST("Thrash confuses the user after it finishes even if move fail
     } THEN {
         // Check that PP has been consumed correctly
         EXPECT_EQ(player->pp[0], 9);
+    }
+}
+
+SINGLE_BATTLE_TEST("Rampage confusion after Protect on the last turn follows the configured generation")
+{
+    u32 gen;
+    PARAMETRIZE { gen = GEN_4; }
+    PARAMETRIZE { gen = GEN_5; }
+    GIVEN {
+        WITH_CONFIG(B_RAMPAGE_CONFUSION, gen);
+        PLAYER(SPECIES_WOBBUFFET) { MaxHP(500); HP(500); }
+        OPPONENT(SPECIES_WOBBUFFET) { MaxHP(500); HP(500); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_THRASH, WITH_RNG(RNG_RAMPAGE_TURNS, 3)); }
+        TURN { SKIP_TURN(player); }
+        TURN { MOVE(opponent, MOVE_PROTECT); SKIP_TURN(player); }
+    } SCENE {
+        if (gen >= GEN_5)
+            ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_CONFUSION, player);
+        else
+            NOT ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_CONFUSION, player);
     }
 }

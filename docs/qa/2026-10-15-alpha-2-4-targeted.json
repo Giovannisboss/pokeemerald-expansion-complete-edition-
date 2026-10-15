@@ -1,0 +1,93 @@
+{
+  "complete": true,
+  "profile": "Rampage, Magic Coat, Assurance, multi-hit, bad-move AI, Complete Edition and actual flash saves",
+  "statuses": {
+    "PASS": 106
+  },
+  "reports": [
+    {
+      "log": "../alpha24-targeted/00-final.log",
+      "complete": true,
+      "recorded_results": 9,
+      "reported_total": 9,
+      "statuses": {
+        "PASS": 9
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../alpha24-targeted/01.log",
+      "complete": true,
+      "recorded_results": 7,
+      "reported_total": 7,
+      "statuses": {
+        "PASS": 7
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../alpha24-targeted/02.log",
+      "complete": true,
+      "recorded_results": 24,
+      "reported_total": 24,
+      "statuses": {
+        "PASS": 24
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../alpha24-targeted/03.log",
+      "complete": true,
+      "recorded_results": 13,
+      "reported_total": 13,
+      "statuses": {
+        "PASS": 13
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../alpha24-targeted/04.log",
+      "complete": true,
+      "recorded_results": 15,
+      "reported_total": 15,
+      "statuses": {
+        "PASS": 15
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../alpha24-targeted/05.log",
+      "complete": true,
+      "recorded_results": 34,
+      "reported_total": 34,
+      "statuses": {
+        "PASS": 34
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    {
+      "log": "../alpha24-targeted/06.log",
+      "complete": true,
+      "recorded_results": 4,
+      "reported_total": 4,
+      "statuses": {
+        "PASS": 4
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    }
+  ]
+}

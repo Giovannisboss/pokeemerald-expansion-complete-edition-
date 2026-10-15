@@ -1187,7 +1187,7 @@ void CancelMultiTurnMoves(enum BattlerId battler)
     gBattleMons[battler].volatiles.rolloutTimer = 0;
     gBattleMons[battler].volatiles.furyCutterCounter = 0;
 
-    if (B_RAMPAGE_CONFUSION < GEN_5
+    if (GetConfig(B_RAMPAGE_CONFUSION) < GEN_5
      || gBattleMons[battler].volatiles.rampageTurns != 1) // Will be confused at the end of the turn
     {
         gLockedMoves[battler] = MOVE_NONE;

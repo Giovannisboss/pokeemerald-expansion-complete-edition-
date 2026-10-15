@@ -5095,7 +5095,7 @@ static enum MoveEndResult MoveEndRampage(struct BattleCalcValues *cv)
 
     if (gBattleMons[cv->battlerAtk].volatiles.rampageTurns == 0
      || gSpecialStatuses[cv->battlerAtk].dancerUsedMove
-     || B_RAMPAGE_CONFUSION < GEN_5)
+     || GetConfig(B_RAMPAGE_CONFUSION) < GEN_5)
     {
         result = MOVEEND_RESULT_CONTINUE;
     }

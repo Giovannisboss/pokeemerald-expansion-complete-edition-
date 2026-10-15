@@ -234,3 +234,39 @@ healing restored both Pokemon; a normal save and fresh final-ROM process loaded
 the Rustboro Centre checkpoint at (7,4). This remains early-game QA.
 Full story, Frontier, all event travel/captures,
 portraits and real hardware testing remain release blockers.
+
+
+## Alpha 2.4 first-badge verification (2026-10-15)
+
+Changed battle groups plus Complete Edition and flash saves pass 106 tests,
+with no failed, TODO or assumption outcomes in that profile. Both Gen 4 and
+Gen 5 rampage cancellation and Magic Coat hazard reflection are exercised.
+The broad battle-engine run completed 5,908 outcomes: 5,289 PASS, 108 failing
+outcomes (93 FAIL, nine FLAKY, six INVALID), 65 assumptions, 16 known failures,
+421 TODOs and nine expected outcomes. No TIMEOUT or ERROR occurred. The prior
+Alpha 2.3 audit had 119 failing outcomes. Reports preserve every failure.
+
+The battle engine and test sources were frozen during the broad audit.
+Subsequent dialogue-only edits explain reusable TMs and remove obsolete badge
+stat-boost claims in Roxanne, Norman and Tate/Liza's conversations. HM gates
+remain unchanged. Compilation and normal-font width checks validate integration;
+Roxanne's reusable-TM page was additionally inspected in ordinary play.
+
+A normal Alpha 2.3 save progressed through Josh, Tommy and Marc. Alpha 2.4
+loaded it and defeated Roxanne, awarding the Stone Badge and TM39. Mudkip
+learned Rock Tomb over Growl; the move list and retained TM39 were both inspected.
+A normal save loaded in a fresh emulator process with one badge. The Gym exit,
+Aqua chase and Devon recovery request also completed. No flags, levels, party
+members or items were injected. The release ROM reloaded the ordinary one-badge save at Rustboro (29,10)
+after the Devon request. All 11 changed dialogue lines measure at most 199/208
+pixels with the normal font. The next story task is the Rusturf Tunnel rescue.
+
+The host controller now guards the main callback and yields for other menus.
+An isolated replay tested this at a mandatory party menu after a faint. It did
+not complete an evolution check. Walking plans use static tile/elevation data
+and require live position checks for moving NPCs and encounters. Neither tool
+is part of the ROM. No move or ability was removed; Gen 4 defaults are preserved.
+
+Gold portrait generation was rejected by the built-in image tool and produced
+no artwork. Temporary portraits remain. Full story/evolution, all Frontier
+facilities, world-event captures and real hardware QA remain open.

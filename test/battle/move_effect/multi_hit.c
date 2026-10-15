@@ -263,17 +263,18 @@ SINGLE_BATTLE_TEST("Scale Shot decreases defense and increases speed after killi
 SINGLE_BATTLE_TEST("Multi Hit moves will not disrupt Destiny Bond flag")
 {
     u32 hp;
-    PARAMETRIZE { hp = 11; }
-    PARAMETRIZE { hp = 55; }
+    PARAMETRIZE { hp = 1; }
+    PARAMETRIZE { hp = 41; }
     GIVEN {
-        PLAYER(SPECIES_WOBBUFFET) { HP(55); }
-        OPPONENT(SPECIES_WOBBUFFET);
+        ASSUME(GetMovePower(MOVE_BULLET_SEED) == 10);
+        PLAYER(SPECIES_WOBBUFFET) { HP(hp); Defense(100); }
+        OPPONENT(SPECIES_WOBBUFFET) { Attack(100); Ability(ABILITY_SKILL_LINK); }
     } WHEN {
-        TURN { MOVE(player, MOVE_DESTINY_BOND); MOVE(opponent, MOVE_BULLET_SEED); }
+        TURN { MOVE(player, MOVE_DESTINY_BOND); MOVE(opponent, MOVE_BULLET_SEED, criticalHit: FALSE, WITH_RNG(RNG_DAMAGE_MODIFIER, 0)); }
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DESTINY_BOND, player);
         ANIMATION(ANIM_TYPE_MOVE, MOVE_BULLET_SEED, opponent);
-        if (hp == 55)
+        if (hp == 41)
         {
             ANIMATION(ANIM_TYPE_MOVE, MOVE_BULLET_SEED, opponent);
             ANIMATION(ANIM_TYPE_MOVE, MOVE_BULLET_SEED, opponent);

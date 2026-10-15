@@ -366,7 +366,8 @@ static inline bool32 MoveIgnoresProtect(enum Move moveId)
 static inline bool32 MoveCanBeBouncedBack(enum Move moveId)
 {
     #if TESTING
-    if (moveId == MOVE_EMBARGO)
+    if (moveId == MOVE_EMBARGO || moveId == MOVE_SPIKES
+     || moveId == MOVE_TOXIC_SPIKES || moveId == MOVE_STEALTH_ROCK)
         return GetConfig(B_UPDATED_MOVE_FLAGS) >= GEN_5;
     #endif
     return gMovesInfo[SanitizeMoveId(moveId)].magicCoatAffected;

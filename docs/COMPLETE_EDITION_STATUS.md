@@ -1,4 +1,4 @@
-# Complete Edition — Alpha 2.3
+# Complete Edition — Alpha 2.4
 
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
@@ -17,15 +17,16 @@ The [field guide](COMPLETE_EDITION_FIELD_GUIDE.md) and
 [legendary trails guide](COMPLETE_EDITION_LEGEND_TRAILS.md) describe locations and gates.
 Implementation is distinct from ordinary-play verification.
 
-## Alpha 2.3 corrections
+## Alpha 2.4 corrections
 
-- Defog clears hazards on its selected target's side under Gen 4 rules and preserves the other side. Ally targets in doubles receive the same treatment for hazards and screens.
-- Gen 4 Defog lowers evasion through Substitute. Its minimum-evasion refusal remains intact; Gen 5 behavior is checked separately.
-- Semi-invulnerable moves animate before their charge message under older move data. Power Herb now prints the subsequent attack message.
-- Beat Up reads its own generation setting for typeless versus Dark damage; Future Sight retains its separate type setting.
-- Conversion 2's target follows its own generation setting consistently with the effect implementation.
-- Battle fixtures select Sturdy and Lightning Rod's modern behavior explicitly where required. Beat Up expectations use Gen 4's ten base power and a non-Fairy resistance fixture. Conversion 2's status-move case uses Confuse Ray without relying on later Curse typing.
-- Partner switch-message fixtures follow the engine's battler order. No battle-order gameplay change was made.
+- Roxanne and the Route 104 Bullet Seed gift now explain that TMs are reusable.
+- Removed obsolete badge stat-boost claims from Roxanne, Norman and Tate/Liza. Gen 4 disables these boosts; HM permissions remain unchanged.
+- All rampage paths consistently read the selected generation setting. Gen 4 behavior is retained; Gen 5 cancellation/confusion cases now select the same rules across move resolution, cancellation and end turn.
+- Magic Coat tests distinguish Gen 4 hazards from Gen 5 reflection. Assurance fixtures explicitly select modern Infiltrator/Disguise behavior, and use a neutral target for the rounding comparison.
+- The multi-hit Destiny Bond test actually uses both HP parameters and deterministic Gen 4 Bullet Seed damage. The paralysis AI fixture requests Gen 6 Electric immunity explicitly.
+- The host QA controller now stops when another callback takes control; it does not press through party menus. A conservative walking planner was added. Neither tool is part of the game.
+
+No move or ability was removed. These configuration fixes do not change the production Gen 4 defaults.
 
 ## Verification
 
@@ -33,39 +34,41 @@ Ubuntu 24.04, ARM GCC 13.2.1, binutils 2.42 and mGBA 0.10.2.
 The 938 production objects and 1,912 test objects pass ARM object-integrity checks.
 All 84 added placements pass terrain, elevation, adjacency, overlap and event-limit validation.
 
-Changed battle groups, Complete Edition features and actual flash saves pass
-**137 tests**, with six TODOs and one assumption failure reported separately.
-This includes 21 Defog cases, 13 Conversion 2 cases, all six parameters of each
-semi-invulnerable charge/Power Herb scenario, 34 Complete Edition cases and four
-flash-save cases. See `qa/2026-10-15-alpha-2-3-targeted.json`.
+The targeted profile passes **106 tests**, including both generation variants
+for rampage cancellation and Magic Coat, all Assurance/multi-hit/bad-move AI
+cases, 34 Complete Edition cases and four actual flash-save cases. There are no
+failed, TODO or assumption outcomes in this profile.
+See `qa/2026-10-15-alpha-2-4-targeted.json`.
 
-The final-source full audit completed **5,906 outcomes**: **5,276 PASS**, **119
-failing outcomes** (104 FAIL, nine FLAKY, six INVALID), 65 assumption failures,
-16 known failures, 421 TODOs and nine expected outcomes. No TIMEOUT or ERROR
-occurred. This improves on Alpha 2.2's 139 failing outcomes but is not release-clean.
-See `qa/2026-10-15-alpha-2-3-full.json` for every failure.
+The complete battle-engine audit records **5,908 outcomes**: **5,289 PASS**,
+**108 failing outcomes** (93 FAIL, nine FLAKY, six INVALID), 65 assumption
+failures, 16 known failures, 421 TODOs and nine expected outcomes. No TIMEOUT or
+ERROR occurred. Alpha 2.3 had 119 failing outcomes. Remaining failures are
+explicit in `qa/2026-10-15-alpha-2-4-full.json`; this is not release-clean.
+Map-dialogue edits made after the audit began do not change the battle engine;
+production play verifies the reusable-TM explanation separately. All 11 changed
+dialogue lines pass the normal-font width check (maximum 199/208 pixels).
 
-Ordinary-input testing has reached Rustboro City: the opening story, first
-rival, Pokédex, running shoes, early trainer wins, a loss/whiteout recovery,
-Petalburg/Norman dialogue, Wally's catching tutorial and Scott's introduction.
-Cindy, James, Winston and Haley were defeated. Mudkip fainted against Haley;
-Sentret finished the battle. Rustboro nurse healing restored Mudkip to 44/44
-HP at level 12 and Sentret to 17/17 HP at level 4. An ordinary save and
-fresh final-ROM process reloaded this Rustboro checkpoint. The ordinary Alpha 2.2 battery save loaded in
-a fresh Alpha 2.3 emulator process at the woods entrance; the Bulbasaur site's
-first-badge refusal was displayed. The first Team Aqua grunt was defeated, and
-the Great Ball reward was confirmed in the Bag. Earlier QA covers BOX17, nature/EV purchases,
-healing, a shiny Sentret capture, legendary hints and the pre-badge catalogue refusal.
-This is not a complete Hoenn or Frontier playthrough.
+Ordinary buttons advanced the Alpha 2.3 battery save through Josh, Tommy and
+Marc, then defeated Roxanne on the Alpha 2.4 build. The Stone Badge and TM39
+were awarded. Roxanne's reusable-TM message displays correctly, Mudkip learned
+Rock Tomb over Growl, and TM39 remained in the Bag. A normal save and fresh
+process reloaded the one-badge checkpoint. The Aqua chase and Devon recovery request completed, and
+the release ROM reloaded that save at Rustboro (29,10). All earlier opening/PC/services,
+catching and legendary-hint checks remain documented in the stability report.
+
+Evolution is not yet verified in ordinary play. An isolated callback-guard test
+stopped at the mandatory party screen after a faint; it did not complete an
+evolution test. Gold portrait generation was rejected and produced no artwork.
 
 ## Build, patch and saves
 
-- ROM SHA-256: `451840cb5dc1f0a1d11636f33002d4d8ab72964da57f2dac38dcfb01e75ad4f1`.
-- Linked ROM: 16,557,400 bytes; padded ROM: 16 MiB; standard GBA ceiling: 32 MiB.
+- ROM SHA-256: `7210f3eb6c61b01d286ea96bf12b017c3cfe41022a15579cf1234c00141b11b3`.
+- Linked ROM: 16,557,360 bytes; padded ROM: 16 MiB; standard GBA ceiling: 32 MiB.
 - EWRAM: 235,496/262,144 bytes; IWRAM: 28,364/32,768 bytes.
 - Clean patch input: Emerald US/EU revision 0, SHA-1 `f3ae088181bf583e55daf962a92bb46f4f1d07b7`, CRC32 `1f1c08fb`.
 - BPS creation verifies an exact round trip against the compiled target.
-- Alpha 2 / 2.1 / 2.2 battery saves remain compatible. Back up saves before upgrading; load the normal battery save rather than an older emulator save state.
+- Alpha 2 / 2.1 / 2.2 / 2.3 battery saves remain compatible. Back up saves before upgrading; load the normal battery save rather than an older emulator save state.
 - Alpha 1/original saves are incompatible. No retail or compiled ROM is committed.
 
 ## Required before final release

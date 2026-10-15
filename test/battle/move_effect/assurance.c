@@ -40,6 +40,7 @@ DOUBLE_BATTLE_TEST("Assurance does not double in power if the target's damage is
     s16 hits[2];
 
     GIVEN {
+        WITH_CONFIG(B_INFILTRATOR_SUBSTITUTE, GEN_6);
         ASSUME(GetMoveEffect(MOVE_SUBSTITUTE) == EFFECT_SUBSTITUTE);
         PLAYER(SPECIES_WOBBUFFET);
         PLAYER(SPECIES_WOBBUFFET);
@@ -219,7 +220,8 @@ SINGLE_BATTLE_TEST("Assurance doubles in power if the target has been damaged by
     s16 hits[2];
 
     GIVEN {
-        PLAYER(SPECIES_WOBBUFFET);
+        // A neutral target avoids amplifying integer rounding through type effectiveness.
+        PLAYER(SPECIES_SNORLAX);
         OPPONENT(SPECIES_GIBLE) { Ability(ABILITY_ROUGH_SKIN); }
     } WHEN {
         TURN { MOVE(opponent, MOVE_ASSURANCE); }
@@ -463,6 +465,7 @@ DOUBLE_BATTLE_TEST("Assurance doubles in power if Disguise has been broken")
     s16 hits[2];
 
     GIVEN {
+        WITH_CONFIG(B_DISGUISE_HP_LOSS, GEN_8);
         PLAYER(SPECIES_MIMIKYU_DISGUISED) { Speed(1); Ability(ABILITY_DISGUISE); }
         PLAYER(SPECIES_MIMIKYU_DISGUISED) { Speed(2); Ability(ABILITY_DISGUISE); }
         OPPONENT(SPECIES_WOBBUFFET) { Speed(3); };
