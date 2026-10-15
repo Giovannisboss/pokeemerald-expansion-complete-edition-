@@ -61,3 +61,11 @@ Seventeen boxes provide 510 normal slots. `PokemonStorage` is 41,276 bytes: 35,7
 Full saves pack the PC tail; partial Frontier/link saves preserve the previous full PC snapshot. Footer chunks are now checksum-protected, and invalid sector IDs cannot index the layout table. `test/complete_edition_flash.c` exercises actual emulated flash writes, all 510 slots, metadata, corrupted newest-slot fallback and partial-save consistency.
 
 The title artwork is a committed indexed PNG with normal automatic asset conversion. Building needs no image-generation service. Artwork provenance and prompt are in `graphics/title_screen/COMPLETE_EDITION_ART.md`.
+
+To export a searchable ordinary-wild encounter list:
+
+```sh
+python3 tools/complete_edition/export_encounters.py /path/outside/repo/Wild_Encounters.csv
+```
+
+Flash tests restore Timer 2's test-watchdog handler and timer registers after exercising the production flash routines; otherwise later full-suite tests can lose their timeout interrupt.

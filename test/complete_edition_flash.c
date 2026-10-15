@@ -7,10 +7,41 @@
 #include "pokemon_storage_system.h"
 #include "save.h"
 #include "test/test.h"
+#include "main.h"
+
+// Production flash programming borrows Timer 2. The native test runner uses
+// the same timer for its watchdog; restore it before handing back control.
+struct FlashTestClock
+{
+    IntrFunc handler;
+    u16 interruptEnable;
+    u16 timerLow;
+    u16 timerHigh;
+};
+
+static struct FlashTestClock BeginFlashTest(void)
+{
+    struct FlashTestClock clock = {gIntrTable[7], REG_IE, REG_TM2CNT_L, REG_TM2CNT_H};
+    CheckForFlashMemory();
+    return clock;
+}
+
+static void EndFlashTest(const struct FlashTestClock *clock)
+{
+    u16 ime = REG_IME;
+    REG_IME = 0;
+    REG_TM2CNT_H = 0;
+    gIntrTable[7] = clock->handler;
+    REG_TM2CNT_L = clock->timerLow;
+    REG_IF = INTR_FLAG_TIMER2;
+    REG_IE = clock->interruptEnable;
+    REG_TM2CNT_H = clock->timerHigh;
+    REG_IME = ime;
+}
 
 TEST("Complete Edition: flash save restores trained party, final PC slot, and capture flags")
 {
-    CheckForFlashMemory();
+    struct FlashTestClock clock = BeginFlashTest();
     EXPECT(gFlashMemoryPresent);
     Save_ResetSaveCounters();
     ClearSaveData();
@@ -47,6 +78,7 @@ TEST("Complete Edition: flash save restores trained party, final PC slot, and ca
     EXPECT_EQ(GetBoxMonData(boxed, MON_DATA_SPEED_IV), 31);
     EXPECT(GetBoxMonData(boxed, MON_DATA_IS_SHINY));
     EXPECT(FlagGet(FLAG_CE_STARTER_PIPLUP));
+    EndFlashTest(&clock);
 }
 
 #include "agb_flash.h"
@@ -67,7 +99,7 @@ TEST("Complete Edition: all 510 PC slots survive flash saves and corrupted-slot 
     u32 corruption = 0;
     PARAMETRIZE { corruption = 0; } // PC data in footer chunk, formerly unchecked upstream.
     PARAMETRIZE { corruption = 1; } // Invalid sector ID must never index outside the layout.
-    CheckForFlashMemory();
+    struct FlashTestClock clock = BeginFlashTest();
     EXPECT(gFlashMemoryPresent);
     Save_ResetSaveCounters();
     ClearSaveData();
@@ -112,11 +144,12 @@ TEST("Complete Edition: all 510 PC slots survive flash saves and corrupted-slot 
     EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_ERROR); // Previous snapshot recovered.
     EXPECT_EQ(StorageHash(), oldHash);
     EXPECT(FlagGet(FLAG_CE_STARTER_PIPLUP));
+    EndFlashTest(&clock);
 }
 
 TEST("Complete Edition: Frontier partial save preserves a consistent PC snapshot")
 {
-    CheckForFlashMemory();
+    struct FlashTestClock clock = BeginFlashTest();
     EXPECT(gFlashMemoryPresent);
     Save_ResetSaveCounters();
     ClearSaveData();
@@ -137,4 +170,5 @@ TEST("Complete Edition: Frontier partial save preserves a consistent PC snapshot
     EXPECT_EQ(LoadGameSave(SAVE_NORMAL), SAVE_STATUS_OK);
     EXPECT_EQ(StorageHash(), savedHash);
     EXPECT(FlagGet(FLAG_CE_STARTER_PIPLUP));
+    EndFlashTest(&clock);
 }

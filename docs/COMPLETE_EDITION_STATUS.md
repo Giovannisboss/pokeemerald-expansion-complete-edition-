@@ -42,9 +42,9 @@ Actual emulated flash tests restore a trained party and the final PC slot; fill 
 
 All 55 added NPC placements pass static checks for passable floor, compatible elevation, adjacent access, overlapping objects and the 64 map-template limit. The engine still limits simultaneously active objects to 16; normal spatial activation applies. Starter scripts are checked to set their hide flag only after `B_OUTCOME_CAUGHT`. Complete travel and interaction QA remains necessary.
 
-The Alpha 2 full upstream rerun is being recorded separately. The following Alpha 1 result remains the known regression baseline until that run completes.
+Final Alpha 2 full upstream run: **5,163 passed / 5,899 total; 218 failed, 18 known failing, 70 assumption failures, 421 TODO and 9 expected failures**. The 218 failing test names are identical to Alpha 1's recorded full-profile failures; the three extra passing tests reflect the replacement of the gift test with new storage and availability checks. The full suite still exits with failure, so a final-release claim would be premature.
 
-Final full upstream run: **5,160 passed / 5,896 total; 218 failed, 18 known failing, 70 assumption failures, 421 TODO and 9 expected failures**. The previous milestone had 220 failures; the intended shiny-template expectation and the intentional new save layout were updated, accounting for the two resolved failures. The full suite still exits with failure. A final-release claim would be premature.
+The new flash-save tests initially left the test runner's Timer 2 watchdog replaced by the flash handler. Their fixture now restores the interrupt handler, timer registers and interrupt-enable mask before returning. The corrected full run completed; this fixture fix does not change the production ROM.
 
 Several full-suite failures are configuration mismatches: for example newer-generation damage/experience expectations and Future Sight typing. Not all failures have been triaged; they must not all be dismissed as harmless. The focused CI workflow is explicit about its scope; it does not imply the full upstream suite passes.
 
@@ -59,7 +59,7 @@ Several full-suite failures are configuration mismatches: for example newer-gene
 
 ## Required before a final release
 
-- Start a **new game**. Original Emerald saves and earlier experimental Complete Edition saves are not compatible with the changed species/trainer flag layout.
+- Start a **new game**. Alpha 1, original Emerald and earlier experimental saves are incompatible with the new storage/save format.
 - The 510-slot storage expansion passes actual flash tests; its UI and all facility-specific save paths still need normal-play QA.
 - Play through all story gates, Champion defeat/Hall of Fame, postgame unlocks and save/reload. Size checks are not a save/reload playthrough.
 - Exercise all new menus, captures, loss/whiteout paths, full-party/full-PC gifts, and an entire tournament in normal play.
