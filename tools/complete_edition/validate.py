@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check reachability and event limits of every added Complete Edition NPC."""
 import json
+import re
 import struct
 from pathlib import Path
 from map_tiles import MapTiles, STABLE_GROUND
@@ -92,3 +93,15 @@ def visit_trail(name, stack):
 for name in trail_by_name:
     visit_trail(name, [])
 print("Validated acyclic legendary quest chains")
+
+# Keep the native graphics regression aligned with every CE_ map placement.
+placed_graphics = {
+    obj["graphics_id"]
+    for path in (root / "data/maps").glob("*/map.json")
+    for obj in json.loads(path.read_text()).get("object_events", [])
+    if obj.get("script", "").startswith("CE_")
+}
+graphics_test = (root / "test/complete_edition_graphics.c").read_text()
+covered_graphics = set(re.findall(r"^    (.+),$", graphics_test, re.M))
+assert placed_graphics == covered_graphics, "Update native graphics coverage for changed CE_ placements"
+print(f"Validated native resource coverage for {len(placed_graphics)} placed NPC graphics IDs")
