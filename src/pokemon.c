@@ -2912,6 +2912,8 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
             u32 shinyValue = GET_SHINY_VALUE(boxMon->otId, boxMon->personality);
             bool32 isShiny;
             SET8(isShiny);
+            if (P_ALL_POKEMON_SHINY)
+                isShiny = TRUE;
             boxMon->shinyModifier = (shinyValue < SHINY_ODDS) ^ isShiny;
             break;
         }

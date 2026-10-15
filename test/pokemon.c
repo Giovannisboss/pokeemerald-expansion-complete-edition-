@@ -87,7 +87,7 @@ TEST("Shininess independent from PID and OTID")
     SetMonData(&mon, MON_DATA_IS_SHINY, &data);
     EXPECT_EQ(pid, GetMonData(&mon, MON_DATA_PERSONALITY));
     EXPECT_EQ(otId, GetMonData(&mon, MON_DATA_OT_ID));
-    EXPECT_EQ(!isShiny, GetMonData(&mon, MON_DATA_IS_SHINY));
+    EXPECT_EQ(P_ALL_POKEMON_SHINY ? TRUE : !isShiny, GetMonData(&mon, MON_DATA_IS_SHINY));
 }
 
 TEST("Shininess set on an Egg persists after hatching")
