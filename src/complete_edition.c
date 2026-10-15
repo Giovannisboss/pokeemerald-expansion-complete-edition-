@@ -4,6 +4,9 @@
 #include "complete_edition.h"
 #include "event_data.h"
 #include "item.h"
+#include "malloc.h"
+#include "script_menu.h"
+#include "string_util.h"
 
 static bool32 CanTrainMon(struct Pokemon *mon)
 {
@@ -94,5 +97,22 @@ void Script_CompleteEditionTraining(void)
         CompleteEditionResetEVs(mon);
         gSpecialVar_Result = CE_SERVICE_OK;
         break;
+    }
+}
+
+void Script_CEEVAmountMenu(void)
+{
+    static const u8 suffix[] = _(" EVs");
+    // Encode values above 1024 so EV 127 cannot collide with the B-button sentinel.
+    for (u32 ev = 0; ev <= MAX_PER_STAT_EVS; ev++)
+    {
+        struct ListMenuItem item;
+        u8 *name = Alloc(12);
+        AGB_ASSERT(name != NULL);
+        ConvertIntToDecimalStringN(name, ev, STR_CONV_MODE_LEFT_ALIGN, 3);
+        StringAppend(name, suffix);
+        item.name = name;
+        item.id = 1024 + ev;
+        MultichoiceDynamic_PushElement(item);
     }
 }

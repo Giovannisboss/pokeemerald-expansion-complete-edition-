@@ -21,7 +21,7 @@ TEST("CreateNPCTrainerPartyForTrainer generates customized Pokémon")
     u8 nickBuffer[20];
     CreateNPCTrainerPartyFromTrainer(testParty, GetTrainerStructFromId(currTrainer));
     EXPECT(IsMonShiny(&testParty[0]));
-    EXPECT(!IsMonShiny(&testParty[1]));
+    EXPECT_EQ(IsMonShiny(&testParty[1]), P_ALL_POKEMON_SHINY);
 
     EXPECT(GetMonData(&testParty[0], MON_DATA_POKEBALL, 0) == BALL_MASTER);
     EXPECT(GetMonData(&testParty[1], MON_DATA_POKEBALL, 0) == BALL_POKE);

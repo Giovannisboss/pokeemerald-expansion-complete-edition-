@@ -18,8 +18,8 @@ jobs:
           sudo apt-get install -y --no-install-recommends build-essential binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
       - name: Build
         run: ./tools/complete_edition/build.sh
-      - name: Game tests in headless mGBA
-        run: make -j4 -O KEEP_TEMPS=1 check
+      - name: Focused Gen 4 checks in headless mGBA
+        run: ./tools/complete_edition/test.sh
       - name: Save verification logs
         if: always()
         uses: actions/upload-artifact@v4

@@ -30,18 +30,11 @@ CE_Training_EventScript::
 	goto_if_ge VAR_RESULT, 6, CE_Training_End
 	copyvar VAR_0x8006, VAR_RESULT
 	goto_if_ne VAR_0x8005, 3, CE_Training_Confirm
-	dynmultipush CE_Training_Text_0, 0
-	dynmultipush CE_Training_Text_4, 1
-	dynmultipush CE_Training_Text_64, 2
-	dynmultipush CE_Training_Text_128, 3
-	dynmultipush CE_Training_Text_252, 4
+	callnative Script_CEEVAmountMenu
 	dynmultistack 0, 0, FALSE, 7, FALSE, 0, NULL
-	goto_if_ge VAR_RESULT, 5, CE_Training_End
-	setvar VAR_0x8007, 0
-	call_if_eq VAR_RESULT, 1, CE_Training_EV4
-	call_if_eq VAR_RESULT, 2, CE_Training_EV64
-	call_if_eq VAR_RESULT, 3, CE_Training_EV128
-	call_if_eq VAR_RESULT, 4, CE_Training_EV252
+	goto_if_eq VAR_RESULT, MULTI_B_PRESSED, CE_Training_End
+	copyvar VAR_0x8007, VAR_RESULT
+	subvar VAR_0x8007, 1024
 	goto CE_Training_Confirm
 
 CE_Training_Nature:

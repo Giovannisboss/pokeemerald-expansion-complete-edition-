@@ -106,3 +106,103 @@ TEST("Complete Edition: trade evolutions work locally and consume their held ite
     EXPECT_EQ(GetEvolutionTargetSpecies(&mon, EVO_MODE_NORMAL, ITEM_NONE, NULL, &canStop, DO_EVO), SPECIES_STEELIX);
     EXPECT_EQ(GetMonData(&mon, MON_DATA_HELD_ITEM), ITEM_NONE);
 }
+
+#include "complete_edition_research.h"
+#include "event_data.h"
+
+TEST("Complete Edition: every research encounter is a real shiny Gen 1-4 Pokemon")
+{
+    u32 dex = 1;
+    for (u32 i = 1; i <= 493; i++)
+        PARAMETRIZE_LABEL("dex %u", i) { dex = i; }
+    EXPECT(!CompleteEditionCanResearch(dex, FALSE));
+    EXPECT(CompleteEditionCanResearch(dex, TRUE));
+    FlagSet(FLAG_SYS_GAME_CLEAR);
+    gSpecialVar_Result = dex + 1024;
+    Script_CEPrepareEncounter();
+    EXPECT_EQ(gSpecialVar_Result, TRUE);
+    struct Pokemon *mon = &gParties[B_TRAINER_OPPONENT_A][0];
+    EXPECT_EQ(GetMonData(mon, MON_DATA_SPECIES), NationalPokedexNumToSpecies(dex));
+    EXPECT_EQ(GetMonData(mon, MON_DATA_LEVEL), 50);
+    EXPECT(IsMonShiny(mon));
+}
+
+TEST("Complete Edition: research rejects out-of-range species")
+{
+    EXPECT(!CompleteEditionCanResearch(0, TRUE));
+    EXPECT(!CompleteEditionCanResearch(494, TRUE));
+    EXPECT(!CompleteEditionCanResearch(0xFFFFFFFF, TRUE));
+}
+
+TEST("Complete Edition: starter adoption is shiny, badge gated, and once per starter")
+{
+    u32 index = 0;
+    const u16 starters[] = {
+        SPECIES_BULBASAUR, SPECIES_CHARMANDER, SPECIES_SQUIRTLE,
+        SPECIES_CHIKORITA, SPECIES_CYNDAQUIL, SPECIES_TOTODILE,
+        SPECIES_TREECKO, SPECIES_TORCHIC, SPECIES_MUDKIP,
+        SPECIES_TURTWIG, SPECIES_CHIMCHAR, SPECIES_PIPLUP,
+    };
+    for (u32 i = 0; i < ARRAY_COUNT(starters); i++)
+        PARAMETRIZE { index = i; }
+    ZeroPlayerPartyMons();
+    gPartiesCount[B_TRAINER_PLAYER] = 0;
+    FlagClear(FLAG_BADGE01_GET);
+    FlagClear(FLAG_CE_STARTER_BULBASAUR + index);
+    gSpecialVar_Result = index;
+    Script_CEGiveStarter();
+    EXPECT_EQ(gSpecialVar_Result, 1);
+    FlagSet(FLAG_BADGE01_GET);
+    gSpecialVar_Result = index;
+    Script_CEGiveStarter();
+    EXPECT_EQ(gSpecialVar_Result, 0);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_SPECIES), starters[index]);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_LEVEL), 5);
+    EXPECT(IsMonShiny(&gParties[B_TRAINER_PLAYER][0]));
+    gSpecialVar_Result = index;
+    Script_CEGiveStarter();
+    EXPECT_EQ(gSpecialVar_Result, 2);
+    EXPECT_EQ(CalculatePlayerPartyCount(), 1);
+}
+
+#include "script_menu.h"
+#include "malloc.h"
+
+static void FreeResearchTestMenu(void)
+{
+    for (u32 i = 0; i < MultichoiceDynamic_StackSize(); i++)
+        Free((void *)MultichoiceDynamic_PeekElementAt(i)->name);
+    MultichoiceDynamic_DestroyStack();
+}
+
+TEST("Complete Edition: research menus cover all 493 species without cancel collisions")
+{
+    const u32 starts[] = {1, 152, 252, 387};
+    const u32 ends[] = {151, 251, 386, 493};
+    for (u32 region = 0; region < 4; region++)
+    {
+        gSpecialVar_0x8005 = region;
+        Script_CEResearchMenu();
+        EXPECT_EQ(MultichoiceDynamic_StackSize(), ends[region] - starts[region] + 1);
+        for (u32 i = 0; i < MultichoiceDynamic_StackSize(); i++)
+        {
+            u32 id = MultichoiceDynamic_PeekElementAt(i)->id;
+            EXPECT_EQ(id, starts[region] + i + 1024);
+            EXPECT_NE(id, MULTI_B_PRESSED);
+        }
+        FreeResearchTestMenu();
+    }
+}
+
+TEST("Complete Edition: EV menu permits every value from 0 to 252 without cancel collisions")
+{
+    Script_CEEVAmountMenu();
+    EXPECT_EQ(MultichoiceDynamic_StackSize(), 253);
+    for (u32 i = 0; i < 253; i++)
+    {
+        u32 id = MultichoiceDynamic_PeekElementAt(i)->id;
+        EXPECT_EQ(id, i + 1024);
+        EXPECT_NE(id, MULTI_B_PRESSED);
+    }
+    FreeResearchTestMenu();
+}

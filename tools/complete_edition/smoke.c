@@ -13,7 +13,7 @@ static void QuietLog(struct mLogger *logger, int category, enum mLogLevel level,
 int main(int argc, char **argv)
 {
     if (argc < 4) {
-        fprintf(stderr, "usage: %s ROM OUTPUT.ppm FRAMES [KEY_MASK]\n", argv[0]);
+        fprintf(stderr, "usage: %s ROM OUTPUT.ppm FRAMES [KEY_MASK] [KEY_END_FRAME]\n", argv[0]);
         return 2;
     }
     struct mLogger logger = {.log = QuietLog};
@@ -32,8 +32,9 @@ int main(int argc, char **argv)
     core->reset(core);
     unsigned frames = strtoul(argv[3], NULL, 0);
     unsigned keys = argc > 4 ? strtoul(argv[4], NULL, 0) : 0;
+    unsigned keyEnd = argc > 5 ? strtoul(argv[5], NULL, 0) : frames;
     for (unsigned i = 0; i < frames; i++) {
-        core->setKeys(core, i > 180 && i % 60 < 2 ? keys : 0);
+        core->setKeys(core, i > 180 && i < keyEnd && i % 60 < 2 ? keys : 0);
         core->runFrame(core);
     }
     FILE *out = fopen(argv[2], "wb");

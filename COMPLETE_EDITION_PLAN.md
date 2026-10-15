@@ -23,15 +23,15 @@ Fan-made ROM hack built on RHH pokeemerald-expansion.
 
 ## Milestones
 - [x] Fork connected; development branch created.
-- [ ] Establish reproducible Codespaces build and baseline ROM test.
-- [ ] Configure species, types, moves and battle mechanics.
-- [ ] Implement and test universal shiny generation, including trainers.
-- [ ] Build encounter, evolution, starter and legendary availability.
-- [ ] Implement trainer difficulty and Steven Champion battle.
-- [ ] Add nature/IV/EV services.
-- [ ] Add visiting Gym Leaders and World Tournament.
-- [ ] Add postgame superbosses.
-- [ ] Adapt title art to GBA hardware constraints.
+- [x] Establish reproducible Codespaces build and baseline ROM test.
+- [x] Configure species, types, moves and battle mechanics.
+- [x] Implement and test universal shiny generation, including trainers.
+- [x] Build encounter, evolution, starter and legendary availability.
+- [x] Implement trainer difficulty and Steven Champion battle.
+- [x] Add nature/IV/EV services.
+- [x] Add visiting Gym Leaders and World Tournament.
+- [x] Add postgame superbosses.
+- [x] Adapt title art to GBA hardware constraints.
 - [ ] Regression-test story, saves, Battle Frontier and final patch.
 
-**Status:** Specification only; gameplay changes are not yet implemented.
+**Status:** Alpha 1 implements the listed systems and compiles. Focused emulator checks pass; full-suite regression failures and end-to-end playthroughs remain open. Checkmarks mean the alpha implementation exists, not that final-release QA is complete. Codespaces configuration is supplied; the equivalent Ubuntu build was tested locally. Availability currently uses a postgame research encounter catalogue. Some portraits are temporary. See [the current status and limitations](docs/COMPLETE_EDITION_STATUS.md).

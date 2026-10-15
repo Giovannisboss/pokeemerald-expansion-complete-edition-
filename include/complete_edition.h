@@ -13,5 +13,6 @@ u32 CompleteEditionTrainIV(struct Pokemon *mon, u32 stat, bool32 allStats);
 u32 CompleteEditionSetEV(struct Pokemon *mon, u32 stat, u32 value);
 void CompleteEditionResetEVs(struct Pokemon *mon);
 void Script_CompleteEditionTraining(void);
+void Script_CEEVAmountMenu(void);
 
 #endif

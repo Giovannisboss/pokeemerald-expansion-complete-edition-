@@ -51,18 +51,18 @@
 
 #else
 
-#define FLAG_UNUSED_0x020    0x20 // Unused Flag
-#define FLAG_UNUSED_0x021    0x21 // Unused Flag
-#define FLAG_UNUSED_0x022    0x22 // Unused Flag
-#define FLAG_UNUSED_0x023    0x23 // Unused Flag
-#define FLAG_UNUSED_0x024    0x24 // Unused Flag
-#define FLAG_UNUSED_0x025    0x25 // Unused Flag
-#define FLAG_UNUSED_0x026    0x26 // Unused Flag
-#define FLAG_UNUSED_0x027    0x27 // Unused Flag
-#define FLAG_UNUSED_0x028    0x28 // Unused Flag
-#define FLAG_UNUSED_0x029    0x29 // Unused Flag
-#define FLAG_UNUSED_0x02A    0x2A // Unused Flag
-#define FLAG_UNUSED_0x02B    0x2B // Unused Flag
+#define FLAG_CE_STARTER_BULBASAUR    0x20 // Unused Flag
+#define FLAG_CE_STARTER_CHARMANDER    0x21 // Unused Flag
+#define FLAG_CE_STARTER_SQUIRTLE    0x22 // Unused Flag
+#define FLAG_CE_STARTER_CHIKORITA    0x23 // Unused Flag
+#define FLAG_CE_STARTER_CYNDAQUIL    0x24 // Unused Flag
+#define FLAG_CE_STARTER_TOTODILE    0x25 // Unused Flag
+#define FLAG_CE_STARTER_TREECKO    0x26 // Unused Flag
+#define FLAG_CE_STARTER_TORCHIC    0x27 // Unused Flag
+#define FLAG_CE_STARTER_MUDKIP    0x28 // Unused Flag
+#define FLAG_CE_STARTER_TURTWIG    0x29 // Unused Flag
+#define FLAG_CE_STARTER_CHIMCHAR    0x2A // Unused Flag
+#define FLAG_CE_STARTER_PIPLUP    0x2B // Unused Flag
 #define FLAG_UNUSED_0x02C    0x2C // Unused Flag
 #define FLAG_UNUSED_0x02D    0x2D // Unused Flag
 #define FLAG_UNUSED_0x02E    0x2E // Unused Flag

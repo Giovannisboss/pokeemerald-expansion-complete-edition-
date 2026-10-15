@@ -37,3 +37,17 @@ To run the visual smoke harness (optional host dependency `libmgba-dev`):
 gcc -O2 -Wall -Wextra tools/complete_edition/smoke.c -lmgba -o /tmp/ce-smoke
 timeout 40 /tmp/ce-smoke pokeemerald.gba /tmp/newgame.ppm 1800 9
 ```
+
+## Alpha 1
+
+Run `./tools/complete_edition/test.sh` for the focused production-profile checks and map validation. `./tools/complete_edition/test.sh --full` runs the full upstream suite; it currently has unresolved failures under Gen 4 defaults and is not a release gate that passes. See `COMPLETE_EDITION_STATUS.md` for evidence and limits.
+
+Quickstart and all developer menus are disabled. A **new save is required**: species settings and trainer-flag allocation deliberately differ from upstream and earlier experimental builds.
+
+Create a patch using your own clean US/EU revision-0 ROM (outside this checkout):
+
+```sh
+python3 tools/complete_edition/bps.py /private/clean-emerald.gba pokeemerald.gba /private/complete-edition.bps
+```
+
+The tool verifies the input SHA-1, the GBA size limit, and an apply-to-clean-ROM round trip with CRC32 checks before writing the patch. Neither input nor output ROM belongs in Git.

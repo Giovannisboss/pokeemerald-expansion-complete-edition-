@@ -1740,3 +1740,7 @@ EventScript_PalletTown_PlayersHouse_2F_TurnOnPC::
 	.include "data/scripts/wild_encounter.inc"
 
 	.include "data/scripts/complete_edition_training.inc"
+
+	.include "data/scripts/complete_edition_research.inc"
+
+	.include "data/scripts/complete_edition_battles.inc"

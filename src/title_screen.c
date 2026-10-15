@@ -3,6 +3,7 @@
 #include "config/quickstart.h"
 #include "quickstart.h"
 #include "title_screen.h"
+#include "text.h"
 #include "sprite.h"
 #include "gba/m4a_internal.h"
 #include "clear_save_data_menu.h"
@@ -42,6 +43,46 @@ enum {
 #define RESET_RTC_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON | DPAD_LEFT)
 #define BERRY_UPDATE_BUTTON_COMBO (B_BUTTON | SELECT_BUTTON)
 #define A_B_START_SELECT (A_BUTTON | B_BUTTON | START_BUTTON | SELECT_BUTTON)
+
+
+// Native GBA sprite text: 1 KiB of OBJ tiles, one palette, four sprites.
+// Keep the original Emerald logo, Rayquaza animation and copyright banner.
+static const u32 sCompleteEditionBlankTiles[256] = {0};
+static const u16 sCompleteEditionPalette[16] = {RGB_BLACK, RGB_WHITE, RGB(9, 14, 5)};
+static const struct OamData sCompleteEditionOam = {
+    .shape = SPRITE_SHAPE(32x16),
+    .size = SPRITE_SIZE(32x16),
+    .priority = 0,
+};
+static const struct SpriteTemplate sCompleteEditionSprite = {
+    .tileTag = 1200,
+    .paletteTag = 1200,
+    .oam = &sCompleteEditionOam,
+    .anims = gDummySpriteAnimTable,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = SpriteCallbackDummy,
+};
+
+static void CreateCompleteEditionBanner(void)
+{
+    const struct SpriteSheet sheet = {sCompleteEditionBlankTiles, sizeof(sCompleteEditionBlankTiles), 1200};
+    const struct SpritePalette palette = {sCompleteEditionPalette, 1200};
+    const u8 text[] = _("COMPLETE EDITION");
+    const union TextColor color = {.background = 0, .foreground = 1, .shadow = 2};
+    u8 ids[4];
+    const u32 *sources[4] = {sCompleteEditionBlankTiles, sCompleteEditionBlankTiles, sCompleteEditionBlankTiles, sCompleteEditionBlankTiles};
+    LoadSpriteSheet(&sheet);
+    LoadSpritePalette(&palette);
+    for (u32 i = 0; i < ARRAY_COUNT(ids); i++)
+    {
+        ids[i] = CreateSprite(&sCompleteEditionSprite, 72 + i * 32, 85, 0);
+        if (ids[i] == MAX_SPRITES)
+            return;
+        gSprites[ids[i]].oam.tileNum += i * 8;
+    }
+    SetupSpritesForTextPrinting(ids, sources, 4, 1);
+    AddSpriteTextPrinterParameterized6(ids[0], FONT_SMALL, (128 - GetStringWidth(FONT_SMALL, text, 0)) / 2, 1, 0, 0, color, TEXT_SKIP_DRAW, text);
+}
 
 static void MainCB2(void);
 static void Task_TitleScreenPhase1(u8);
@@ -755,6 +796,7 @@ static void Task_TitleScreenPhase2(u8 taskId)
                                     | DISPCNT_BG1_ON
                                     | DISPCNT_BG2_ON
                                     | DISPCNT_OBJ_ON);
+        CreateCompleteEditionBanner();
         CreatePressStartBanner(START_BANNER_X, 108);
         CreateCopyrightBanner(START_BANNER_X, 148);
         if (QUICKSTART && QUICKSTART_HUD)
