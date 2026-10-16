@@ -3,6 +3,37 @@
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
 
+## 2026-10-16: complete Alpha 2.5.1 native audit
+
+A fresh clean GitHub runner built the no-Dynamax source and completed the entire
+native suite at commit `a583fe1aea3671bae1ff280abe856b323ca3832f`.
+The run records **5,400 PASS and zero unexpected failures across 5,909 outcomes**.
+It retains **16 KNOWN_FAILING, 421 TO_DO, 63 ASSUMPTION_FAIL, seven EXPECTED_FAIL
+and two deliberate expected-crash outcomes**. The native TOTAL footer, process
+exit status, result checker and final workflow all pass. This completed run
+replaces the need to rely on the historical combined partial-run coverage for
+the current battle/test tree; those older reports remain historical evidence.
+
+The log checker now rejects unexpected or ambiguous crashes, unrecognized result
+statuses, unexpected passes and failing summary footers. It preserves the native
+runner's explicitly green expected-crash outcomes. Four host regression tests
+cover 19 scenarios and pass locally and in CI. Existing known-failure and TODO
+markers were not increased or removed to obtain a passing result.
+
+The production ROM checksum remains
+`c4b86f0dca54f7118252b5209081df5b282af8c84ad06d4b8081291775313948`;
+these host verification changes do not modify gameplay or saves. All 938
+production and 1,914 test object headers validate, together with the map,
+graphics, starter, legendary and seventh-badge gates.
+See [full-audit evidence](qa/2026-10-16-alpha-2-5-1-full.json) and the
+[completed workflow](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/38932717701).
+
+No ordinary-play progress is claimed for this pass. The recorded story position
+remains Slateport with two badges, before defeating the Route 110 rival. The
+prior live emulator session is not available in this continuation environment.
+Original-story/postgame/event playthrough, portraits and real-hardware QA remain
+required before a final release.
+
 ## Alpha 2.5.1: Dynamax removed from gameplay
 
 Dynamax and Gigantamax are globally disabled for both players and trainers.

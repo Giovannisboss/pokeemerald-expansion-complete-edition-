@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-16",
+  "milestone": "Alpha 2.5.1 complete native regression audit",
+  "source_commit": "a583fe1aea3671bae1ff280abe856b323ca3832f",
+  "workflow_run_id": 38932717701,
+  "workflow_url": "https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/38932717701",
+  "log": "full/tests-0.log",
+  "complete": true,
+  "recorded_results": 5909,
+  "reported_total": 5909,
+  "statuses": {
+    "PASS": 5400,
+    "EXPECTED_FAIL": 7,
+    "CRASH": 2,
+    "ASSUMPTION_FAIL": 63,
+    "TO_DO": 421,
+    "KNOWN_FAILING": 16
+  },
+  "expected_crashes": 2,
+  "failing_outcomes": 0,
+  "no_failing_outcomes": true,
+  "failures": [],
+  "known_failures": [
+    {
+      "name": "Berserk does activate if move is boosted by Sheer Force (Champions)",
+      "detail": "test/battle/ability/berserk.c:114: EXPECT_EQ(6, 7) failed"
+    },
+    {
+      "name": "Sleep Clause: Sleep clause is deactivated when a sleeping mon is sent out and transforms into a mon with Insomnia / Vital spirit",
+      "detail": "test/battle/sleep_clause.c:1149: Did you mean: MESSAGE(\"The opposing Ditto transformed?into Zigzagoon!\")"
+    },
+    {
+      "name": "Anticipation treats Hidden Power as its dynamic type (Gen6+)",
+      "detail": "test/battle/ability/anticipation.c:333: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Color Change does activate if move is boosted by Sheer Force (Champions)",
+      "detail": "test/battle/ability/color_change.c:218: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Neutralizing Gas fainting as Discharge's foe allows 30% paralysis on the attacker's ally",
+      "detail": "test/battle/ability/neutralizing_gas.c:41: Expected 0.299 passes/successes, observed 0.0"
+    },
+    {
+      "name": "Anger Shell does activate if move is boosted by Sheer Force (Champions)",
+      "detail": "test/battle/ability/anger_shell.c:127: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "AI will not use Protect if its left ally is about to trigger Justified with Beat Up",
+      "detail": "test/battle/ai/ai_doubles.c:598: Expected target opponentRight, got playerLeft"
+    },
+    {
+      "name": "Pickpocket can steal an item even if hit by a contact move that's boosted by Sheer Force (Champions)",
+      "detail": "test/battle/ability/pickpocket.c:485: Unmatched ABILITY_POPUP"
+    },
+    {
+      "name": "Mirror Armor lowers Speed of the partner Pokemon after Court Change was used by the opponent after it set up Sticky Web",
+      "detail": "test/battle/ability/mirror_armor.c:172: Did you mean: ANIMATION(ANIM_TYPE_GENERAL, 0, opponentLeft)"
+    },
+    {
+      "name": "Neutralizing Gas fainting as Discharge's ally restores Sheer Force before opposing secondary effects",
+      "detail": "test/battle/ability/neutralizing_gas.c:4: Expected 1.0 passes/successes, observed 0.0"
+    },
+    {
+      "name": "AI uses Dynamax -- Max Moves are scored based on max move effects, not base effects",
+      "detail": "test/battle/ai/gimmick_dynamax.c:24: Unmatched EXPECT_MOVE Explosion, got Scratch"
+    },
+    {
+      "name": "AI uses Helping Hand if the ally does notably more damage",
+      "detail": "test/battle/ai/ai_doubles.c:1210: Unmatched EXPECT_MOVE Helping Hand, got Mud-Slap"
+    },
+    {
+      "name": "AI_SMART_MON_CHOICES: AI sees its own terrain setting ability's effect on failed moves when considering switchin candidates",
+      "detail": "test/battle/ai/ai_switching.c:2449: Expected partyIndex 1, got 2"
+    },
+    {
+      "name": "AI uses Dynamax -- AI does not dynamax before using a utility move",
+      "detail": "test/battle/ai/gimmick_dynamax.c:36: Expected gimmick N/A, got Dynamax"
+    },
+    {
+      "name": "Roost recovers 50% of the user's Max HP",
+      "detail": "test/battle/move_effect/roost.c:79: EXPECT failed"
+    },
+    {
+      "name": "Embargo blocks an affected Pokémon's trainer from using items",
+      "detail": "test/battle/move_effect/embargo.c:44: EXPECT_EQ(21, 1) failed"
+    }
+  ],
+  "rom_sha256": "c4b86f0dca54f7118252b5209081df5b282af8c84ad06d4b8081291775313948",
+  "production_objects_valid": 938,
+  "test_objects_valid": 1914,
+  "notes": [
+    "Full run completed with its native TOTAL footer and passing process/verification exit status; this is not combined coverage from partial runs.",
+    "The existing 16 known failures, 421 TODOs and 63 assumption skips remain visible and unchanged.",
+    "Two green CRASH rows are explicit expected-crash tests; unexpected or ambiguous crashes now fail the log checker.",
+    "Host-only audit changes do not alter the Alpha 2.5.1 production ROM; checksum matches the prior no-Dynamax release.",
+    "No ordinary-play progress was made in this run. Latest recorded story checkpoint remains Slateport with two badges, before the Route 110 rival victory.",
+    "Full original-story/postgame/event playthrough, portraits and hardware QA remain open."
+  ],
+  "footer_failures": 0,
+  "host_regression_tests": {
+    "methods": 4,
+    "scenarios": 19,
+    "local": "PASS",
+    "github": "PASS"
+  },
+  "known_failure_review": [
+    {
+      "area": "Roost",
+      "finding": "Fixture unconditionally expects later-generation odd-HP rounding (51 from HP1/MaxHP99); its own commented Gen4 expectation is50 and production uses integer division. No production change made."
+    },
+    {
+      "area": "Sleep Clause",
+      "finding": "The inspected transform fixture uses Gen5 Imposter; it does not establish a Gen4 production regression."
+    },
+    {
+      "area": "Helping Hand AI",
+      "finding": "Requires targeted score/target investigation. Missing explicit doubles flag is not established as cause because production adds it automatically."
+    },
+    {
+      "area": "Embargo trainer items",
+      "finding": "The known fixture forces an item action outside normal AI eligibility. Production ShouldUseItem already rejects Embargo. No production change made."
+    },
+    {
+      "area": "Dynamax AI",
+      "finding": "Two known failures exercise the inactive upstream backend; production Dynamax/Gigantamax remain disabled."
+    }
+  ]
+}

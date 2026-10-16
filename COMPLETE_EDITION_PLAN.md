@@ -36,12 +36,6 @@ Fan-made ROM hack built on RHH pokeemerald-expansion.
 - [x] Adapt title art to GBA hardware constraints.
 - [ ] Regression-test story, saves, Battle Frontier and final patch.
 
-**Status:** Alpha 2.5 completes the full native audit with 5,397 passes and zero unexpected failures, down from 108 in Alpha 2.4. The 16 known failures, 421 TODOs and 63 assumption skips remain visible. Three actual flash-storage tests pass. Native story QA verifies shiny Marshtomp evolution, fixes the Rusturf reset caused by disabled visitor graphics, and completes Peeko rescue/Devon Parts recovery with a fresh save reload. Final outcome coverage adds a graphics regression and verifies all 5,907 expected outcomes across the broad recheck and focused completion; the incomplete recheck is labelled explicitly. Story/Frontier, world-event captures, portraits and hardware QA remain open. Checkmarks denote implemented alpha systems, not final-release QA. See [status and limitations](docs/COMPLETE_EDITION_STATUS.md).
+**Status:** Alpha 2.5.1 disables Dynamax/Gigantamax and completes a fresh full native audit: 5,400 passes, zero unexpected failures and 5,909 recorded outcomes. The 16 known failures, 421 TODOs and 63 assumption skips remain visible. The rebuilt production ROM matches the existing Alpha 2.5.1 checksum exactly. Checkmarks denote implemented alpha systems, not final-release QA. Story/Frontier, world-event captures, portraits and hardware QA remain open. See [status and limitations](docs/COMPLETE_EDITION_STATUS.md).
 
-**2026-10-16 progress:** Ordinary-play QA now reaches the Knuckle Badge: Devon,
-PokeNav/Match Call, Rustboro rival, Briney's voyages, all six Dewford Gym trainers,
-blackout/retry and Brawly victory are verified. EV reset, exact allocations and
-the 510-total limit pass through the normal adviser UI. A fresh normal-save reload
-retains two badges, level-22 Marshtomp and all progress. The unchanged Alpha 2.5
-ROM rebuilds identically and 38 focused native checks pass. Next checkpoint:
-Granite Cave/Steven's Letter and the Slateport boat unlock.
+**2026-10-16 progress:** Ordinary-play QA has completed the Knuckle Badge, Granite Cave/Steven's Letter and Slateport's museum/Aqua storyline. The latest recorded normal save is Slateport Centre with two badges, Marshtomp level 24 and Cleffa level 10. The Route 110 rival is reached but unbeaten. This continuation completed the fresh full native audit and strengthened result checking; it did not advance the ordinary playthrough. Next story task: defeat the Route 110 rival and continue to Mauville.
