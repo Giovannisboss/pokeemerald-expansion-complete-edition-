@@ -265,6 +265,7 @@ CE_Tournament_EventScript::
 	lock
 	faceplayer
 	goto_if_unset FLAG_SYS_GAME_CLEAR, CE_Battles_NotChampion
+	goto_if_set FLAG_CE_TOURNAMENT_REWARD_PENDING, CE_Tournament_ClaimReward
 	msgbox CE_Battles_Text_Tournament, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, NO, CE_Battles_End
 	callnative Script_CEStartTournament
@@ -307,9 +308,22 @@ CE_Tournament_Round:
 CE_Tournament_AfterBattle:
 	addvar VAR_TEMP_2, 1
 	goto_if_lt VAR_TEMP_2, 8, CE_Tournament_Round
+	setflag FLAG_CE_TOURNAMENT_REWARD_PENDING
 	msgbox CE_Battles_Text_Winner, MSGBOX_DEFAULT
-	giveitem ITEM_GOLD_BOTTLE_CAP, 1
+CE_Tournament_ClaimReward:
+	callnative Script_CEClaimTournamentReward
+	goto_if_eq VAR_RESULT, FALSE, CE_Tournament_RewardNoRoom
+	playfanfare MUS_OBTAIN_ITEM
+	msgbox CE_Battles_Text_RewardReceived, MSGBOX_DEFAULT
+	waitfanfare
 	goto CE_Battles_End
+CE_Tournament_RewardNoRoom:
+	msgbox CE_Battles_Text_RewardNoRoom, MSGBOX_DEFAULT
+	goto CE_Battles_End
+CE_Battles_Text_RewardReceived:
+	.string "You received a GOLD BOTTLE CAP!\nIt was put in the BAG.$"
+CE_Battles_Text_RewardNoRoom:
+	.string "Your BAG has no room for the prize.\nI will keep your GOLD BOTTLE CAP.\pMake room in the ITEMS pocket,\nthen speak to me to collect it.$"
 CE_Tournament_Battle_0:
 	trainerbattle_no_intro TRAINER_CE_PWT_BROCK, CE_Battles_Text_Defeat
 	goto CE_Tournament_AfterBattle

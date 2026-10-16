@@ -2438,15 +2438,18 @@ AI_SINGLE_BATTLE_TEST("AI_SMART_MON_CHOICES: AI sees its own terrain setting abi
 
 AI_SINGLE_BATTLE_TEST("AI_SMART_MON_CHOICES: AI sees its own terrain setting ability's effect on failed moves when considering switchin candidates")
 {
-    KNOWN_FAILING; // Fails because the AI can't currently see the arbitrary terrain passed to AI_CalcDamage in CanAbilityBlockMove
+    u32 surgeSlot;
+    PARAMETRIZE { surgeSlot = 1; }
+    PARAMETRIZE { surgeSlot = 2; }
+
     GIVEN {
         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY | AI_FLAG_SMART_SWITCHING | AI_FLAG_SMART_MON_CHOICES | AI_FLAG_OMNISCIENT);
         PLAYER(SPECIES_ZIGZAGOON) { Moves(MOVE_PROTECT, MOVE_QUICK_ATTACK); }
         OPPONENT(SPECIES_ZIGZAGOON) { Moves(MOVE_EXPLOSION); }
-        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(ABILITY_PSYCHIC_SURGE); Moves(MOVE_CONFUSION); }
-        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(ABILITY_INNER_FOCUS); Moves(MOVE_CONFUSION); }
+        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(surgeSlot == 1 ? ABILITY_PSYCHIC_SURGE : ABILITY_INNER_FOCUS); Moves(MOVE_CONFUSION); }
+        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(surgeSlot == 2 ? ABILITY_PSYCHIC_SURGE : ABILITY_INNER_FOCUS); Moves(MOVE_CONFUSION); }
     } WHEN {
-        TURN { MOVE(player, MOVE_PROTECT); EXPECT_MOVE(opponent, MOVE_EXPLOSION); EXPECT_SEND_OUT(opponent, 1); }
+        TURN { MOVE(player, MOVE_PROTECT); EXPECT_MOVE(opponent, MOVE_EXPLOSION); EXPECT_SEND_OUT(opponent, surgeSlot); }
     }
 }
 

@@ -92,7 +92,7 @@
 #define FLAG_CE_LEGEND_DARKRAI                 0x46 // Complete Edition legendary trail
 #define FLAG_CE_LEGEND_SHAYMIN                 0x47 // Complete Edition legendary trail
 #define FLAG_CE_LEGEND_ARCEUS                  0x48 // Complete Edition legendary trail
-#define FLAG_UNUSED_0x049    0x49 // Unused Flag
+#define FLAG_CE_TOURNAMENT_REWARD_PENDING      0x49 // Unclaimed Gold Bottle Cap; existing persistent flag slot
 #define FLAG_UNUSED_0x04A    0x4A // Unused Flag
 #define FLAG_UNUSED_0x04B    0x4B // Unused Flag
 #define FLAG_UNUSED_0x04C    0x4C // Unused Flag

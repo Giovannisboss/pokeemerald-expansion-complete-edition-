@@ -1,6 +1,6 @@
-# Pokémon Emerald: Complete Edition — Alpha 2.2 field guide
+# Pokémon Emerald: Complete Edition — field guide
 
-**Alpha 2.2 can use Alpha 2 / 2.1 battery saves. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
+**Current development builds retain the Alpha 2 battery-save format. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
 
 ## Other generations in the wild
 
@@ -80,6 +80,12 @@ After defeating Tate and Liza and receiving the seventh Gym Badge (MIND BADGE), 
 
 If you already earned the Mind Badge in an Alpha 2 save, the catalogue becomes available immediately when that save is loaded in Alpha 2.1. Load a normal battery save rather than an emulator save state from the earlier ROM. If the emulator associates saves with the ROM filename, copy your backed-up Alpha 2 `.sav` alongside the new ROM using the new ROM's basename.
 
-## Legendary trails in the development build
+## Legendary trails
 
-The new **Legendary trails** option at Birch's researcher provides hints for 29 additional world encounters. See [the trail guide](COMPLETE_EDITION_LEGEND_TRAILS.md) for locations and linked unlocks. The Mind Badge remains the minimum; stronger encounters also require the Hall of Fame. These additions are still undergoing verification. The delivered Alpha 2.1 ROM does not include them.
+The new **Legendary trails** option at Birch's researcher provides hints for 29 additional world encounters. See [the trail guide](COMPLETE_EDITION_LEGEND_TRAILS.md) for locations and linked unlocks. The Mind Badge remains the minimum; stronger encounters also require the Hall of Fame. These encounters are included in current builds. Complete travel, capture and save/reload verification remains open; see the status report for the tested scope.
+
+## Battle mechanics
+
+The game uses Generation 4 defaults and the physical/special split. Dynamax and Gigantamax are disabled for both players and trainers.
+
+Winning all eight World Tournament rounds earns one Gold Bottle Cap. If the Items pocket is full, the desk retains the prize; make room and speak to the attendant again before entering another tournament.

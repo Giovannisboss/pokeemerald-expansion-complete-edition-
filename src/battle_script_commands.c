@@ -5100,8 +5100,9 @@ void BS_CourtChangeSwapSideStatuses(void)
     SWAP(sideTimerPlayer->spikesAmount, sideTimerOpp->spikesAmount, temp);
     SWAP(sideTimerPlayer->toxicSpikesAmount, sideTimerOpp->toxicSpikesAmount, temp);
 
-    // Change battler IDs of swapped effects. Needed for the correct string when they expire
-    UPDATE_COURTCHANGED_BATTLER(stickyWebBattlerId);
+    // Court Change moves the web, not the identity of its original setter.
+    // Mirror Armor reflects the drop to that setter, even on the same side.
+    SWAP(sideTimerPlayer->stickyWebBattlerId, sideTimerOpp->stickyWebBattlerId, temp);
 
     // Track which side originally set the Sticky Web
     SWAP(sideTimerPlayer->stickyWebBattlerSide, sideTimerOpp->stickyWebBattlerSide, temp);

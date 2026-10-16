@@ -26,6 +26,7 @@
 
 static u32 GetAIEffectGroup(enum BattleMoveEffects effect);
 static u32 GetAIEffectGroupFromMove(enum BattlerId battler, enum Move move);
+static u32 GetUsableMoveIndexWithEffect(enum BattlerId battler, enum BattleMoveEffects effect, u32 moveLimitations);
 
 // Functions
 enum Ability AI_GetMoldBreakerSanitizedAbility(enum BattlerId battlerAtk, enum Ability abilityAtk, enum Ability abilityDef, enum HoldEffect holdEffectDef, enum Move move)
@@ -526,7 +527,10 @@ bool32 Ai_IsPriorityBlocked(enum BattlerId battlerAtk, enum BattlerId battlerDef
 
 bool32 AI_CanMoveBeBlockedByTarget(struct DamageContext *ctx)
 {
-    return CanMoveBeBlockedByTarget(ctx, GetBattleMovePriority(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ctx->move));
+    s32 priority = GetBattleMovePriority(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ctx->move);
+
+    return CanMoveBeBlockedByTarget(ctx, priority)
+        || CanPsychicTerrainProtectTarget(ctx, priority);
 }
 
 // To save computation time this function has 2 variants. One saves, sets and restores battlers, while the other doesn't.
@@ -2240,9 +2244,43 @@ static bool32 ShouldAvoidProtectingAgainstPartnerMove(enum BattlerId battler, en
     enum BattlerId partner = GetPartnerBattler(battler);
     enum Move partnerMove;
 
-    if (!IsDoubleBattle()
-     || !HasPartner(battler)
-     || !(gAiLogicData->battlerMovesScored & (1u << partner))
+    if (!IsDoubleBattle() || !HasPartner(battler))
+        return FALSE;
+
+    // During the preliminary partner simulation neither ally has committed a
+    // move. Break the Protect/Beat Up prediction cycle only when Beat Up is
+    // the partner's sole usable option; other moves require committed scoring.
+    if (gAiLogicData->partnerMoveSimulation
+     && !(gAiLogicData->shouldSwitch & (1u << partner)))
+    {
+        u32 moveIndex = GetUsableMoveIndexWithEffect(partner, EFFECT_BEAT_UP, gAiLogicData->moveLimitations[partner]);
+        enum Move *partnerMoves = GetMovesArray(partner);
+        bool32 hasAlternativeMove = FALSE;
+        for (u32 i = 0; i < MAX_MON_MOVES; i++)
+        {
+            if (i != moveIndex && !IsMoveUnusable(i, partnerMoves[i], gAiLogicData->moveLimitations[partner]))
+            {
+                hasAlternativeMove = TRUE;
+                break;
+            }
+        }
+        u32 incomingDamage = 0;
+        if (IsBattlerAlive(GetBattlerLeftFoe(battler)))
+            incomingDamage += GetBestDmgFromBattler(GetBattlerLeftFoe(battler), battler, AI_DEFENDING);
+        if (IsBattlerAlive(GetBattlerRightFoe(battler)))
+            incomingDamage += GetBestDmgFromBattler(GetBattlerRightFoe(battler), battler, AI_DEFENDING);
+        if (!hasAlternativeMove
+         && moveIndex != MAX_MON_MOVES
+         && IsAllyProtectingFromMove(partner, gBattleMons[partner].moves[moveIndex], protectMove)
+         && AI_IsFaster(battler, partner, protectMove, gBattleMons[partner].moves[moveIndex], CONSIDER_PRIORITY)
+         && incomingDamage + AI_GetDamage(partner, battler, moveIndex, AI_ATTACKING_PARTNER, gAiLogicData) < gBattleMons[battler].hp
+         && ShouldBeatUpForJustified(partner, battler, gBattleMons[partner].moves[moveIndex],
+                                    GetMoveType(gBattleMons[partner].moves[moveIndex]),
+                                    CanIndexMoveFaintTarget(partner, battler, moveIndex, AI_ATTACKING_PARTNER), gAiLogicData))
+            return TRUE;
+    }
+
+    if (!(gAiLogicData->battlerMovesScored & (1u << partner))
      || gAiLogicData->shouldSwitch & (1u << partner))
     {
         return FALSE;
@@ -2606,7 +2644,9 @@ bool32 ShouldBeatUpForJustified(enum BattlerId battlerAtk, enum BattlerId battle
 {
     enum Ability atkPartnerAbility = aiData->abilities[battlerAtkPartner];
 
-    if (wouldPartnerFaint
+    // Before Gen5, Beat Up deals typeless damage and cannot trigger Justified.
+    if ((GetMoveEffect(move) == EFFECT_BEAT_UP && GetConfig(B_BEAT_UP) < GEN_5)
+     || wouldPartnerFaint
      || gBattleStruct->monToSwitchIntoId[battlerAtkPartner] != PARTY_SIZE)
         return FALSE;
 
@@ -6745,3 +6785,4 @@ bool32 ShouldUsePledgeMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
 
     return FALSE;
 }
+

@@ -4190,7 +4190,8 @@ static enum MoveEndResult MoveEndMoveBlockRecoil(struct BattleCalcValues *cv)
 static enum MoveEndResult MoveEndSheerForce(struct BattleCalcValues *cv)
 {
     if (IsSheerForceAffected(cv->move, cv->abilities[cv->battlerAtk]))
-        gBattleScripting.moveendState = MOVEEND_ITEMS_EFFECTS_ALL;
+        gBattleScripting.moveendState = GetConfig(B_SHEER_FORCE_AGAINST_ABILITIES) >= GEN_CHAMPIONS
+            ? MOVEEND_COLOR_CHANGE : MOVEEND_ITEMS_EFFECTS_ALL;
     else
         gBattleScripting.moveendState++;
 
@@ -4576,7 +4577,12 @@ static enum MoveEndResult MoveEndColorChange(struct BattleCalcValues *cv)
     }
 
     gBattleStruct->eventState.moveEndBattler = 0;
-    gBattleScripting.moveendState++;
+    // Champions restores reactive abilities, but Sheer Force still suppresses
+    // the intervening item and switch effects.
+    if (IsSheerForceAffected(cv->move, cv->abilities[cv->battlerAtk]))
+        gBattleScripting.moveendState = MOVEEND_PICKPOCKET;
+    else
+        gBattleScripting.moveendState++;
     return MOVEEND_RESULT_CONTINUE;
 }
 

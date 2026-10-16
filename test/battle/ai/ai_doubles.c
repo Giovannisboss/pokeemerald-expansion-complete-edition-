@@ -583,8 +583,8 @@ AI_DOUBLE_BATTLE_TEST("AI will not use Protect if its left ally is about to trig
     ASSUME(GetMoveEffect(MOVE_BEAT_UP) == EFFECT_BEAT_UP);
     ASSUME(GetMoveType(MOVE_BEAT_UP) == TYPE_DARK);
 
-    KNOWN_FAILING; // partner is protecting
     GIVEN {
+        WITH_CONFIG(B_BEAT_UP, GEN_5);
         WITH_CONFIG(AI_REVERSE_BATTLER_LOGIC_ORDER_CHANCE, 0);
         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT);
         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_SCRATCH); }
@@ -622,6 +622,29 @@ AI_DOUBLE_BATTLE_TEST("AI will not use Protect if its right ally is about to tri
             EXPECT_MOVE(opponentRight, MOVE_BEAT_UP, target: opponentLeft);
             NOT_EXPECT_MOVE(opponentLeft, MOVE_PROTECT);
             SCORE_LT_VAL(opponentLeft, MOVE_PROTECT, AI_SCORE_DEFAULT, target: playerLeft);
+        }
+    }
+}
+
+AI_DOUBLE_BATTLE_TEST("AI does not target a Justified ally with typeless Gen4 Beat Up in either scoring order")
+{
+    u32 reverseOrderChance;
+    PARAMETRIZE { reverseOrderChance = 0; }
+    PARAMETRIZE { reverseOrderChance = 100; }
+
+    GIVEN {
+        WITH_CONFIG(B_BEAT_UP, GEN_4);
+        WITH_CONFIG(AI_REVERSE_BATTLER_LOGIC_ORDER_CHANCE, reverseOrderChance);
+        AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT);
+        PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_SCRATCH); }
+        PLAYER(SPECIES_CLEFABLE) { Moves(MOVE_SCRATCH); }
+        OPPONENT(SPECIES_PANGORO) { Ability(ABILITY_SCRAPPY); Moves(MOVE_BEAT_UP); }
+        OPPONENT(SPECIES_GROWLITHE) { Ability(ABILITY_JUSTIFIED); Moves(MOVE_PROTECT, MOVE_TACKLE); }
+    } WHEN {
+        TURN {
+            MOVE(playerLeft, MOVE_SCRATCH, target: opponentLeft);
+            MOVE(playerRight, MOVE_SCRATCH, target: opponentRight);
+            EXPECT_MOVE(opponentLeft, MOVE_BEAT_UP, target: playerLeft);
         }
     }
 }
@@ -1198,16 +1221,22 @@ AI_DOUBLE_BATTLE_TEST("AI uses Helping Hand if it's about to die")
 
 AI_DOUBLE_BATTLE_TEST("AI uses Helping Hand if the ally does notably more damage")
 {
-    KNOWN_FAILING;  // Failure was masked by test runner issues
+    enum Move attack;
+    PARAMETRIZE { attack = MOVE_MUD_SLAP; }
+    PARAMETRIZE { attack = MOVE_MUDDY_WATER; }
+
     GIVEN {
         ASSUME(GetMoveEffect(MOVE_HELPING_HAND) == EFFECT_HELPING_HAND);
         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY | AI_FLAG_OMNISCIENT);
         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_TACKLE, MOVE_CELEBRATE); }
         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_TACKLE, MOVE_CELEBRATE); }
-        OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_HELPING_HAND, MOVE_MUD_SLAP); }
+        OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_HELPING_HAND, attack); }
         OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_MUDDY_WATER); }
     } WHEN {
-        TURN { EXPECT_MOVE(opponentLeft, MOVE_HELPING_HAND); }
+        if (attack == MOVE_MUD_SLAP)
+            TURN { EXPECT_MOVE(opponentLeft, MOVE_HELPING_HAND); }
+        else
+            TURN { NOT_EXPECT_MOVE(opponentLeft, MOVE_HELPING_HAND); }
     }
 }
 
@@ -1428,3 +1457,4 @@ AI_DOUBLE_BATTLE_TEST("AI can choose a status move that boosts the attack by two
         }
     }
 }
+

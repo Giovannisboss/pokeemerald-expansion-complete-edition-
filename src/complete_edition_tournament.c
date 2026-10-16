@@ -1,6 +1,7 @@
 #include "global.h"
 #include "event_data.h"
 #include "random.h"
+#include "item.h"
 #include "complete_edition_tournament.h"
 
 static EWRAM_DATA u32 sTournamentUsed = 0;
@@ -23,4 +24,17 @@ void Script_CENextTournament(void)
     } while (sTournamentUsed & (1u << opponent));
     sTournamentUsed |= 1u << opponent;
     gSpecialVar_Result = opponent;
+}
+
+// Keep an earned prize in the ordinary saved flag array until it is delivered.
+// A full Bag must never consume the prize, and repeated claims must not duplicate it.
+void Script_CEClaimTournamentReward(void)
+{
+    gSpecialVar_Result = FALSE;
+    if (!FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING))
+        return;
+    if (!AddBagItem(ITEM_GOLD_BOTTLE_CAP, 1))
+        return;
+    FlagClear(FLAG_CE_TOURNAMENT_REWARD_PENDING);
+    gSpecialVar_Result = TRUE;
 }

@@ -3152,6 +3152,31 @@ static bool32 ShouldTriggerPartnerAbility(enum BattlerId battlerAtk, enum Move m
     }
 }
 
+// Compare damage from one legal attack, not two independently selected moves.
+// A single-target move cannot contribute damage against both foes in one turn.
+static u32 GetBestTurnDamageToFoes(enum BattlerId battler)
+{
+    u32 bestDamage = 0;
+    enum Move *moves = GetMovesArray(battler);
+    for (u32 moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
+    {
+        if (IsMoveUnusable(moveIndex, moves[moveIndex], gAiLogicData->moveLimitations[battler])
+         || IsBattleMoveStatus(moves[moveIndex]))
+            continue;
+        u32 leftDamage = 0;
+        u32 rightDamage = 0;
+        if (IsBattlerAlive(GetBattlerLeftFoe(battler)))
+            leftDamage = AI_GetDamage(battler, GetBattlerLeftFoe(battler), moveIndex, AI_ATTACKING, gAiLogicData);
+        if (IsBattlerAlive(GetBattlerRightFoe(battler)))
+            rightDamage = AI_GetDamage(battler, GetBattlerRightFoe(battler), moveIndex, AI_ATTACKING, gAiLogicData);
+        u32 damage = IsSpreadMove(AI_GetBattlerMoveTargetType(battler, moves[moveIndex]))
+                   ? leftDamage + rightDamage : (leftDamage > rightDamage ? leftDamage : rightDamage);
+        if (damage > bestDamage)
+            bestDamage = damage;
+    }
+    return bestDamage;
+}
+
 // double battle logic
 static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score)
 {
@@ -3261,6 +3286,12 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
             u32 ownHitsToKOFoe2 = GetBestNoOfHitsToKO(battlerAtk, GetBattlerRightFoe(battlerAtk), AI_ATTACKING);
             u32 partnerHitsToKOFoe2 = GetBestNoOfHitsToKO(battlerAtkPartner, GetBattlerRightFoe(battlerAtk), AI_ATTACKING);
 
+            u32 ownDamage = GetBestTurnDamageToFoes(battlerAtk);
+            u32 partnerDamage = GetBestTurnDamageToFoes(battlerAtkPartner);
+            // Helping Hand adds half of the partner's damage. Prefer support
+            // more strongly when that gain exceeds our own attack damage.
+            s32 supportScore = partnerDamage > 2 * ownDamage ? BEST_EFFECT : GOOD_EFFECT;
+
             if (hasTwoOpponents)
             {
                 // Might be about to die
@@ -3271,7 +3302,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
 
                 if (ownHitsToKOFoe1 > partnerHitsToKOFoe1 && partnerHitsToKOFoe1 > 1
                  && ownHitsToKOFoe2 > partnerHitsToKOFoe2 && partnerHitsToKOFoe2 > 1)
-                    ADJUST_SCORE(GOOD_EFFECT);
+                    ADJUST_SCORE(supportScore);
             }
             else if (IsBattlerAlive(GetBattlerLeftFoe(battlerAtk)))
             {
@@ -3281,7 +3312,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
                     ADJUST_SCORE(GOOD_EFFECT);
 
                 if (ownHitsToKOFoe1 > partnerHitsToKOFoe1 && partnerHitsToKOFoe1 > 1)
-                    ADJUST_SCORE(GOOD_EFFECT);
+                    ADJUST_SCORE(supportScore);
             }
             else if (IsBattlerAlive(GetBattlerRightFoe(battlerAtk)))
             {
@@ -3291,7 +3322,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
                     ADJUST_SCORE(GOOD_EFFECT);
 
                 if (ownHitsToKOFoe2 > partnerHitsToKOFoe2 && partnerHitsToKOFoe2 > 1)
-                    ADJUST_SCORE(GOOD_EFFECT);
+                    ADJUST_SCORE(supportScore);
 
             }
         }

@@ -9,6 +9,7 @@ SINGLE_BATTLE_TEST("Beat Up hits the target for each non-fainted, non-statused m
 {
     u32 gen;
     PARAMETRIZE { gen = GEN_3; }
+    PARAMETRIZE { gen = GEN_4; }
     PARAMETRIZE { gen = GEN_5; }
 
     GIVEN {
@@ -389,3 +390,4 @@ SINGLE_BATTLE_TEST("Beat Up ignores Choice Band", s16 damage)
             EXPECT_EQ(results[i].damage, results[0].damage);
     }
 }
+

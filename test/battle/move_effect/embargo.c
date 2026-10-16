@@ -1,5 +1,6 @@
 #include "global.h"
 #include "test/battle.h"
+#include "battle_ai_items.h"
 
 ASSUMPTIONS
 {
@@ -27,21 +28,27 @@ SINGLE_BATTLE_TEST("Embargo blocks the effect of an affected Pokémon's held ite
 
 SINGLE_BATTLE_TEST("Embargo blocks an affected Pokémon's trainer from using items")
 {
-    // As of writing, the battle tests system doesn't perform all the operations involved
-    // in the action of an NPC using an item in battle.
-    KNOWN_FAILING;
+    // USE_ITEM forces an action past the trainer AI eligibility check. Exercise
+    // that check directly, with a positive control after Embargo expires.
     GIVEN {
         ASSUME(gItemsInfo[ITEM_POTION].battleUsage == EFFECT_ITEM_RESTORE_HP);
         PLAYER(SPECIES_WOBBUFFET);
         OPPONENT(SPECIES_WOBBUFFET) { HP(1); }
     } WHEN {
         TURN { MOVE(player, MOVE_EMBARGO); }
-        TURN { USE_ITEM(opponent, ITEM_POTION, partyIndex: 0); }
     } SCENE {
         MESSAGE("Wobbuffet used Embargo!");
         MESSAGE("The opposing Wobbuffet can't use items anymore!");
     } THEN {
         EXPECT_EQ(opponent->hp, 1);
+        EXPECT_GT((u32)opponent->volatiles.embargoTimer, 0);
+        gBattleHistory->trainerItems[0] = ITEM_POTION;
+        EXPECT_EQ(ShouldUseItem(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)), FALSE);
+        EXPECT_EQ(gBattleHistory->trainerItems[0], ITEM_POTION);
+
+        opponent->volatiles.embargoTimer = 0;
+        EXPECT_EQ(ShouldUseItem(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)), TRUE);
+        EXPECT_EQ(gBattleHistory->trainerItems[0], ITEM_NONE);
     }
 }
 
@@ -428,3 +435,4 @@ SINGLE_BATTLE_TEST("Embargo doesn't block held item effects that affect prize mo
         EXPECT((bool32)gBattleStruct->moneyMultiplierItem);
     }
 }
+

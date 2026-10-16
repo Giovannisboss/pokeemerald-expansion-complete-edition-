@@ -1,7 +1,7 @@
 name: Complete Edition
 on:
   push:
-    branches: [complete-edition-development]
+    branches: [complete-edition-development, qa-reconcile-20261016]
   pull_request:
     branches: [complete-edition-development]
   workflow_dispatch:
@@ -20,6 +20,9 @@ jobs:
         run: python3 -m unittest discover -s tools/complete_edition -p 'test_summarize_tests.py' -v
       - name: Build
         run: ./tools/complete_edition/build.sh
+      - name: Affected candidate native families
+        if: github.ref_name == 'qa-reconcile-20261016'
+        run: bash tools/complete_edition/test-candidate.sh
       - name: Full native regression audit in headless mGBA
         run: ./tools/complete_edition/test.sh --full
       - name: Save verification logs

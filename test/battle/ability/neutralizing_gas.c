@@ -19,22 +19,15 @@ DOUBLE_BATTLE_TEST("Neutralizing Gas fainting as Discharge's ally restores Sheer
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DISCHARGE, playerLeft);
         HP_BAR(playerRight, hp: 0);
-        NONE_OF {
-            STATUS_ICON(opponentLeft, paralysis: TRUE);
-            STATUS_ICON(opponentRight, paralysis: TRUE);
-        }
-
         HP_BAR(opponentLeft);
-        NONE_OF {
-            STATUS_ICON(opponentLeft, paralysis: TRUE);
-            STATUS_ICON(opponentRight, paralysis: TRUE);
-        }
-
         HP_BAR(opponentRight);
         NONE_OF {
             STATUS_ICON(opponentLeft, paralysis: TRUE);
             STATUS_ICON(opponentRight, paralysis: TRUE);
         }
+    } THEN {
+        EXPECT_EQ(opponentLeft->status1 & STATUS1_PARALYSIS, 0);
+        EXPECT_EQ(opponentRight->status1 & STATUS1_PARALYSIS, 0);
     }
 }
 
@@ -64,7 +57,6 @@ DOUBLE_BATTLE_TEST("Neutralizing Gas fainting as Discharge's foe allows 30% para
     } SCENE {
         ANIMATION(ANIM_TYPE_MOVE, MOVE_DISCHARGE, playerLeft);
         HP_BAR(playerRight);
-        STATUS_ICON(playerRight, paralysis: TRUE);
         if (gasOnRight) {
             HP_BAR(opponentLeft);
             HP_BAR(opponentRight, hp: 0);
@@ -72,6 +64,9 @@ DOUBLE_BATTLE_TEST("Neutralizing Gas fainting as Discharge's foe allows 30% para
             HP_BAR(opponentLeft, hp: 0);
             HP_BAR(opponentRight);
         }
+        STATUS_ICON(playerRight, paralysis: TRUE);
+    } THEN {
+        EXPECT_NE(playerRight->status1 & STATUS1_PARALYSIS, 0);
     }
 }
 

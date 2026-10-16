@@ -61,12 +61,13 @@ SINGLE_BATTLE_TEST("Roost fails if the user is under the effects of Heal Block")
     }
 }
 
-SINGLE_BATTLE_TEST("Roost recovers 50% of the user's Max HP")
+SINGLE_BATTLE_TEST("Roost rounds half-HP recovery up from Gen5 onwards")
 {
     u16 hp;
 
-    KNOWN_FAILING; // All healing is currently rounded down
+    KNOWN_FAILING; // Modern rounding is not implemented; Gen4 floor rounding is tested separately.
     GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_5);
         PLAYER(SPECIES_WOBBUFFET) { HP(1); MaxHP(99); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -75,10 +76,30 @@ SINGLE_BATTLE_TEST("Roost recovers 50% of the user's Max HP")
         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
         HP_BAR(player, captureHP: &hp);
     } THEN {
-        //if (B_UPDATED_MOVE_DATA >= GEN_5)
-            EXPECT(hp == 51); // Rounds up
-        //else
-        //    EXPECT(hp == 50); // Rounds down
+        EXPECT_EQ(hp, 51);
+    }
+}
+
+SINGLE_BATTLE_TEST("Roost rounds half-HP recovery down in Gen4 and caps it at Max HP")
+{
+    u16 initialHP, maxHP, expectedHP, hp;
+
+    PARAMETRIZE { initialHP = 1;  maxHP = 99;  expectedHP = 50; }
+    PARAMETRIZE { initialHP = 1;  maxHP = 100; expectedHP = 51; }
+    PARAMETRIZE { initialHP = 80; maxHP = 99;  expectedHP = 99; }
+
+    GIVEN {
+        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_4);
+        PLAYER(SPECIES_WOBBUFFET) { HP(initialHP); MaxHP(maxHP); }
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_ROOST); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
+        HP_BAR(player, captureHP: &hp);
+    } THEN {
+        EXPECT_EQ(hp, expectedHP);
+        EXPECT_EQ(player->hp, expectedHP);
     }
 }
 
@@ -439,3 +460,4 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Telekinesis
         }
     }
 }
+

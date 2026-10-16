@@ -1130,13 +1130,14 @@ SINGLE_BATTLE_TEST("Sleep Clause: Sleep clause is deactivated when a sleeping mo
     enum Ability ability;
     PARAMETRIZE { ability = ABILITY_VITAL_SPIRIT; }
     PARAMETRIZE { ability = ABILITY_INSOMNIA; }
-    KNOWN_FAILING; // Sleep Clause parts work, but Imposter seems broken with battle messages / targeting. Issue #5565 https://github.com/rh-hideout/pokeemerald-expansion/issues/5565
     GIVEN {
         FLAG_SET(B_FLAG_SLEEP_CLAUSE);
         ASSUME(GetMoveEffect(MOVE_SPORE) == EFFECT_NON_VOLATILE_STATUS);
         ASSUME(GetMoveNonVolatileStatus(MOVE_SPORE) == MOVE_EFFECT_SLEEP);
         ASSUME(gItemsInfo[ITEM_LAGGING_TAIL].holdEffect == HOLD_EFFECT_LAGGING_TAIL);
-        PLAYER(SPECIES_ZIGZAGOON)
+        // Imposter copies slot 0. Keep its default action harmless so it does
+        // not put our Spore user to sleep before this scenario can run.
+        PLAYER(SPECIES_ZIGZAGOON) { Moves(MOVE_CELEBRATE, MOVE_SPORE); }
         PLAYER(SPECIES_DELIBIRD) { Ability(ability); }
         OPPONENT(SPECIES_DITTO) { Ability(ABILITY_IMPOSTER); }
         OPPONENT(SPECIES_ZIGZAGOON);
@@ -1146,19 +1147,23 @@ SINGLE_BATTLE_TEST("Sleep Clause: Sleep clause is deactivated when a sleeping mo
         TURN { SWITCH(opponent, 0); }
         TURN { SWITCH(opponent, 1); MOVE(player, MOVE_SPORE); }
     } SCENE {
-        MESSAGE("The opposing Ditto transformed into Zigzagoon using Imposter!");
+        MESSAGE("The opposing Ditto transformed into Zigzagoon!");
         MESSAGE("Zigzagoon used Spore!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, player);
         ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, opponent);
         MESSAGE("The opposing Ditto fell asleep!");
         MESSAGE("2 sent out Zigzagoon!");
         MESSAGE("2 sent out Ditto!");
+        MESSAGE("The opposing Ditto transformed into Delibird!");
         MESSAGE("The opposing Ditto woke up!");
         MESSAGE("2 sent out Zigzagoon!");
         MESSAGE("Delibird used Spore!");
         ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, player);
         ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, opponent);
         MESSAGE("The opposing Zigzagoon fell asleep!");
+    } THEN {
+        EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_STATUS), STATUS1_NONE);
+        EXPECT(opponent->status1 & STATUS1_SLEEP);
     }
 }
 
