@@ -1,0 +1,17 @@
+{
+  "log": "full-baseline.log",
+  "complete": true,
+  "recorded_results": 5909,
+  "reported_total": 5909,
+  "statuses": {
+    "ASSUMPTION_FAIL": 63,
+    "CRASH": 2,
+    "EXPECTED_FAIL": 7,
+    "KNOWN_FAILING": 16,
+    "PASS": 5400,
+    "TO_DO": 421
+  },
+  "failing_outcomes": 0,
+  "no_failing_outcomes": true,
+  "failures": []
+}
