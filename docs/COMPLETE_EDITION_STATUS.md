@@ -1,7 +1,29 @@
-# Complete Edition — Alpha 2.5
+# Complete Edition — Alpha 2.5.1
 
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
+
+## Alpha 2.5.1: Dynamax removed from gameplay
+
+Dynamax and Gigantamax are globally disabled for both players and trainers.
+The production eligibility function compiles to `return FALSE`, and direct
+activation compiles to a no-op. The normal battle UI cannot offer the feature.
+Shared IDs, save data and HP cleanup helpers are retained to protect compatibility.
+Gen 4 defaults and the physical/special split remain unchanged.
+
+The final isolated build passes **40 focused native Complete Edition tests**,
+including both-side and direct-activation rejection, maximum Dynamax-level and
+Gigantamax metadata, and flash storage regressions. All 938 production object
+headers and the map/resource validation pass. A fresh process loads the prior
+Alpha 2.5 two-badge save and verifies normal field movement at Dewford Gym.
+ROM SHA-256: `c4b86f0dca54f7118252b5209081df5b282af8c84ad06d4b8081291775313948`.
+
+Other pending battle repairs were excluded after broad testing found regressions;
+this patch contains only the Dynamax policy and its tests. The historical full
+audit below still describes Alpha 2.5: its 16 known failures are not claimed as
+resolved in this release. Two of those concern unused upstream Dynamax AI.
+Original-story/postgame, portrait and hardware release QA remains open.
+See `qa/2026-10-16-alpha-2-5-1-no-dynamax.json`.
 
 ## Implemented systems
 
@@ -124,7 +146,7 @@ routing and battle controls are being improved to reduce routine input overhead.
 See `qa/2026-10-16-alpha-2-5-slateport.json`. The Dewford checkpoint above remains
 a historical milestone, not the latest progression position.
 
-## Build, patch and saves
+## Alpha 2.5 historical build, patch and saves
 
 - ROM SHA-256: `8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6`.
 - Linked ROM: 16,568,604 bytes; padded ROM: 16 MiB; standard GBA ceiling: 32 MiB.

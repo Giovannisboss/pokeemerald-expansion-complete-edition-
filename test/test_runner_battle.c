@@ -424,6 +424,9 @@ static void BattleTest_Run(void *data)
     memset(&DATA, 0, sizeof(DATA));
     InitTestBattlers(test);
     TestInitConfigData();
+    // Upstream mechanics tests may explicitly request Dynamax. The shipped
+    // Complete Edition profile disables it; profile regressions override this.
+    SetConfig(CONFIG_B_DYNAMAX_ENABLED, TRUE);
 
     DATA.queuedEventsFailIndex = MAX_QUEUED_EVENTS;
     DATA.recordedBattle.rngSeed = defaultSeed;

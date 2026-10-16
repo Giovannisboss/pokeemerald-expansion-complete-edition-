@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-16",
+  "milestone": "Alpha 2.5.1: no Dynamax or Gigantamax gameplay",
+  "source_base": "9c0ba3ae94c22eaf9b99918276338149d245d1ec",
+  "rom_sha256": "c4b86f0dca54f7118252b5209081df5b282af8c84ad06d4b8081291775313948",
+  "rom_bytes": 16777216,
+  "linked_rom_bytes": 16568300,
+  "changes": [
+    "B_DYNAMAX_ENABLED is FALSE in the production profile",
+    "CanDynamax returns FALSE before player/trainer eligibility checks",
+    "ActivateDynamax returns without changing battle state when disabled",
+    "Upstream mechanics tests explicitly enable their test-only configuration; Complete Edition regressions force the shipped disabled policy"
+  ],
+  "production_machine_code": {
+    "CanDynamax": [
+      "movs r0, #0",
+      "bx lr"
+    ],
+    "ActivateDynamax": [
+      "bx lr"
+    ]
+  },
+  "focused_native": {
+    "log": "no-dynamax-isolated-focused.log",
+    "complete": true,
+    "recorded_results": 40,
+    "reported_total": 40,
+    "statuses": {
+      "PASS": 40
+    },
+    "failing_outcomes": 0,
+    "no_failing_outcomes": true,
+    "failures": []
+  },
+  "production_objects_valid": 938,
+  "map_validation": "84 placements; 61 graphics; 24 leaders; 12 starters; 29 legendary trails and acyclic gates",
+  "existing_save_reload": {
+    "checkpoint": "Alpha 2.5 Dewford Gym, two badges",
+    "method": "fresh mGBA process; ordinary Continue and button movement; no emulator state or injected progress",
+    "position_before": [
+      4,
+      4
+    ],
+    "position_after_down": [
+      4,
+      5
+    ],
+    "position_after_up": [
+      4,
+      4
+    ],
+    "map_group_num": [
+      3,
+      3
+    ],
+    "callback": "CB2_Overworld 0x08191c04"
+  },
+  "save_layout_changed": false,
+  "scope": [
+    "Dynamax and Gigantamax cannot be activated by players or trainers in the shipped build. Shared IDs, save fields and HP cleanup routines remain intact.",
+    "Other experimental battle repairs were excluded after a broad WIP audit found regressions. They are not part of this ROM.",
+    "This patch reruns focused native and existing-save checks; it does not replace the previous full audit. Main-story, Frontier, portraits and hardware release QA remain open."
+  ]
+}

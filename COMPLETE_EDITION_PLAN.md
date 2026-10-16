@@ -7,6 +7,7 @@ Fan-made ROM hack built on RHH pokeemerald-expansion.
 - National Pokédex species #1–493 obtainable in one save, without trading.
 - Every Pokémon shiny, including wild, gift, egg, static and trainer Pokémon.
 - Generation 4 physical/special move split and Gen 1–4 mechanics; no Fairy type.
+- Dynamax and Gigantamax disabled for players and trainers; shared save structures retained.
 - Steven replaces Wallace as Champion; moderate main-story difficulty.
 - Birch's research catalogue unlocks after the seventh Gym (Mind Badge), retaining its level-50 catchable encounters and existing menus.
 - All starter families obtainable; all Gen 1–4 legendary and mythical Pokémon obtainable through events.

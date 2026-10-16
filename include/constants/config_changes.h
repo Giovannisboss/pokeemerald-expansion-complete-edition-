@@ -3,6 +3,7 @@
 
 /* Config definitions */
 #define BATTLE_CONFIG_DEFINITIONS(F) \
+    F(B_DYNAMAX_ENABLED,           dynamaxEnabled,         (bool8, 1)) \
     /* Calculation settings */ \
     F(B_CRIT_CHANCE,               critChance,              (u32, GEN_COUNT - 1)) \
     F(B_CRIT_MULTIPLIER,           critMultiplier,          (u32, GEN_COUNT - 1)) \

@@ -145,3 +145,13 @@ The subsequent field-resource fix is tree
 that were accidentally gated behind IS_FRLG. All 61 placed graphics IDs pass
 native validation. Final outcome-coverage details (including the incomplete
 broad recheck and its focused completion) are in the final-coverage QA JSON.
+
+## Alpha 2.5.1: no Dynamax gameplay
+
+`B_DYNAMAX_ENABLED` defaults to `FALSE`. Both eligibility and direct activation
+are guarded. Production compiles these to false/no-op; no save-layout changes
+are made. The general battle-test harness enables the legacy backend solely
+for upstream mechanics coverage; the new Complete Edition regression explicitly
+disables it and tests both sides, Gigantamax metadata and direct activation.
+The isolated final ROM passes 40 focused native tests and prior-save field reload.
+Other experimental battle changes were excluded from this patch.

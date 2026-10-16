@@ -1,6 +1,36 @@
 #include "global.h"
 #include "test/battle.h"
 #include "battle_stat_change.h"
+#include "battle_dynamax.h"
+#include "battle_gimmick.h"
+
+SINGLE_BATTLE_TEST("Complete Edition: Dynamax and Gigantamax cannot activate on either side")
+{
+    GIVEN {
+        WITH_CONFIG(B_DYNAMAX_ENABLED, FALSE);
+        PLAYER(SPECIES_PIKACHU) { DynamaxLevel(10); GigantamaxFactor(TRUE); }
+        OPPONENT(SPECIES_PIKACHU) { DynamaxLevel(10); GigantamaxFactor(TRUE); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_CELEBRATE); MOVE(opponent, MOVE_CELEBRATE); }
+    } THEN {
+        u32 playerHP = player->hp, opponentHP = opponent->hp;
+        EXPECT_EQ(GetConfig(B_DYNAMAX_ENABLED), FALSE);
+        AssignUsableGimmicks();
+        for (u32 battler = 0; battler < gBattlersCount; battler++)
+        {
+            EXPECT_EQ(CanDynamax(battler), FALSE);
+            EXPECT_EQ(CanActivateGimmick(battler, GIMMICK_DYNAMAX), FALSE);
+            EXPECT_NE(gBattleStruct->gimmick.usableGimmick[battler], GIMMICK_DYNAMAX);
+            ActivateDynamax(battler); // Direct activation must also be harmless.
+            EXPECT_EQ(GetActiveGimmick(battler), GIMMICK_NONE);
+            EXPECT_EQ(gBattleStruct->dynamax.dynamaxTurns[battler], 0);
+        }
+        EXPECT_EQ(player->species, SPECIES_PIKACHU);
+        EXPECT_EQ(opponent->species, SPECIES_PIKACHU);
+        EXPECT_EQ(player->hp, playerHP);
+        EXPECT_EQ(opponent->hp, opponentHP);
+    }
+}
 
 SINGLE_BATTLE_TEST("Complete Edition: Gen4 Mental Herb retains its original limited effect")
 {

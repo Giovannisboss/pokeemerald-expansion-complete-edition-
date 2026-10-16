@@ -6,6 +6,11 @@
 #include "pokedex.h"
 #include "test/test.h"
 
+TEST("Complete Edition: the shipped profile disables Dynamax")
+{
+    EXPECT_EQ(B_DYNAMAX_ENABLED, FALSE);
+}
+
 TEST("Complete Edition: all 493 species are shiny with every original-trainer method")
 {
     u32 dex = 1, method = 0;
