@@ -1,0 +1,31 @@
+name: CE verified playable build
+on:
+  push:
+    branches: [qa-windows-play-runtime]
+    paths: ['.github/workflows/ce-playable-build.yml']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: adb01b50634e49c0d3dfbbd59d6d787dd549424b
+      - name: Install ARM toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+      - name: Rebuild and require audited ROM hash
+        run: |
+          bash tools/complete_edition/build.sh
+          echo 'ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040  pokeemerald.gba' | sha256sum -c -
+          mkdir -p build/playable
+          cp pokeemerald.gba build/playable/CE_20261016_Verified.gba
+          cp build/complete-edition-logs/SHA256SUMS build/playable/ORIGINAL_SHA256SUMS
+          printf '%s\n' 'Source adb01b50634e49c0d3dfbbd59d6d787dd549424b' 'Full native audit passed:5916 outcomes,5418 PASS,zero unexpected failures.' 'Development QA build; full story/postgame/hardware validation remains open.' > build/playable/README.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CE-verified-playable-20261016
+          path: build/playable/
+          retention-days: 30
