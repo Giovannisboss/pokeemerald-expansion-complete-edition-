@@ -1,0 +1,75 @@
+name: CE Windows headless host
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - qa-windows-play-runtime
+    paths:
+      - '.github/workflows/ce-windows-host.yml'
+      - 'tools/complete_edition/build-windows-host.sh'
+      - 'tools/complete_edition/play.c'
+
+permissions:
+  contents: read
+
+jobs:
+  host:
+    runs-on: windows-2022
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >-
+            git
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-ninja
+      - name: Build static host only
+        shell: msys2 {0}
+        run: bash tools/complete_edition/build-windows-host.sh
+      - name: Windows startup and import selftest
+        shell: pwsh
+        run: |
+          $exe = Join-Path $env:GITHUB_WORKSPACE 'ce-windows-host/package/ce-play.exe'
+          $processInfo = [System.Diagnostics.ProcessStartInfo]::new($exe)
+          $processInfo.UseShellExecute = $false
+          $processInfo.RedirectStandardError = $true
+          $processInfo.RedirectStandardOutput = $true
+          $processInfo.Environment['PATH'] = "$env:SystemRoot\System32;$env:SystemRoot"
+          $process = [System.Diagnostics.Process]::Start($processInfo)
+          $stderr = $process.StandardError.ReadToEnd()
+          $stdout = $process.StandardOutput.ReadToEnd()
+          if (-not $process.WaitForExit(10000)) { $process.Kill(); throw 'Host startup timeout' }
+          if ($process.ExitCode -ne 2 -or $stderr -notmatch 'usage:.*ROM') {
+            throw "Host startup failed: exit=$($process.ExitCode) stderr=$stderr stdout=$stdout"
+          }
+          Write-Output 'CE_WINDOWS_HOST_SELFTEST_PASS: native Windows startup, usage exit 2; MSYS2 excluded from child PATH'
+          Get-FileHash -Algorithm SHA256 $exe
+      - name: Preserve host tool and source attribution
+        uses: actions/upload-artifact@v4
+        with:
+          name: ce-windows-headless-host
+          path: ce-windows-host/package/*
+          retention-days: 30
+      - name: Emit host-only transfer stream
+        shell: pwsh
+        run: |
+          $exe = Join-Path $env:GITHUB_WORKSPACE 'ce-windows-host/package/ce-play.exe'
+          $bytes = [IO.File]::ReadAllBytes($exe)
+          $stream = [IO.MemoryStream]::new()
+          $gzip = [IO.Compression.GZipStream]::new($stream, [IO.Compression.CompressionLevel]::SmallestSize, $true)
+          $gzip.Write($bytes, 0, $bytes.Length)
+          $gzip.Dispose()
+          $encoded = [Convert]::ToBase64String($stream.ToArray())
+          $hash = (Get-FileHash -Algorithm SHA256 $exe).Hash.ToLowerInvariant()
+          Write-Output "CE_WINDOWS_HOST_META sha256=$hash bytes=$($bytes.Length) gzip_base64_chars=$($encoded.Length) mgba=26b7884bc25a5933960f3cdcd98bac1ae14d42e2"
+          Write-Output 'CE_WINDOWS_HOST_BEGIN'
+          for ($i = 0; $i -lt $encoded.Length; $i += 1024) {
+            Write-Output $encoded.Substring($i, [Math]::Min(1024, $encoded.Length - $i))
+          }
+          Write-Output 'CE_WINDOWS_HOST_END'
+          $stream.Dispose()
