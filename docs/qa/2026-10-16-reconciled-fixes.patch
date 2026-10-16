@@ -1,0 +1,983 @@
+diff --git a/.github/workflows/complete-edition.yml b/.github/workflows/complete-edition.yml
+--- a/.github/workflows/complete-edition.yml
++++ b/.github/workflows/complete-edition.yml
+@@ -1,7 +1,7 @@
+ name: Complete Edition
+ on:
+   push:
+-    branches: [complete-edition-development]
++    branches: [complete-edition-development, qa-reconcile-20261016]
+   pull_request:
+     branches: [complete-edition-development]
+   workflow_dispatch:
+@@ -20,6 +20,9 @@ jobs:
+         run: python3 -m unittest discover -s tools/complete_edition -p 'test_summarize_tests.py' -v
+       - name: Build
+         run: ./tools/complete_edition/build.sh
++      - name: Affected candidate native families
++        if: github.ref_name == 'qa-reconcile-20261016'
++        run: bash tools/complete_edition/test-candidate.sh
+       - name: Full native regression audit in headless mGBA
+         run: ./tools/complete_edition/test.sh --full
+       - name: Save verification logs
+diff --git a/data/scripts/complete_edition_battles.inc b/data/scripts/complete_edition_battles.inc
+--- a/data/scripts/complete_edition_battles.inc
++++ b/data/scripts/complete_edition_battles.inc
+@@ -265,6 +265,7 @@ CE_Tournament_EventScript::
+ 	lock
+ 	faceplayer
+ 	goto_if_unset FLAG_SYS_GAME_CLEAR, CE_Battles_NotChampion
++	goto_if_set FLAG_CE_TOURNAMENT_REWARD_PENDING, CE_Tournament_ClaimReward
+ 	msgbox CE_Battles_Text_Tournament, MSGBOX_YESNO
+ 	goto_if_eq VAR_RESULT, NO, CE_Battles_End
+ 	callnative Script_CEStartTournament
+@@ -307,9 +308,22 @@ CE_Tournament_Round:
+ CE_Tournament_AfterBattle:
+ 	addvar VAR_TEMP_2, 1
+ 	goto_if_lt VAR_TEMP_2, 8, CE_Tournament_Round
++	setflag FLAG_CE_TOURNAMENT_REWARD_PENDING
+ 	msgbox CE_Battles_Text_Winner, MSGBOX_DEFAULT
+-	giveitem ITEM_GOLD_BOTTLE_CAP, 1
++CE_Tournament_ClaimReward:
++	callnative Script_CEClaimTournamentReward
++	goto_if_eq VAR_RESULT, FALSE, CE_Tournament_RewardNoRoom
++	playfanfare MUS_OBTAIN_ITEM
++	msgbox CE_Battles_Text_RewardReceived, MSGBOX_DEFAULT
++	waitfanfare
+ 	goto CE_Battles_End
++CE_Tournament_RewardNoRoom:
++	msgbox CE_Battles_Text_RewardNoRoom, MSGBOX_DEFAULT
++	goto CE_Battles_End
++CE_Battles_Text_RewardReceived:
++	.string "You received a GOLD BOTTLE CAP!\nIt was put in the BAG.$"
++CE_Battles_Text_RewardNoRoom:
++	.string "Your BAG has no room for the prize.\nI will keep your GOLD BOTTLE CAP.\pMake room in the ITEMS pocket,\nthen speak to me to collect it.$"
+ CE_Tournament_Battle_0:
+ 	trainerbattle_no_intro TRAINER_CE_PWT_BROCK, CE_Battles_Text_Defeat
+ 	goto CE_Tournament_AfterBattle
+diff --git a/docs/COMPLETE_EDITION_FIELD_GUIDE.md b/docs/COMPLETE_EDITION_FIELD_GUIDE.md
+--- a/docs/COMPLETE_EDITION_FIELD_GUIDE.md
++++ b/docs/COMPLETE_EDITION_FIELD_GUIDE.md
+@@ -1,6 +1,6 @@
+-# Pokémon Emerald: Complete Edition — Alpha 2.2 field guide
++# Pokémon Emerald: Complete Edition — field guide
+ 
+-**Alpha 2.2 can use Alpha 2 / 2.1 battery saves. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
++**Current development builds retain the Alpha 2 battery-save format. Alpha 1 saves remain incompatible. Back up your save before switching ROM versions.**
+ 
+ ## Other generations in the wild
+ 
+@@ -80,6 +80,12 @@ After defeating Tate and Liza and receiving the seventh Gym Badge (MIND BADGE),
+ 
+ If you already earned the Mind Badge in an Alpha 2 save, the catalogue becomes available immediately when that save is loaded in Alpha 2.1. Load a normal battery save rather than an emulator save state from the earlier ROM. If the emulator associates saves with the ROM filename, copy your backed-up Alpha 2 `.sav` alongside the new ROM using the new ROM's basename.
+ 
+-## Legendary trails in the development build
++## Legendary trails
+ 
+-The new **Legendary trails** option at Birch's researcher provides hints for 29 additional world encounters. See [the trail guide](COMPLETE_EDITION_LEGEND_TRAILS.md) for locations and linked unlocks. The Mind Badge remains the minimum; stronger encounters also require the Hall of Fame. These additions are still undergoing verification. The delivered Alpha 2.1 ROM does not include them.
++The new **Legendary trails** option at Birch's researcher provides hints for 29 additional world encounters. See [the trail guide](COMPLETE_EDITION_LEGEND_TRAILS.md) for locations and linked unlocks. The Mind Badge remains the minimum; stronger encounters also require the Hall of Fame. These encounters are included in current builds. Complete travel, capture and save/reload verification remains open; see the status report for the tested scope.
++
++## Battle mechanics
++
++The game uses Generation 4 defaults and the physical/special split. Dynamax and Gigantamax are disabled for both players and trainers.
++
++Winning all eight World Tournament rounds earns one Gold Bottle Cap. If the Items pocket is full, the desk retains the prize; make room and speak to the attendant again before entering another tournament.
+diff --git a/include/complete_edition_tournament.h b/include/complete_edition_tournament.h
+--- a/include/complete_edition_tournament.h
++++ b/include/complete_edition_tournament.h
+@@ -2,4 +2,5 @@
+ #define GUARD_COMPLETE_EDITION_TOURNAMENT_H
+ void Script_CEStartTournament(void);
+ void Script_CENextTournament(void);
++void Script_CEClaimTournamentReward(void);
+ #endif
+diff --git a/include/constants/flags.h b/include/constants/flags.h
+--- a/include/constants/flags.h
++++ b/include/constants/flags.h
+@@ -92,7 +92,7 @@
+ #define FLAG_CE_LEGEND_DARKRAI                 0x46 // Complete Edition legendary trail
+ #define FLAG_CE_LEGEND_SHAYMIN                 0x47 // Complete Edition legendary trail
+ #define FLAG_CE_LEGEND_ARCEUS                  0x48 // Complete Edition legendary trail
+-#define FLAG_UNUSED_0x049    0x49 // Unused Flag
++#define FLAG_CE_TOURNAMENT_REWARD_PENDING      0x49 // Unclaimed Gold Bottle Cap; existing persistent flag slot
+ #define FLAG_UNUSED_0x04A    0x4A // Unused Flag
+ #define FLAG_UNUSED_0x04B    0x4B // Unused Flag
+ #define FLAG_UNUSED_0x04C    0x4C // Unused Flag
+diff --git a/src/battle_ai_main.c b/src/battle_ai_main.c
+--- a/src/battle_ai_main.c
++++ b/src/battle_ai_main.c
+@@ -3152,6 +3152,31 @@ static bool32 ShouldTriggerPartnerAbility(enum BattlerId battlerAtk, enum Move m
+     }
+ }
+ 
++// Compare damage from one legal attack, not two independently selected moves.
++// A single-target move cannot contribute damage against both foes in one turn.
++static u32 GetBestTurnDamageToFoes(enum BattlerId battler)
++{
++    u32 bestDamage = 0;
++    enum Move *moves = GetMovesArray(battler);
++    for (u32 moveIndex = 0; moveIndex < MAX_MON_MOVES; moveIndex++)
++    {
++        if (IsMoveUnusable(moveIndex, moves[moveIndex], gAiLogicData->moveLimitations[battler])
++         || IsBattleMoveStatus(moves[moveIndex]))
++            continue;
++        u32 leftDamage = 0;
++        u32 rightDamage = 0;
++        if (IsBattlerAlive(GetBattlerLeftFoe(battler)))
++            leftDamage = AI_GetDamage(battler, GetBattlerLeftFoe(battler), moveIndex, AI_ATTACKING, gAiLogicData);
++        if (IsBattlerAlive(GetBattlerRightFoe(battler)))
++            rightDamage = AI_GetDamage(battler, GetBattlerRightFoe(battler), moveIndex, AI_ATTACKING, gAiLogicData);
++        u32 damage = IsSpreadMove(AI_GetBattlerMoveTargetType(battler, moves[moveIndex]))
++                   ? leftDamage + rightDamage : (leftDamage > rightDamage ? leftDamage : rightDamage);
++        if (damage > bestDamage)
++            bestDamage = damage;
++    }
++    return bestDamage;
++}
++
+ // double battle logic
+ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef, enum Move move, s32 score)
+ {
+@@ -3261,6 +3286,12 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
+             u32 ownHitsToKOFoe2 = GetBestNoOfHitsToKO(battlerAtk, GetBattlerRightFoe(battlerAtk), AI_ATTACKING);
+             u32 partnerHitsToKOFoe2 = GetBestNoOfHitsToKO(battlerAtkPartner, GetBattlerRightFoe(battlerAtk), AI_ATTACKING);
+ 
++            u32 ownDamage = GetBestTurnDamageToFoes(battlerAtk);
++            u32 partnerDamage = GetBestTurnDamageToFoes(battlerAtkPartner);
++            // Helping Hand adds half of the partner's damage. Prefer support
++            // more strongly when that gain exceeds our own attack damage.
++            s32 supportScore = partnerDamage > 2 * ownDamage ? BEST_EFFECT : GOOD_EFFECT;
++
+             if (hasTwoOpponents)
+             {
+                 // Might be about to die
+@@ -3271,7 +3302,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
+ 
+                 if (ownHitsToKOFoe1 > partnerHitsToKOFoe1 && partnerHitsToKOFoe1 > 1
+                  && ownHitsToKOFoe2 > partnerHitsToKOFoe2 && partnerHitsToKOFoe2 > 1)
+-                    ADJUST_SCORE(GOOD_EFFECT);
++                    ADJUST_SCORE(supportScore);
+             }
+             else if (IsBattlerAlive(GetBattlerLeftFoe(battlerAtk)))
+             {
+@@ -3281,7 +3312,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
+                     ADJUST_SCORE(GOOD_EFFECT);
+ 
+                 if (ownHitsToKOFoe1 > partnerHitsToKOFoe1 && partnerHitsToKOFoe1 > 1)
+-                    ADJUST_SCORE(GOOD_EFFECT);
++                    ADJUST_SCORE(supportScore);
+             }
+             else if (IsBattlerAlive(GetBattlerRightFoe(battlerAtk)))
+             {
+@@ -3291,7 +3322,7 @@ static s32 AI_DoubleBattle(enum BattlerId battlerAtk, enum BattlerId battlerDef,
+                     ADJUST_SCORE(GOOD_EFFECT);
+ 
+                 if (ownHitsToKOFoe2 > partnerHitsToKOFoe2 && partnerHitsToKOFoe2 > 1)
+-                    ADJUST_SCORE(GOOD_EFFECT);
++                    ADJUST_SCORE(supportScore);
+ 
+             }
+         }
+diff --git a/src/battle_ai_util.c b/src/battle_ai_util.c
+--- a/src/battle_ai_util.c
++++ b/src/battle_ai_util.c
+@@ -26,6 +26,7 @@
+ 
+ static u32 GetAIEffectGroup(enum BattleMoveEffects effect);
+ static u32 GetAIEffectGroupFromMove(enum BattlerId battler, enum Move move);
++static u32 GetUsableMoveIndexWithEffect(enum BattlerId battler, enum BattleMoveEffects effect, u32 moveLimitations);
+ 
+ // Functions
+ enum Ability AI_GetMoldBreakerSanitizedAbility(enum BattlerId battlerAtk, enum Ability abilityAtk, enum Ability abilityDef, enum HoldEffect holdEffectDef, enum Move move)
+@@ -526,7 +527,10 @@ bool32 Ai_IsPriorityBlocked(enum BattlerId battlerAtk, enum BattlerId battlerDef
+ 
+ bool32 AI_CanMoveBeBlockedByTarget(struct DamageContext *ctx)
+ {
+-    return CanMoveBeBlockedByTarget(ctx, GetBattleMovePriority(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ctx->move));
++    s32 priority = GetBattleMovePriority(ctx->battlerAtk, ctx->abilities[ctx->battlerAtk], ctx->move);
++
++    return CanMoveBeBlockedByTarget(ctx, priority)
++        || CanPsychicTerrainProtectTarget(ctx, priority);
+ }
+ 
+ // To save computation time this function has 2 variants. One saves, sets and restores battlers, while the other doesn't.
+@@ -2240,9 +2244,43 @@ static bool32 ShouldAvoidProtectingAgainstPartnerMove(enum BattlerId battler, en
+     enum BattlerId partner = GetPartnerBattler(battler);
+     enum Move partnerMove;
+ 
+-    if (!IsDoubleBattle()
+-     || !HasPartner(battler)
+-     || !(gAiLogicData->battlerMovesScored & (1u << partner))
++    if (!IsDoubleBattle() || !HasPartner(battler))
++        return FALSE;
++
++    // During the preliminary partner simulation neither ally has committed a
++    // move. Break the Protect/Beat Up prediction cycle only when Beat Up is
++    // the partner's sole usable option; other moves require committed scoring.
++    if (gAiLogicData->partnerMoveSimulation
++     && !(gAiLogicData->shouldSwitch & (1u << partner)))
++    {
++        u32 moveIndex = GetUsableMoveIndexWithEffect(partner, EFFECT_BEAT_UP, gAiLogicData->moveLimitations[partner]);
++        enum Move *partnerMoves = GetMovesArray(partner);
++        bool32 hasAlternativeMove = FALSE;
++        for (u32 i = 0; i < MAX_MON_MOVES; i++)
++        {
++            if (i != moveIndex && !IsMoveUnusable(i, partnerMoves[i], gAiLogicData->moveLimitations[partner]))
++            {
++                hasAlternativeMove = TRUE;
++                break;
++            }
++        }
++        u32 incomingDamage = 0;
++        if (IsBattlerAlive(GetBattlerLeftFoe(battler)))
++            incomingDamage += GetBestDmgFromBattler(GetBattlerLeftFoe(battler), battler, AI_DEFENDING);
++        if (IsBattlerAlive(GetBattlerRightFoe(battler)))
++            incomingDamage += GetBestDmgFromBattler(GetBattlerRightFoe(battler), battler, AI_DEFENDING);
++        if (!hasAlternativeMove
++         && moveIndex != MAX_MON_MOVES
++         && IsAllyProtectingFromMove(partner, gBattleMons[partner].moves[moveIndex], protectMove)
++         && AI_IsFaster(battler, partner, protectMove, gBattleMons[partner].moves[moveIndex], CONSIDER_PRIORITY)
++         && incomingDamage + AI_GetDamage(partner, battler, moveIndex, AI_ATTACKING_PARTNER, gAiLogicData) < gBattleMons[battler].hp
++         && ShouldBeatUpForJustified(partner, battler, gBattleMons[partner].moves[moveIndex],
++                                    GetMoveType(gBattleMons[partner].moves[moveIndex]),
++                                    CanIndexMoveFaintTarget(partner, battler, moveIndex, AI_ATTACKING_PARTNER), gAiLogicData))
++            return TRUE;
++    }
++
++    if (!(gAiLogicData->battlerMovesScored & (1u << partner))
+      || gAiLogicData->shouldSwitch & (1u << partner))
+     {
+         return FALSE;
+@@ -2606,7 +2644,9 @@ bool32 ShouldBeatUpForJustified(enum BattlerId battlerAtk, enum BattlerId battle
+ {
+     enum Ability atkPartnerAbility = aiData->abilities[battlerAtkPartner];
+ 
+-    if (wouldPartnerFaint
++    // Before Gen5, Beat Up deals typeless damage and cannot trigger Justified.
++    if ((GetMoveEffect(move) == EFFECT_BEAT_UP && GetConfig(B_BEAT_UP) < GEN_5)
++     || wouldPartnerFaint
+      || gBattleStruct->monToSwitchIntoId[battlerAtkPartner] != PARTY_SIZE)
+         return FALSE;
+ 
+@@ -6745,3 +6785,4 @@ bool32 ShouldUsePledgeMove(enum BattlerId battlerAtk, enum BattlerId battlerDef,
+ 
+     return FALSE;
+ }
++
+diff --git a/src/battle_move_resolution.c b/src/battle_move_resolution.c
+--- a/src/battle_move_resolution.c
++++ b/src/battle_move_resolution.c
+@@ -4190,7 +4190,8 @@ static enum MoveEndResult MoveEndMoveBlockRecoil(struct BattleCalcValues *cv)
+ static enum MoveEndResult MoveEndSheerForce(struct BattleCalcValues *cv)
+ {
+     if (IsSheerForceAffected(cv->move, cv->abilities[cv->battlerAtk]))
+-        gBattleScripting.moveendState = MOVEEND_ITEMS_EFFECTS_ALL;
++        gBattleScripting.moveendState = GetConfig(B_SHEER_FORCE_AGAINST_ABILITIES) >= GEN_CHAMPIONS
++            ? MOVEEND_COLOR_CHANGE : MOVEEND_ITEMS_EFFECTS_ALL;
+     else
+         gBattleScripting.moveendState++;
+ 
+@@ -4576,7 +4577,12 @@ static enum MoveEndResult MoveEndColorChange(struct BattleCalcValues *cv)
+     }
+ 
+     gBattleStruct->eventState.moveEndBattler = 0;
+-    gBattleScripting.moveendState++;
++    // Champions restores reactive abilities, but Sheer Force still suppresses
++    // the intervening item and switch effects.
++    if (IsSheerForceAffected(cv->move, cv->abilities[cv->battlerAtk]))
++        gBattleScripting.moveendState = MOVEEND_PICKPOCKET;
++    else
++        gBattleScripting.moveendState++;
+     return MOVEEND_RESULT_CONTINUE;
+ }
+ 
+diff --git a/src/battle_script_commands.c b/src/battle_script_commands.c
+--- a/src/battle_script_commands.c
++++ b/src/battle_script_commands.c
+@@ -5100,8 +5100,9 @@ void BS_CourtChangeSwapSideStatuses(void)
+     SWAP(sideTimerPlayer->spikesAmount, sideTimerOpp->spikesAmount, temp);
+     SWAP(sideTimerPlayer->toxicSpikesAmount, sideTimerOpp->toxicSpikesAmount, temp);
+ 
+-    // Change battler IDs of swapped effects. Needed for the correct string when they expire
+-    UPDATE_COURTCHANGED_BATTLER(stickyWebBattlerId);
++    // Court Change moves the web, not the identity of its original setter.
++    // Mirror Armor reflects the drop to that setter, even on the same side.
++    SWAP(sideTimerPlayer->stickyWebBattlerId, sideTimerOpp->stickyWebBattlerId, temp);
+ 
+     // Track which side originally set the Sticky Web
+     SWAP(sideTimerPlayer->stickyWebBattlerSide, sideTimerOpp->stickyWebBattlerSide, temp);
+diff --git a/src/battle_util.c b/src/battle_util.c
+--- a/src/battle_util.c
++++ b/src/battle_util.c
+@@ -3228,6 +3228,8 @@ u32 AbilityBattleEffects(enum AbilityEffect caseID, enum BattlerId battler, enum
+                             move = gBattleMons[i].moves[j];
+                             enum BattleMoveEffects moveEffect = GetMoveEffect(move);
+                             moveType = GetBattleMoveType(move);
++                            if (move == MOVE_HIDDEN_POWER && GetConfig(B_UPDATED_ABILITY_DATA) >= GEN_6)
++                                moveType = GetDynamicMoveType(GetBattlerMon(i), move, i, ABILITY_NONE, HOLD_EFFECT_NONE, MON_IN_BATTLE);
+ 
+                             ctx.battlerAtk = i;
+                             ctx.battlerDef = battler;
+diff --git a/src/complete_edition_tournament.c b/src/complete_edition_tournament.c
+--- a/src/complete_edition_tournament.c
++++ b/src/complete_edition_tournament.c
+@@ -1,6 +1,7 @@
+ #include "global.h"
+ #include "event_data.h"
+ #include "random.h"
++#include "item.h"
+ #include "complete_edition_tournament.h"
+ 
+ static EWRAM_DATA u32 sTournamentUsed = 0;
+@@ -24,3 +25,16 @@ void Script_CENextTournament(void)
+     sTournamentUsed |= 1u << opponent;
+     gSpecialVar_Result = opponent;
+ }
++
++// Keep an earned prize in the ordinary saved flag array until it is delivered.
++// A full Bag must never consume the prize, and repeated claims must not duplicate it.
++void Script_CEClaimTournamentReward(void)
++{
++    gSpecialVar_Result = FALSE;
++    if (!FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING))
++        return;
++    if (!AddBagItem(ITEM_GOLD_BOTTLE_CAP, 1))
++        return;
++    FlagClear(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++    gSpecialVar_Result = TRUE;
++}
+diff --git a/test/battle/ability/anger_shell.c b/test/battle/ability/anger_shell.c
+--- a/test/battle/ability/anger_shell.c
++++ b/test/battle/ability/anger_shell.c
+@@ -95,7 +95,7 @@ SINGLE_BATTLE_TEST("Anger Shell does not activate if move is boosted by Sheer Fo
+ {
+     u16 maxHp = 500;
+     GIVEN {
+-        // WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_9);
++        WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_9);
+         PLAYER(SPECIES_KLAWF) { Ability(ABILITY_ANGER_SHELL); MaxHP(maxHp); HP(maxHp / 2 + 1); }
+         OPPONENT(SPECIES_NIDOKING) { Ability(ABILITY_SHEER_FORCE); }
+     } WHEN {
+@@ -114,10 +114,9 @@ SINGLE_BATTLE_TEST("Anger Shell does not activate if move is boosted by Sheer Fo
+ 
+ SINGLE_BATTLE_TEST("Anger Shell does activate if move is boosted by Sheer Force (Champions)")
+ {
+-    KNOWN_FAILING;
+     u16 maxHp = 500;
+     GIVEN {
+-        // WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
++        WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
+         PLAYER(SPECIES_KLAWF) { Ability(ABILITY_ANGER_SHELL); MaxHP(maxHp); HP(maxHp / 2 + 1); }
+         OPPONENT(SPECIES_NIDOKING) { Ability(ABILITY_SHEER_FORCE); }
+     } WHEN {
+@@ -126,8 +125,8 @@ SINGLE_BATTLE_TEST("Anger Shell does activate if move is boosted by Sheer Force
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_EMBER, opponent);
+         ABILITY_POPUP(player, ABILITY_ANGER_SHELL);
+     } THEN {
+-        EXPECT_EQ(player->statStages[STAT_DEF], DEFAULT_STAT_STAGE + 1);
+-        EXPECT_EQ(player->statStages[STAT_SPDEF], DEFAULT_STAT_STAGE + 1);
++        EXPECT_EQ(player->statStages[STAT_DEF], DEFAULT_STAT_STAGE - 1);
++        EXPECT_EQ(player->statStages[STAT_SPDEF], DEFAULT_STAT_STAGE - 1);
+         EXPECT_EQ(player->statStages[STAT_ATK], DEFAULT_STAT_STAGE + 1);
+         EXPECT_EQ(player->statStages[STAT_SPATK], DEFAULT_STAT_STAGE + 1);
+         EXPECT_EQ(player->statStages[STAT_SPEED], DEFAULT_STAT_STAGE + 1);
+diff --git a/test/battle/ability/anticipation.c b/test/battle/ability/anticipation.c
+--- a/test/battle/ability/anticipation.c
++++ b/test/battle/ability/anticipation.c
+@@ -319,21 +319,27 @@ SINGLE_BATTLE_TEST("Anticipation does not consider ate-abilities")
+     }
+ }
+ 
+-SINGLE_BATTLE_TEST("Anticipation treats Hidden Power as its dynamic type (Gen6+)")
++SINGLE_BATTLE_TEST("Anticipation uses Hidden Power dynamic type from Gen6 onward")
+ {
+-    KNOWN_FAILING;
++    u32 generation;
++    PARAMETRIZE { generation = GEN_4; }
++    PARAMETRIZE { generation = GEN_6; }
+     GIVEN {
++        WITH_CONFIG(B_UPDATED_ABILITY_DATA, generation);
+         ASSUME(GetSpeciesType(SPECIES_EEVEE, 0) == TYPE_NORMAL);
+         ASSUME(GetSpeciesType(SPECIES_EEVEE, 1) == TYPE_NORMAL);
+         PLAYER(SPECIES_EEVEE) { Ability(ABILITY_ANTICIPATION); Item(ITEM_CHOPLE_BERRY); }
+         OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_HIDDEN_POWER, MOVE_SCRATCH, MOVE_POUND, MOVE_CELEBRATE); HPIV(30); AttackIV(2); DefenseIV(31); SpAttackIV(30); SpDefenseIV(30); SpeedIV(30); }
+     } WHEN {
+         TURN { MOVE(opponent, MOVE_HIDDEN_POWER); }
+     } SCENE {
+-        ABILITY_POPUP(player, ABILITY_ANTICIPATION);
+-        ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_EFFECT, opponent); // Check that the item is triggered
++        if (generation >= GEN_6)
++            ABILITY_POPUP(player, ABILITY_ANTICIPATION);
++        else
++            NOT ABILITY_POPUP(player, ABILITY_ANTICIPATION);
++        ANIMATION(ANIM_TYPE_GENERAL, B_ANIM_HELD_ITEM_BERRY, player); // Check that the item is triggered
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_HIDDEN_POWER, opponent);
+-        HP_BAR(opponent);
++        HP_BAR(player);
+         MESSAGE("It's super effective!");
+     }
+ }
+diff --git a/test/battle/ability/berserk.c b/test/battle/ability/berserk.c
+--- a/test/battle/ability/berserk.c
++++ b/test/battle/ability/berserk.c
+@@ -78,7 +78,7 @@ SINGLE_BATTLE_TEST("Berserk does not activate if move is boosted by Sheer Force
+ {
+     u16 maxHp = 500;
+     GIVEN {
+-        // WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_9);
++        WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_9);
+         PLAYER(SPECIES_DRAMPA) { Ability(ABILITY_BERSERK); MaxHP(maxHp); HP(maxHp / 2 + 1); }
+         OPPONENT(SPECIES_NIDOKING) { Ability(ABILITY_SHEER_FORCE); }
+     } WHEN {
+@@ -97,22 +97,21 @@ SINGLE_BATTLE_TEST("Berserk does not activate if move is boosted by Sheer Force
+ 
+ SINGLE_BATTLE_TEST("Berserk does activate if move is boosted by Sheer Force (Champions)")
+ {
+-    KNOWN_FAILING;
+     u16 maxHp = 500;
+     GIVEN {
+-        // WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
++        WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
+         PLAYER(SPECIES_DRAMPA) { Ability(ABILITY_BERSERK); MaxHP(maxHp); HP(maxHp / 2 + 1); }
+         OPPONENT(SPECIES_NIDOKING) { Ability(ABILITY_SHEER_FORCE); }
+     } WHEN {
+         TURN { MOVE(opponent, MOVE_EMBER); }
+     } SCENE {
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_EMBER, opponent);
+-        NOT ABILITY_POPUP(player, ABILITY_BERSERK);
++        ABILITY_POPUP(player, ABILITY_BERSERK);
+     } THEN {
+         EXPECT_EQ(player->statStages[STAT_DEF], DEFAULT_STAT_STAGE);
+         EXPECT_EQ(player->statStages[STAT_SPDEF], DEFAULT_STAT_STAGE);
+-        EXPECT_EQ(player->statStages[STAT_ATK], DEFAULT_STAT_STAGE + 1);
+-        EXPECT_EQ(player->statStages[STAT_SPATK], DEFAULT_STAT_STAGE);
++        EXPECT_EQ(player->statStages[STAT_ATK], DEFAULT_STAT_STAGE);
++        EXPECT_EQ(player->statStages[STAT_SPATK], DEFAULT_STAT_STAGE + 1);
+         EXPECT_EQ(player->statStages[STAT_SPEED], DEFAULT_STAT_STAGE);
+     }
+ }
+diff --git a/test/battle/ability/color_change.c b/test/battle/ability/color_change.c
+--- a/test/battle/ability/color_change.c
++++ b/test/battle/ability/color_change.c
+@@ -206,7 +206,6 @@ SINGLE_BATTLE_TEST("Color Change does not activate if move is boosted by Sheer F
+ 
+ SINGLE_BATTLE_TEST("Color Change does activate if move is boosted by Sheer Force (Champions)")
+ {
+-    KNOWN_FAILING;
+     GIVEN {
+         WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
+         PLAYER(SPECIES_KECLEON) { Ability(ABILITY_COLOR_CHANGE); }
+diff --git a/test/battle/ability/mirror_armor.c b/test/battle/ability/mirror_armor.c
+--- a/test/battle/ability/mirror_armor.c
++++ b/test/battle/ability/mirror_armor.c
+@@ -147,8 +147,8 @@ SINGLE_BATTLE_TEST("Mirror Armor doesn't lower the stat of the attacking Pokemon
+ // This behaviour needs to be verified in the actual games. Currently it's written to follow Showdown's logic.
+ DOUBLE_BATTLE_TEST("Mirror Armor lowers Speed of the partner Pokemon after Court Change was used by the opponent after it set up Sticky Web")
+ {
+-    KNOWN_FAILING;
+     GIVEN {
++        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_8);
+         ASSUME(GetMoveEffect(MOVE_STICKY_WEB) == EFFECT_STICKY_WEB);
+         ASSUME(GetMoveEffect(MOVE_COURT_CHANGE) == EFFECT_COURT_CHANGE);
+         PLAYER(SPECIES_WOBBUFFET);
+diff --git a/test/battle/ability/neutralizing_gas.c b/test/battle/ability/neutralizing_gas.c
+--- a/test/battle/ability/neutralizing_gas.c
++++ b/test/battle/ability/neutralizing_gas.c
+@@ -19,22 +19,15 @@ DOUBLE_BATTLE_TEST("Neutralizing Gas fainting as Discharge's ally restores Sheer
+     } SCENE {
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_DISCHARGE, playerLeft);
+         HP_BAR(playerRight, hp: 0);
+-        NONE_OF {
+-            STATUS_ICON(opponentLeft, paralysis: TRUE);
+-            STATUS_ICON(opponentRight, paralysis: TRUE);
+-        }
+-
+         HP_BAR(opponentLeft);
+-        NONE_OF {
+-            STATUS_ICON(opponentLeft, paralysis: TRUE);
+-            STATUS_ICON(opponentRight, paralysis: TRUE);
+-        }
+-
+         HP_BAR(opponentRight);
+         NONE_OF {
+             STATUS_ICON(opponentLeft, paralysis: TRUE);
+             STATUS_ICON(opponentRight, paralysis: TRUE);
+         }
++    } THEN {
++        EXPECT_EQ(opponentLeft->status1 & STATUS1_PARALYSIS, 0);
++        EXPECT_EQ(opponentRight->status1 & STATUS1_PARALYSIS, 0);
+     }
+ }
+ 
+@@ -64,14 +57,16 @@ DOUBLE_BATTLE_TEST("Neutralizing Gas fainting as Discharge's foe allows 30% para
+     } SCENE {
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_DISCHARGE, playerLeft);
+         HP_BAR(playerRight);
+-        STATUS_ICON(playerRight, paralysis: TRUE);
+         if (gasOnRight) {
+             HP_BAR(opponentLeft);
+             HP_BAR(opponentRight, hp: 0);
+         } else {
+             HP_BAR(opponentLeft, hp: 0);
+             HP_BAR(opponentRight);
+         }
++        STATUS_ICON(playerRight, paralysis: TRUE);
++    } THEN {
++        EXPECT_NE(playerRight->status1 & STATUS1_PARALYSIS, 0);
+     }
+ }
+ 
+diff --git a/test/battle/ability/pickpocket.c b/test/battle/ability/pickpocket.c
+--- a/test/battle/ability/pickpocket.c
++++ b/test/battle/ability/pickpocket.c
+@@ -448,7 +448,7 @@ SINGLE_BATTLE_TEST("Pickpocket does not activate if its user switches out with E
+ SINGLE_BATTLE_TEST("Pickpocket cannot steal an item if hit by a contact move that's boosted by Sheer Force (Gen9-)")
+ {
+     GIVEN {
+-        // GIVEN(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_9);
++        WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_9);
+         ASSUME(gMovesInfo[MOVE_CRUNCH].additionalEffects->moveEffect == MOVE_EFFECT_STAT_MINUS);
+         ASSUME(gItemsInfo[ITEM_LIFE_ORB].holdEffect == HOLD_EFFECT_LIFE_ORB);
+         PLAYER(SPECIES_LANDORUS) { Item(ITEM_LIFE_ORB); Ability(ABILITY_SHEER_FORCE); }
+@@ -470,9 +470,8 @@ SINGLE_BATTLE_TEST("Pickpocket cannot steal an item if hit by a contact move tha
+ 
+ SINGLE_BATTLE_TEST("Pickpocket can steal an item even if hit by a contact move that's boosted by Sheer Force (Champions)")
+ {
+-    KNOWN_FAILING;
+     GIVEN {
+-        // GIVEN(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
++        WITH_CONFIG(B_SHEER_FORCE_AGAINST_ABILITIES, GEN_CHAMPIONS);
+         ASSUME(gMovesInfo[MOVE_CRUNCH].additionalEffects->moveEffect == MOVE_EFFECT_STAT_MINUS);
+         ASSUME(gItemsInfo[ITEM_LIFE_ORB].holdEffect == HOLD_EFFECT_LIFE_ORB);
+         PLAYER(SPECIES_LANDORUS) { Item(ITEM_LIFE_ORB); Ability(ABILITY_SHEER_FORCE); }
+diff --git a/test/battle/ai/ai_doubles.c b/test/battle/ai/ai_doubles.c
+--- a/test/battle/ai/ai_doubles.c
++++ b/test/battle/ai/ai_doubles.c
+@@ -583,8 +583,8 @@ AI_DOUBLE_BATTLE_TEST("AI will not use Protect if its left ally is about to trig
+     ASSUME(GetMoveEffect(MOVE_BEAT_UP) == EFFECT_BEAT_UP);
+     ASSUME(GetMoveType(MOVE_BEAT_UP) == TYPE_DARK);
+ 
+-    KNOWN_FAILING; // partner is protecting
+     GIVEN {
++        WITH_CONFIG(B_BEAT_UP, GEN_5);
+         WITH_CONFIG(AI_REVERSE_BATTLER_LOGIC_ORDER_CHANCE, 0);
+         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT);
+         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_SCRATCH); }
+@@ -626,6 +626,29 @@ AI_DOUBLE_BATTLE_TEST("AI will not use Protect if its right ally is about to tri
+     }
+ }
+ 
++AI_DOUBLE_BATTLE_TEST("AI does not target a Justified ally with typeless Gen4 Beat Up in either scoring order")
++{
++    u32 reverseOrderChance;
++    PARAMETRIZE { reverseOrderChance = 0; }
++    PARAMETRIZE { reverseOrderChance = 100; }
++
++    GIVEN {
++        WITH_CONFIG(B_BEAT_UP, GEN_4);
++        WITH_CONFIG(AI_REVERSE_BATTLER_LOGIC_ORDER_CHANCE, reverseOrderChance);
++        AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_CHECK_VIABILITY | AI_FLAG_TRY_TO_FAINT);
++        PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_SCRATCH); }
++        PLAYER(SPECIES_CLEFABLE) { Moves(MOVE_SCRATCH); }
++        OPPONENT(SPECIES_PANGORO) { Ability(ABILITY_SCRAPPY); Moves(MOVE_BEAT_UP); }
++        OPPONENT(SPECIES_GROWLITHE) { Ability(ABILITY_JUSTIFIED); Moves(MOVE_PROTECT, MOVE_TACKLE); }
++    } WHEN {
++        TURN {
++            MOVE(playerLeft, MOVE_SCRATCH, target: opponentLeft);
++            MOVE(playerRight, MOVE_SCRATCH, target: opponentRight);
++            EXPECT_MOVE(opponentLeft, MOVE_BEAT_UP, target: playerLeft);
++        }
++    }
++}
++
+ AI_DOUBLE_BATTLE_TEST("AI does not penalize Protect if its ally switches instead of triggering Weakness Policy")
+ {
+     ASSUME(GetMoveTarget(MOVE_EARTHQUAKE) == TARGET_FOES_AND_ALLY);
+@@ -1198,16 +1221,22 @@ AI_DOUBLE_BATTLE_TEST("AI uses Helping Hand if it's about to die")
+ 
+ AI_DOUBLE_BATTLE_TEST("AI uses Helping Hand if the ally does notably more damage")
+ {
+-    KNOWN_FAILING;  // Failure was masked by test runner issues
++    enum Move attack;
++    PARAMETRIZE { attack = MOVE_MUD_SLAP; }
++    PARAMETRIZE { attack = MOVE_MUDDY_WATER; }
++
+     GIVEN {
+         ASSUME(GetMoveEffect(MOVE_HELPING_HAND) == EFFECT_HELPING_HAND);
+         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY | AI_FLAG_OMNISCIENT);
+         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_TACKLE, MOVE_CELEBRATE); }
+         PLAYER(SPECIES_WOBBUFFET) { Moves(MOVE_TACKLE, MOVE_CELEBRATE); }
+-        OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_HELPING_HAND, MOVE_MUD_SLAP); }
++        OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_HELPING_HAND, attack); }
+         OPPONENT(SPECIES_WOBBUFFET) { Moves(MOVE_MUDDY_WATER); }
+     } WHEN {
+-        TURN { EXPECT_MOVE(opponentLeft, MOVE_HELPING_HAND); }
++        if (attack == MOVE_MUD_SLAP)
++            TURN { EXPECT_MOVE(opponentLeft, MOVE_HELPING_HAND); }
++        else
++            TURN { NOT_EXPECT_MOVE(opponentLeft, MOVE_HELPING_HAND); }
+     }
+ }
+ 
+@@ -1428,3 +1457,4 @@ AI_DOUBLE_BATTLE_TEST("AI can choose a status move that boosts the attack by two
+         }
+     }
+ }
++
+diff --git a/test/battle/ai/ai_switching.c b/test/battle/ai/ai_switching.c
+--- a/test/battle/ai/ai_switching.c
++++ b/test/battle/ai/ai_switching.c
+@@ -2438,15 +2438,18 @@ AI_SINGLE_BATTLE_TEST("AI_SMART_MON_CHOICES: AI sees its own terrain setting abi
+ 
+ AI_SINGLE_BATTLE_TEST("AI_SMART_MON_CHOICES: AI sees its own terrain setting ability's effect on failed moves when considering switchin candidates")
+ {
+-    KNOWN_FAILING; // Fails because the AI can't currently see the arbitrary terrain passed to AI_CalcDamage in CanAbilityBlockMove
++    u32 surgeSlot;
++    PARAMETRIZE { surgeSlot = 1; }
++    PARAMETRIZE { surgeSlot = 2; }
++
+     GIVEN {
+         AI_FLAGS(AI_FLAG_CHECK_BAD_MOVE | AI_FLAG_TRY_TO_FAINT | AI_FLAG_CHECK_VIABILITY | AI_FLAG_SMART_SWITCHING | AI_FLAG_SMART_MON_CHOICES | AI_FLAG_OMNISCIENT);
+         PLAYER(SPECIES_ZIGZAGOON) { Moves(MOVE_PROTECT, MOVE_QUICK_ATTACK); }
+         OPPONENT(SPECIES_ZIGZAGOON) { Moves(MOVE_EXPLOSION); }
+-        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(ABILITY_PSYCHIC_SURGE); Moves(MOVE_CONFUSION); }
+-        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(ABILITY_INNER_FOCUS); Moves(MOVE_CONFUSION); }
++        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(surgeSlot == 1 ? ABILITY_PSYCHIC_SURGE : ABILITY_INNER_FOCUS); Moves(MOVE_CONFUSION); }
++        OPPONENT(SPECIES_INDEEDEE_F) { HP(1); Ability(surgeSlot == 2 ? ABILITY_PSYCHIC_SURGE : ABILITY_INNER_FOCUS); Moves(MOVE_CONFUSION); }
+     } WHEN {
+-        TURN { MOVE(player, MOVE_PROTECT); EXPECT_MOVE(opponent, MOVE_EXPLOSION); EXPECT_SEND_OUT(opponent, 1); }
++        TURN { MOVE(player, MOVE_PROTECT); EXPECT_MOVE(opponent, MOVE_EXPLOSION); EXPECT_SEND_OUT(opponent, surgeSlot); }
+     }
+ }
+ 
+diff --git a/test/battle/move_effect/beat_up.c b/test/battle/move_effect/beat_up.c
+--- a/test/battle/move_effect/beat_up.c
++++ b/test/battle/move_effect/beat_up.c
+@@ -9,6 +9,7 @@ SINGLE_BATTLE_TEST("Beat Up hits the target for each non-fainted, non-statused m
+ {
+     u32 gen;
+     PARAMETRIZE { gen = GEN_3; }
++    PARAMETRIZE { gen = GEN_4; }
+     PARAMETRIZE { gen = GEN_5; }
+ 
+     GIVEN {
+@@ -389,3 +390,4 @@ SINGLE_BATTLE_TEST("Beat Up ignores Choice Band", s16 damage)
+             EXPECT_EQ(results[i].damage, results[0].damage);
+     }
+ }
++
+diff --git a/test/battle/move_effect/embargo.c b/test/battle/move_effect/embargo.c
+--- a/test/battle/move_effect/embargo.c
++++ b/test/battle/move_effect/embargo.c
+@@ -1,5 +1,6 @@
+ #include "global.h"
+ #include "test/battle.h"
++#include "battle_ai_items.h"
+ 
+ ASSUMPTIONS
+ {
+@@ -27,21 +28,27 @@ SINGLE_BATTLE_TEST("Embargo blocks the effect of an affected Pokémon's held ite
+ 
+ SINGLE_BATTLE_TEST("Embargo blocks an affected Pokémon's trainer from using items")
+ {
+-    // As of writing, the battle tests system doesn't perform all the operations involved
+-    // in the action of an NPC using an item in battle.
+-    KNOWN_FAILING;
++    // USE_ITEM forces an action past the trainer AI eligibility check. Exercise
++    // that check directly, with a positive control after Embargo expires.
+     GIVEN {
+         ASSUME(gItemsInfo[ITEM_POTION].battleUsage == EFFECT_ITEM_RESTORE_HP);
+         PLAYER(SPECIES_WOBBUFFET);
+         OPPONENT(SPECIES_WOBBUFFET) { HP(1); }
+     } WHEN {
+         TURN { MOVE(player, MOVE_EMBARGO); }
+-        TURN { USE_ITEM(opponent, ITEM_POTION, partyIndex: 0); }
+     } SCENE {
+         MESSAGE("Wobbuffet used Embargo!");
+         MESSAGE("The opposing Wobbuffet can't use items anymore!");
+     } THEN {
+         EXPECT_EQ(opponent->hp, 1);
++        EXPECT_GT((u32)opponent->volatiles.embargoTimer, 0);
++        gBattleHistory->trainerItems[0] = ITEM_POTION;
++        EXPECT_EQ(ShouldUseItem(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)), FALSE);
++        EXPECT_EQ(gBattleHistory->trainerItems[0], ITEM_POTION);
++
++        opponent->volatiles.embargoTimer = 0;
++        EXPECT_EQ(ShouldUseItem(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT)), TRUE);
++        EXPECT_EQ(gBattleHistory->trainerItems[0], ITEM_NONE);
+     }
+ }
+ 
+@@ -428,3 +435,4 @@ SINGLE_BATTLE_TEST("Embargo doesn't block held item effects that affect prize mo
+         EXPECT((bool32)gBattleStruct->moneyMultiplierItem);
+     }
+ }
++
+diff --git a/test/battle/move_effect/roost.c b/test/battle/move_effect/roost.c
+--- a/test/battle/move_effect/roost.c
++++ b/test/battle/move_effect/roost.c
+@@ -61,12 +61,13 @@ SINGLE_BATTLE_TEST("Roost fails if the user is under the effects of Heal Block")
+     }
+ }
+ 
+-SINGLE_BATTLE_TEST("Roost recovers 50% of the user's Max HP")
++SINGLE_BATTLE_TEST("Roost rounds half-HP recovery up from Gen5 onwards")
+ {
+     u16 hp;
+ 
+-    KNOWN_FAILING; // All healing is currently rounded down
++    KNOWN_FAILING; // Modern rounding is not implemented; Gen4 floor rounding is tested separately.
+     GIVEN {
++        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_5);
+         PLAYER(SPECIES_WOBBUFFET) { HP(1); MaxHP(99); }
+         OPPONENT(SPECIES_WOBBUFFET);
+     } WHEN {
+@@ -75,10 +76,30 @@ SINGLE_BATTLE_TEST("Roost recovers 50% of the user's Max HP")
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
+         HP_BAR(player, captureHP: &hp);
+     } THEN {
+-        //if (B_UPDATED_MOVE_DATA >= GEN_5)
+-            EXPECT(hp == 51); // Rounds up
+-        //else
+-        //    EXPECT(hp == 50); // Rounds down
++        EXPECT_EQ(hp, 51);
++    }
++}
++
++SINGLE_BATTLE_TEST("Roost rounds half-HP recovery down in Gen4 and caps it at Max HP")
++{
++    u16 initialHP, maxHP, expectedHP, hp;
++
++    PARAMETRIZE { initialHP = 1;  maxHP = 99;  expectedHP = 50; }
++    PARAMETRIZE { initialHP = 1;  maxHP = 100; expectedHP = 51; }
++    PARAMETRIZE { initialHP = 80; maxHP = 99;  expectedHP = 99; }
++
++    GIVEN {
++        WITH_CONFIG(B_UPDATED_MOVE_DATA, GEN_4);
++        PLAYER(SPECIES_WOBBUFFET) { HP(initialHP); MaxHP(maxHP); }
++        OPPONENT(SPECIES_WOBBUFFET);
++    } WHEN {
++        TURN { MOVE(player, MOVE_ROOST); }
++    } SCENE {
++        ANIMATION(ANIM_TYPE_MOVE, MOVE_ROOST, player);
++        HP_BAR(player, captureHP: &hp);
++    } THEN {
++        EXPECT_EQ(hp, expectedHP);
++        EXPECT_EQ(player->hp, expectedHP);
+     }
+ }
+ 
+@@ -439,3 +460,4 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Telekinesis
+         }
+     }
+ }
++
+diff --git a/test/battle/sleep_clause.c b/test/battle/sleep_clause.c
+--- a/test/battle/sleep_clause.c
++++ b/test/battle/sleep_clause.c
+@@ -1130,13 +1130,14 @@ SINGLE_BATTLE_TEST("Sleep Clause: Sleep clause is deactivated when a sleeping mo
+     enum Ability ability;
+     PARAMETRIZE { ability = ABILITY_VITAL_SPIRIT; }
+     PARAMETRIZE { ability = ABILITY_INSOMNIA; }
+-    KNOWN_FAILING; // Sleep Clause parts work, but Imposter seems broken with battle messages / targeting. Issue #5565 https://github.com/rh-hideout/pokeemerald-expansion/issues/5565
+     GIVEN {
+         FLAG_SET(B_FLAG_SLEEP_CLAUSE);
+         ASSUME(GetMoveEffect(MOVE_SPORE) == EFFECT_NON_VOLATILE_STATUS);
+         ASSUME(GetMoveNonVolatileStatus(MOVE_SPORE) == MOVE_EFFECT_SLEEP);
+         ASSUME(gItemsInfo[ITEM_LAGGING_TAIL].holdEffect == HOLD_EFFECT_LAGGING_TAIL);
+-        PLAYER(SPECIES_ZIGZAGOON)
++        // Imposter copies slot 0. Keep its default action harmless so it does
++        // not put our Spore user to sleep before this scenario can run.
++        PLAYER(SPECIES_ZIGZAGOON) { Moves(MOVE_CELEBRATE, MOVE_SPORE); }
+         PLAYER(SPECIES_DELIBIRD) { Ability(ability); }
+         OPPONENT(SPECIES_DITTO) { Ability(ABILITY_IMPOSTER); }
+         OPPONENT(SPECIES_ZIGZAGOON);
+@@ -1146,19 +1147,23 @@ SINGLE_BATTLE_TEST("Sleep Clause: Sleep clause is deactivated when a sleeping mo
+         TURN { SWITCH(opponent, 0); }
+         TURN { SWITCH(opponent, 1); MOVE(player, MOVE_SPORE); }
+     } SCENE {
+-        MESSAGE("The opposing Ditto transformed into Zigzagoon using Imposter!");
++        MESSAGE("The opposing Ditto transformed into Zigzagoon!");
+         MESSAGE("Zigzagoon used Spore!");
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, player);
+         ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, opponent);
+         MESSAGE("The opposing Ditto fell asleep!");
+         MESSAGE("2 sent out Zigzagoon!");
+         MESSAGE("2 sent out Ditto!");
++        MESSAGE("The opposing Ditto transformed into Delibird!");
+         MESSAGE("The opposing Ditto woke up!");
+         MESSAGE("2 sent out Zigzagoon!");
+         MESSAGE("Delibird used Spore!");
+         ANIMATION(ANIM_TYPE_MOVE, MOVE_SPORE, player);
+         ANIMATION(ANIM_TYPE_STATUS, B_ANIM_STATUS_SLP, opponent);
+         MESSAGE("The opposing Zigzagoon fell asleep!");
++    } THEN {
++        EXPECT_EQ(GetMonData(&gEnemyParty[0], MON_DATA_STATUS), STATUS1_NONE);
++        EXPECT(opponent->status1 & STATUS1_SLEEP);
+     }
+ }
+ 
+diff --git a/test/complete_edition_rewards.c b/test/complete_edition_rewards.c
+new file mode 100644
+--- /dev/null
++++ b/test/complete_edition_rewards.c
+@@ -0,0 +1,114 @@
++#include "global.h"
++#include "complete_edition_tournament.h"
++#include "event_data.h"
++#include "item.h"
++#include "test/test.h"
++
++TEST("Complete Edition: tournament prize survives a full Bag and can be collected once after making room")
++{
++    ClearBag();
++    FlagSet(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++    // Fill every Items-pocket slot through the real inventory API.
++    for (u32 i = 0; i < BAG_ITEMS_COUNT; i++)
++        EXPECT(AddBagItem(ITEM_POTION, MAX_BAG_ITEM_CAPACITY));
++    EXPECT(!CheckBagHasSpace(ITEM_GOLD_BOTTLE_CAP, 1));
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT(FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++    EXPECT(!CheckBagHasItem(ITEM_GOLD_BOTTLE_CAP, 1));
++
++    // Removing only part of a different stack does not free an item slot.
++    EXPECT(RemoveBagItem(ITEM_POTION, 1));
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT(FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++    EXPECT(RemoveBagItem(ITEM_POTION, MAX_BAG_ITEM_CAPACITY - 1));
++    EXPECT(CheckBagHasSpace(ITEM_GOLD_BOTTLE_CAP, 1));
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, TRUE);
++    EXPECT(!FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++    EXPECT(CheckBagHasItem(ITEM_GOLD_BOTTLE_CAP, 1));
++    EXPECT(!CheckBagHasItem(ITEM_GOLD_BOTTLE_CAP, 2));
++
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT(!CheckBagHasItem(ITEM_GOLD_BOTTLE_CAP, 2));
++}
++
++TEST("Complete Edition: tournament prize cannot be claimed before winning")
++{
++    ClearBag();
++    FlagClear(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT(!CheckBagHasItem(ITEM_GOLD_BOTTLE_CAP, 1));
++}
++
++TEST("Complete Edition: tournament prize fills an existing Gold Bottle Cap stack in a full pocket")
++{
++    ClearBag();
++    EXPECT(AddBagItem(ITEM_GOLD_BOTTLE_CAP, MAX_BAG_ITEM_CAPACITY - 1));
++    for (u32 i = 1; i < BAG_ITEMS_COUNT; i++)
++        EXPECT(AddBagItem(ITEM_POTION, MAX_BAG_ITEM_CAPACITY));
++    // No empty slot remains, but the existing prize stack has room for one.
++    EXPECT(!CheckBagHasSpace(ITEM_POTION, 1));
++    EXPECT(CheckBagHasSpace(ITEM_GOLD_BOTTLE_CAP, 1));
++    FlagSet(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, TRUE);
++    EXPECT(!FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), MAX_BAG_ITEM_CAPACITY);
++    EXPECT(!CheckBagHasSpace(ITEM_GOLD_BOTTLE_CAP, 1));
++
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), MAX_BAG_ITEM_CAPACITY);
++}
++
++TEST("Complete Edition: a capped Gold Bottle Cap stack retains the prize until stack space is freed")
++{
++    ClearBag();
++    EXPECT(AddBagItem(ITEM_GOLD_BOTTLE_CAP, MAX_BAG_ITEM_CAPACITY));
++    for (u32 i = 1; i < BAG_ITEMS_COUNT; i++)
++        EXPECT(AddBagItem(ITEM_POTION, MAX_BAG_ITEM_CAPACITY));
++    EXPECT(!CheckBagHasSpace(ITEM_GOLD_BOTTLE_CAP, 1));
++    FlagSet(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT(FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), MAX_BAG_ITEM_CAPACITY);
++
++    // Keep every slot occupied: reducing the cap stack alone permits delivery.
++    EXPECT(RemoveBagItem(ITEM_GOLD_BOTTLE_CAP, 1));
++    EXPECT(!CheckBagHasSpace(ITEM_POTION, 1));
++    EXPECT(CheckBagHasSpace(ITEM_GOLD_BOTTLE_CAP, 1));
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, TRUE);
++    EXPECT(!FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), MAX_BAG_ITEM_CAPACITY);
++
++    Script_CEClaimTournamentReward();
++    EXPECT_EQ(gSpecialVar_Result, FALSE);
++    EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), MAX_BAG_ITEM_CAPACITY);
++}
++
++TEST("Complete Edition: a newly earned tournament prize can be collected after an earlier prize")
++{
++    ClearBag();
++    FlagClear(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++    for (u32 win = 1; win <= 2; win++)
++    {
++        // The final-round script sets this flag after each completed tournament.
++        FlagSet(FLAG_CE_TOURNAMENT_REWARD_PENDING);
++        Script_CEClaimTournamentReward();
++        EXPECT_EQ(gSpecialVar_Result, TRUE);
++        EXPECT(!FlagGet(FLAG_CE_TOURNAMENT_REWARD_PENDING));
++        EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), win);
++
++        Script_CEClaimTournamentReward();
++        EXPECT_EQ(gSpecialVar_Result, FALSE);
++        EXPECT_EQ(CountTotalItemQuantityInBag(ITEM_GOLD_BOTTLE_CAP), win);
++    }
++}
+diff --git a/tools/complete_edition/test-candidate.sh b/tools/complete_edition/test-candidate.sh
+new file mode 100644
+--- /dev/null
++++ b/tools/complete_edition/test-candidate.sh
+@@ -0,0 +1,40 @@
++#!/usr/bin/env bash
++set -euo pipefail
++cd "$(dirname "$0")/../.."
++log_dir="build/complete-edition-logs/candidate"
++mkdir -p "$log_dir"
++filters=("test/battle/move_effect/embargo.c" "test/complete_edition_rewards.c" "test/battle/ai/ai_doubles.c" "test/battle/ai/ai_switching.c" "test/battle/move_effect/beat_up.c" "test/battle/move_effect/roost.c" "test/battle/ability/anger_shell.c" "test/battle/ability/berserk.c" "test/battle/ability/color_change.c" "test/battle/ability/pickpocket.c" "test/battle/ability/anticipation.c" "test/battle/ability/mirror_armor.c" "test/battle/ability/neutralizing_gas.c" "test/battle/sleep_clause.c" "test/battle/ability/sheer_force.c" "test/battle/hold_effect/life_orb.c" "test/battle/hold_effect/shell_bell.c" "test/battle/hold_effect/eject_button.c" "test/battle/hold_effect/red_card.c" "test/battle/ability/emergency_exit.c" "Complete Edition")
++python3 tools/complete_edition/check_objects.py --repair emerald-test | tee "$log_dir/object-repair.log"
++failed=0
++index=0
++for filter in "${filters[@]}"; do
++    log="$log_dir/tests-$index.log"
++    echo "Candidate family: $filter"
++    if ! make -j"${JOBS:-4}" KEEP_TEMPS=1 check TESTS="$filter" 2>&1 | tee "$log"; then
++        failed=1
++    fi
++    python3 tools/complete_edition/summarize_tests.py "$log" > "${log%.log}.json"
++    python3 tools/complete_edition/check_objects.py emerald-test
++    if ! python3 - "${log%.log}.json" <<'PY'
++import json, sys
++report = json.load(open(sys.argv[1]))
++print("Native candidate:", report["statuses"], "complete:", report["complete"])
++if not report["complete"]:
++    sys.exit(2)
++sys.exit(0 if report["no_failing_outcomes"] else 1)
++PY
++    then
++        failed=1
++    fi
++    # A build error or interrupted process cannot provide a completed family.
++    # Stop here rather than repeatedly retrying the same failed compilation.
++    if ! python3 - "${log%.log}.json" <<'PY'
++import json, sys
++sys.exit(0 if json.load(open(sys.argv[1]))["complete"] else 1)
++PY
++    then
++        exit 1
++    fi
++    index=$((index + 1))
++done
++exit "$failed"
