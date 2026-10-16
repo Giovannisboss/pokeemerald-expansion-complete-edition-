@@ -16,10 +16,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends build-essential binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+      - name: Verify native-log classification
+        run: python3 -m unittest discover -s tools/complete_edition -p 'test_summarize_tests.py' -v
       - name: Build
         run: ./tools/complete_edition/build.sh
-      - name: Focused Gen 4 checks in headless mGBA
-        run: ./tools/complete_edition/test.sh
+      - name: Full native regression audit in headless mGBA
+        run: ./tools/complete_edition/test.sh --full
       - name: Save verification logs
         if: always()
         uses: actions/upload-artifact@v4
