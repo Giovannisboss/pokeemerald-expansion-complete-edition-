@@ -1,0 +1,59 @@
+{
+  "date": "2026-10-16",
+  "milestone": "Reconciled pending fixes: completed focused and full native audit",
+  "source_commit": "adb01b50634e49c0d3dfbbd59d6d787dd549424b",
+  "parent_commit": "ff0dce502fda88a723552fc6db3ecca0d88f3b20",
+  "handoff_commit": "497700e5c6071b83e87ebaf1b2deead64b651492",
+  "pending_patch_base": "09265b088da9707260782356a7ea7885dd9033bb",
+  "workflow_run_id": 38942000064,
+  "job_id": 117111681207,
+  "workflow_conclusion": "success",
+  "complete": true,
+  "recorded_results": 5916,
+  "reported_total": 5916,
+  "statuses": {
+    "PASS": 5418,
+    "EXPECTED_FAIL": 7,
+    "CRASH": 2,
+    "ASSUMPTION_FAIL": 63,
+    "TO_DO": 421,
+    "KNOWN_FAILING": 5
+  },
+  "unexpected_failures": 0,
+  "footer_failures": 0,
+  "known_failures": [
+    "Neutralizing Gas fainting as Discharge's ally restores Sheer Force before opposing secondary effects",
+    "Neutralizing Gas fainting as Discharge's foe allows 30% paralysis on the attacker's ally",
+    "AI uses Dynamax -- Max Moves are scored based on max move effects, not base effects",
+    "AI uses Dynamax -- AI does not dynamax before using a utility move",
+    "Roost rounds half-HP recovery up from Gen5 onwards"
+  ],
+  "focused_family_count": 21,
+  "focused_families_complete": true,
+  "rom_sha256": "ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040",
+  "verification_artifact_id": 12063984133,
+  "verification_artifact_sha256": "528f10fd50f5280fad2a5893d995c5476d8e03bab1342cfa71b47feb6c9be589",
+  "changes": [
+    "Retained stricter result parser already on development rather than replacing it with older pending-patch version.",
+    "Embargo fixture resolves BattlerPosition through GetBattlerAtPosition for enum BattlerId.",
+    "Beat Up/Justified ally scoring is Gen5+; both scoring orders have Gen4 negative coverage.",
+    "Preliminary Beat Up prediction requires the ally's sole usable move; no global spread-target ordering change.",
+    "Gen4 Roost odd/even and capped healing pass; explicit Gen5 rounding limitation remains known.",
+    "Tournament earned reward persists in a pending flag after failed collection; successful collection clears it and cannot duplicate."
+  ],
+  "story": {
+    "advanced_this_run": false,
+    "latest_recovered_save": "CE_QA_Alpha25_TwoBadges.sav",
+    "position": "Dewford Gym after Brawly; two badges; Marshtomp level22; Sentret Box1",
+    "next": "Granite Cave, Flash and Steven's Letter",
+    "later_slateport_documentation": "Historical gameplay report exists; corresponding battery save was not recovered.",
+    "local_files_available": false
+  },
+  "limitations": [
+    "Original-story completion, all postgame facilities/events/services and normal-save checkpoints still need ordinary-play verification.",
+    "Two known Dynamax AI failures concern disabled upstream behavior. Dynamax/Gigantamax remain disabled.",
+    "Two Neutralizing Gas known failures concern a Gen8 ability outside obtainable Gen1–4 scope. Gen5+ Roost rounding remains explicit.",
+    "Portrait integration is held under user instruction after reported automatic approval rejection.",
+    "No real-hardware timing, audio or flashcart validation."
+  ]
+}

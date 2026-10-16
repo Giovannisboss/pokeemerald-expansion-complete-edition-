@@ -3,6 +3,16 @@
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
 
+## 2026-10-16: reconciled pending fixes fully tested
+
+Commit `adb01b50634e49c0d3dfbbd59d6d787dd549424b` passes all 21 affected native families and a fresh complete full suite: **5,418 PASS, zero unexpected failures, 5,916 total outcomes**. Five known failures, 63 assumption skips, 421 upstream TODOs and nine expected self-test outcomes (including two deliberate crashes) remain visible. The native footer, strict result checker, process exit and workflow all pass. See [machine-readable evidence](qa/2026-10-16-reconciled-fixes-full.json) and [completed workflow](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/38942000064).
+
+The handoff patch was reconciled against the latest development source. Embargo's fixture now resolves its battler position correctly. Beat Up/Justified logic respects Gen4's typeless damage and uses cautious preliminary partner prediction. No global spread-move target reordering was introduced. Gen4 Roost rounding passes; its explicit modern-generation limitation remains visible. The tournament preserves an earned Gold Bottle Cap when the bag is full and allows exactly one collection after space is available. All five reward tests pass.
+
+Production ROM SHA-256: `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`. All 938 production and 1,915 test object headers validate. Dynamax/Gigantamax remain disabled. The five known failures cover two disabled Dynamax AI cases, two Gen8 Neutralizing Gas cases and Gen5+ Roost rounding; the Gen4 profile has dedicated passing coverage.
+
+**Recovered-save correction:** the later Slateport playthrough remains documented, but its actual battery save was not recovered. The latest recovered save is Dewford after Brawly, two badges, shiny level-22 Marshtomp and Sentret in Box1. Resume Granite Cave, Flash and Steven's Letter unless a newer save is verified. This continuation has not advanced that save. Story/postgame verification, portraits and hardware QA remain open; the project is not a finished release.
+
 ## 2026-10-16: complete Alpha 2.5.1 native audit
 
 A fresh clean GitHub runner built the no-Dynamax source and completed the entire
