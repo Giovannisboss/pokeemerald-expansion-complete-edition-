@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-16",
+  "milestone": "Alpha 2.5 Dewford ordinary-play QA",
+  "production_source_commit": "32fd9a00aa4c0b825775033eac4a5cc755cbfa74",
+  "rom_sha256": "8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6",
+  "game_binary_changed": false,
+  "method": "Normal buttons in unmodified production ROM, mGBA 0.10.2; read-only live inspection and battery-file validation. No injected items, party data, levels, flags or memory writes; no emulator states used.",
+  "verified": [
+    "Devon handoff, Great Ball reward, Letter/PokeNav award and party heal",
+    "Match Call tutorial, Mr Stone call and return to field",
+    "Rustboro rival victory and Route 104/Petalburg Woods return",
+    "Mr Briney voyage to Dewford and return voyage",
+    "Dewford Centre healing and fresh battery-save reload",
+    "All six Gym trainers, progressively expanding light and safe battle returns",
+    "First Brawly defeat/blackout, Centre recovery and successful retry",
+    "EV reset; exact 252 HP/252 SpA allocation; rejection at total 511; acceptance at total 510 with 6 Speed",
+    "Brawly victory, Knuckle Badge, Bulk Up TM, Match Call registration and full Gym lighting",
+    "Normal two-badge save, fresh process Continue, field movement and retained progress"
+  ],
+  "observations": [
+    "An overlong A-button sequence selected a normal return voyage; both boat directions worked. Final Dewford landing used deliberate B-button dialogue dismissal.",
+    "The first fresh-reload probe stopped at the title/Continue screens and is excluded as field evidence. The confirmed journal enters the field and verifies movement.",
+    "Save-layout offsets were compiled with the production APCS ABI; old structure offset comments are not authoritative."
+  ],
+  "checkpoint": {
+    "filename": "alpha25-two-badges.sav",
+    "sha256": "914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9",
+    "size_bytes": 131088,
+    "map": "DewfordTown_Gym",
+    "coordinates": [
+      4,
+      4
+    ],
+    "badges": 2,
+    "marshtomp_level": 22,
+    "evs_HP_Atk_Def_Spe_SpA_SpD": [
+      252,
+      0,
+      0,
+      6,
+      252,
+      0
+    ],
+    "ev_total": 510,
+    "active_party_count": 1,
+    "sentret": "BOX1; unchanged from previous checkpoint",
+    "save_counter": 15,
+    "selected_slot": 1,
+    "valid_checksums": "All 14 sectors in each of both save slots, including SaveBlock3 footer chunks",
+    "persisted_flags": {
+      "returned_devon_goods": true,
+      "received_pokenav": true,
+      "rustboro_rival_defeated": true,
+      "brawly_defeated": true,
+      "takao_defeated": true,
+      "jocelyn_defeated": true,
+      "laura_defeated": true,
+      "brenden_defeated": true,
+      "lilith_defeated": true,
+      "cristian_defeated": true
+    }
+  },
+  "checks": {
+    "clean_rebuild_matches_alpha25": true,
+    "production_objects_validated": 938,
+    "placement_validation": "84 NPC placements and 61 graphics resource IDs; gates and quest chains valid",
+    "focused_native_tests": {
+      "log": "oct16-focused-check.log",
+      "complete": true,
+      "recorded_results": 38,
+      "reported_total": 38,
+      "statuses": {
+        "PASS": 38
+      },
+      "failing_outcomes": 0,
+      "no_failing_outcomes": true,
+      "failures": []
+    },
+    "qa_controller": "Compiled with -Wall -Wextra -Werror; guarded walk stopped at 0 frames on a real field script, then moved (4,4)->(4,5); legacy walk returned (4,5)->(4,4)."
+  },
+  "remaining": {
+    "known_failures": 16,
+    "todos": 421,
+    "assumption_skips": 63,
+    "scope": "The previous full audit is unchanged; this session reran the focused Complete Edition suite only. Full story, Frontier, world events, portraits and hardware QA remain open."
+  },
+  "next_story_task": "Granite Cave: obtain Flash, deliver the Letter to Steven, verify the Slateport boat unlock, then continue Devon delivery."
+}

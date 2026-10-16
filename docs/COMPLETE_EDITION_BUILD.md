@@ -92,6 +92,18 @@ A=1, B=2, Select=4, Start=8, Right=16, Left=32, Up=64, Down=128, R=256, L=512.
 Each run is bounded to 36,000 frames. Use short single presses around dialogue
 and menus: repeatedly pressing A can close and reopen a sign.
 
+`walk MASK FRAMES BATTLE_FLAG [FIELD_LOCK]` accepts the optional matching-ROM
+address of `sLockFieldControls`. With it, walking stops as soon as a field script
+locks controls, including trainer introductions before the battle flag is set.
+It reports `(field script)` so the caller can inspect the screen and position
+before continuing. Both guarded and legacy formats were verified in ordinary play.
+Map routes still need live position checks: dynamic NPCs can block a static path.
+
+For read-only save inspection, derive structure offsets from the current headers
+with the production `-mabi=apcs-gnu` ABI. Historical offset comments in `global.h`
+can differ from this configured layout. On Alpha 2.5, the compiled SaveBlock1
+flags offset is `0x123C`, and `SYSTEM_FLAGS` is `0x8A0`.
+
 
 ### Button-only battle QA helper
 

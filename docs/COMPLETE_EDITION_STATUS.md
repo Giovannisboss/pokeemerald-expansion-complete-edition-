@@ -77,6 +77,36 @@ Sentret was deposited in BOX1. The final normal save reloads in a fresh process 
 Devon Parts still in the Key Items pocket. Marshtomp is level 17; Sentret is in
 BOX1. The next story task is returning the package to Devon in Rustboro.
 
+## 2026-10-16: Dewford progression verified
+
+The production ROM remains Alpha 2.5 with the same SHA-256 below. A clean rebuild
+matches it byte for byte; all 938 production object headers validate. The focused
+Complete Edition native suite completes with **38 PASS and zero failures**.
+The earlier full audit has not been rerun or replaced by this focused check.
+
+Ordinary buttons now verify the Devon handoff, Great Ball, Letter/PokeNav award,
+Match Call tutorial and Mr Stone call, Rustboro rival victory, return through
+Petalburg Woods, and both directions of Mr Briney's Dewford voyage. Dewford
+Centre healing and a fresh battery reload work. All six Gym trainers are defeated,
+their lighting changes work, and Brawly's initial defeat/blackout and Centre
+recovery are followed by a successful retry. His badge, Bulk Up TM, Match Call
+registration and fully lit Gym sequence complete.
+
+The training adviser is exercised through the normal UI: EV reset, 252 HP and
+252 Special Attack, rejection of a total of 511, and acceptance of exactly 510
+with six Speed EVs. A normal two-badge save then reloads into the Gym in a fresh
+process. Read-only battery validation checks every sector in both slots and
+confirms all six trainer flags, Brawly, both badges and the exact EV allocation.
+No party data, flags, items, levels or memory were injected; no save states were used.
+
+The current durable checkpoint is **Dewford Gym (4,4), two badges, shiny Marshtomp
+level 22**, with Sentret still in BOX1. Next: obtain Flash in Granite Cave, deliver
+the Letter to Steven, and verify the Slateport boat unlock. See
+`qa/2026-10-16-alpha-2-5-dewford.json` for scope and evidence. The QA controller's
+optional field-lock argument now stops walking input during field scripts;
+legacy walking commands remain supported. This host-tool change does not change
+the game binary.
+
 ## Build, patch and saves
 
 - ROM SHA-256: `8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6`.

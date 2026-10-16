@@ -3,7 +3,7 @@
 // Commands: run KEY_MASK FRAMES, pulse KEY_MASK FRAMES, shot PATH,
 // save PATH, load PATH, read HEX_ADDRESS BYTE_COUNT, position HEX_POINTER,
 // advance HEX_FIELD_LOCK_ADDRESS MAX_FRAMES,
-// walk KEY_MASK MAX_FRAMES HEX_BATTLE_FLAG_ADDRESS, quit.
+// walk KEY_MASK MAX_FRAMES HEX_BATTLE_FLAG_ADDRESS [HEX_FIELD_LOCK_ADDRESS], quit.
 // fight MOVE_SLOTS MAX_FRAMES HEX_BATTLE_FLAG HEX_CONTROLLERS HEX_ACTION_HANDLER
 //       HEX_MOVE_HANDLER HEX_ACTION_CURSOR HEX_MOVE_CURSOR HEX_CALLBACK2_ADDRESS HEX_BATTLE_CALLBACK [HEX_TARGET_HANDLER]
 // MOVE_SLOTS packs the left move in bits 0-1 and the right move in bits 2-3.
@@ -60,15 +60,21 @@ int main(int argc, char **argv)
                 core->runFrame(core);
             }
             core->setKeys(core, 0);
-        } else if (!strcmp(command, "walk") && sscanf(line, "%*s %u %u %x", &keys, &frames, &address) == 3
-                   && frames <= 36000 && (keys == 16 || keys == 32 || keys == 64 || keys == 128)) {
+        } else if (!strcmp(command, "walk")) {
+            unsigned lockAddress = 0;
+            if (sscanf(line, "%*s %u %u %x %x", &keys, &frames, &address, &lockAddress) < 3
+                || frames > 36000 || (keys != 16 && keys != 32 && keys != 64 && keys != 128)) {
+                puts("ERROR walk arguments"); fflush(stdout); continue;
+            }
             unsigned i;
-            for (i = 0; i < frames && !(core->busRead8(core, address) & 2); i++) {
+            for (i = 0; i < frames && !(core->busRead8(core, address) & 2)
+                 && !(lockAddress && core->busRead8(core, lockAddress)); i++) {
                 core->setKeys(core, keys);
                 core->runFrame(core);
             }
             core->setKeys(core, 0);
-            printf("WALK %u frames%s\n", i, core->busRead8(core, address) & 2 ? " (battle)" : "");
+            printf("WALK %u frames%s\n", i, core->busRead8(core, address) & 2 ? " (battle)"
+                   : lockAddress && core->busRead8(core, lockAddress) ? " (field script)" : "");
         } else if (!strcmp(command, "advance") && sscanf(line, "%*s %x %u", &address, &frames) == 2 && frames <= 36000) {
             unsigned i;
             for (i = 0; i < frames && core->busRead8(core, address); i++) {

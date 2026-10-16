@@ -36,3 +36,11 @@ Fan-made ROM hack built on RHH pokeemerald-expansion.
 - [ ] Regression-test story, saves, Battle Frontier and final patch.
 
 **Status:** Alpha 2.5 completes the full native audit with 5,397 passes and zero unexpected failures, down from 108 in Alpha 2.4. The 16 known failures, 421 TODOs and 63 assumption skips remain visible. Three actual flash-storage tests pass. Native story QA verifies shiny Marshtomp evolution, fixes the Rusturf reset caused by disabled visitor graphics, and completes Peeko rescue/Devon Parts recovery with a fresh save reload. Final outcome coverage adds a graphics regression and verifies all 5,907 expected outcomes across the broad recheck and focused completion; the incomplete recheck is labelled explicitly. Story/Frontier, world-event captures, portraits and hardware QA remain open. Checkmarks denote implemented alpha systems, not final-release QA. See [status and limitations](docs/COMPLETE_EDITION_STATUS.md).
+
+**2026-10-16 progress:** Ordinary-play QA now reaches the Knuckle Badge: Devon,
+PokeNav/Match Call, Rustboro rival, Briney's voyages, all six Dewford Gym trainers,
+blackout/retry and Brawly victory are verified. EV reset, exact allocations and
+the 510-total limit pass through the normal adviser UI. A fresh normal-save reload
+retains two badges, level-22 Marshtomp and all progress. The unchanged Alpha 2.5
+ROM rebuilds identically and 38 focused native checks pass. Next checkpoint:
+Granite Cave/Steven's Letter and the Slateport boat unlock.
