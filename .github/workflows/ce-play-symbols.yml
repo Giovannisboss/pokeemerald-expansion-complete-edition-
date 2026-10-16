@@ -1,0 +1,39 @@
+name: CE read-only play symbols
+on:
+  push:
+    branches: [qa-windows-play-runtime]
+    paths: ['.github/workflows/ce-play-symbols.yml']
+permissions:
+  contents: read
+jobs:
+  symbols:
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        ref: ['9c0ba3ae94c22eaf9b99918276338149d245d1ec', '09265b088da9707260782356a7ea7885dd9033bb', 'adb01b50634e49c0d3dfbbd59d6d787dd549424b']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.ref }}
+      - name: Install ARM toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential binutils-arm-none-eabi gcc-arm-none-eabi libnewlib-arm-none-eabi libpng-dev python3
+      - name: Build for matching-ROM inspection metadata
+        run: bash tools/complete_edition/build.sh
+      - name: Print read-only symbols only
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+          names = set("gMain gSaveBlock1Ptr gSaveBlock2Ptr gPlayerParty gEnemyParty gBattleMons gBattlerControllerFuncs gActionSelectionCursor gMoveSelectionCursor sLockFieldControls HandleInputChooseAction HandleInputChooseMove HandleInputChooseTarget BattleMainCB2 CB2_Overworld gBattleOutcome gBattlersCount gBattleTypeFlags".split())
+          records = {}
+          for line in subprocess.check_output(["arm-none-eabi-nm", "-n", "-l", "pokeemerald.elf"], text=True).splitlines():
+              fields = line.split()
+              if len(fields) >= 3 and fields[2] in names:
+                  records.setdefault(fields[2], []).append({"address": int(fields[0], 16), "type": fields[1], "source": " ".join(fields[3:])})
+          report = {"source_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(), "rom_sha256": hashlib.sha256(Path("pokeemerald.gba").read_bytes()).hexdigest(), "main_in_battle_offset": 0x439, "main_in_battle_mask": 2, "main_callback2_offset": 4, "symbols": records}
+          print("CE_PLAY_SYMBOLS_BEGIN")
+          print(json.dumps(report, separators=(",", ":")))
+          print("CE_PLAY_SYMBOLS_END")
+          PY
