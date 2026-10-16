@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-16",
+  "save_file": "CE_QA_Alpha25_TwoBadges.sav",
+  "file_bytes": 131088,
+  "sha256": "914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9",
+  "read_only": true,
+  "raw_flash_bytes": 131072,
+  "emulator_trailer_bytes": 16,
+  "format_signature": "CE000002",
+  "slots": [
+    {
+      "slot": 0,
+      "save_counter": 14,
+      "complete": true,
+      "primary_checksums_valid": true,
+      "footer_checksums_valid": true
+    },
+    {
+      "slot": 1,
+      "save_counter": 15,
+      "complete": true,
+      "primary_checksums_valid": true,
+      "footer_checksums_valid": true
+    }
+  ],
+  "selected_slot": 1,
+  "selected_counter": 15,
+  "selection_status": "SAVE_STATUS_OK",
+  "saved_position": {
+    "map_group": 3,
+    "map_number": 3,
+    "map_name": "DewfordTown_Gym",
+    "x": 4,
+    "y": 4
+  },
+  "progress_flags_decoded": false,
+  "save_bytes_unchanged_after_inspection": true,
+  "supplied_rom": {
+    "filename": "Pokemon_Emerald_Complete_Edition_Alpha_1.gba",
+    "bytes": 16777216,
+    "sha256": "a431f8bcdcc39713c8346688ad235c764b5fb4d6dcb7b3a43eeff42ab75e9089",
+    "test": "Normal title/menu boot with a copy of the recovered save; no Continue option. Closed without starting new game or saving.",
+    "compatible_with_recovered_save": false
+  },
+  "replacement": {
+    "source_commit": "adb01b50634e49c0d3dfbbd59d6d787dd549424b",
+    "rom_sha256": "ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040",
+    "run_id": 38945113253,
+    "workflow_conclusion": "success",
+    "artifact_id": 12066260740,
+    "artifact_name": "CE-verified-playable-20261016",
+    "artifact_sha256": "850fc454678a920914892c4fb39aa95f86483ae323133b8d6624d22b895b5767",
+    "local_copy": "awaiting user download/copy"
+  },
+  "source_patch": {
+    "path": "docs/qa/2026-10-16-reconciled-fixes.patch",
+    "base": "ff0dce502fda88a723552fc6db3ecca0d88f3b20",
+    "head": "adb01b50634e49c0d3dfbbd59d6d787dd549424b",
+    "files": 26,
+    "application_check": "PASS",
+    "patched_canonical_blob_sha1_checks": "26/26 PASS; normalize CRLF to canonical LF after Windows git apply"
+  },
+  "source_review": {
+    "commit": "057efeb3584cccc90dcfa4b03ae0700012c406e3",
+    "finding": "No concrete defect found in Steven Champion/HOF linkage, postgame/Scott/ferry/Frontier-pass gates, seven Frontier lobby paths or direct/eligibility Dynamax rejection.",
+    "limits": "Static source review only; no gameplay completion claimed."
+  },
+  "inspector_host_tests": {
+    "passed": 11
+  },
+  "ordinary_story_advanced": false,
+  "additional_reward_flash_test": {
+    "source_commit": "057efeb3584cccc90dcfa4b03ae0700012c406e3",
+    "path": "test/complete_edition_reward_flash.c",
+    "run_id": 38944845308,
+    "status": "in_progress",
+    "validated": false
+  }
+}
