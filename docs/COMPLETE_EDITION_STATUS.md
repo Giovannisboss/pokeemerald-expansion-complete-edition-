@@ -107,6 +107,23 @@ optional field-lock argument now stops walking input during field scripts;
 legacy walking commands remain supported. This host-tool change does not change
 the game binary.
 
+## 2026-10-16: Granite Cave and Slateport progression verified
+
+Normal play now covers the Flash award, Cleffa capture and HM teaching, Flash
+illumination, Steven's Letter/Steel Wing/registration/departure, and the unlocked
+Slateport voyage. Steven's departure survives a fresh battery reload. Dock's
+shipyard dialogue, museum ticket, both Aqua fights, Archie, Devon Parts delivery,
+and Scott/Birch registration sequences complete. Route 110 opens normally.
+
+A normal Slateport Centre save reloads in a fresh process with field movement;
+both slots pass every sector checksum. This checkpoint has two badges, Marshtomp
+level 24 and Cleffa level 10. The rival was reached but not defeated; subsequent
+ordinary losses reflect poor controller strategy and party coverage. There is
+no new production game fix or new full-suite result in this pass. Host-only
+routing and battle controls are being improved to reduce routine input overhead.
+See `qa/2026-10-16-alpha-2-5-slateport.json`. The Dewford checkpoint above remains
+a historical milestone, not the latest progression position.
+
 ## Build, patch and saves
 
 - ROM SHA-256: `8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6`.

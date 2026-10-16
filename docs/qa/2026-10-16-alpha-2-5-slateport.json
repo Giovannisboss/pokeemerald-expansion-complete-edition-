@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-16",
+  "milestone": "Granite Cave and Slateport ordinary-play QA",
+  "rom_sha256": "8edbd04b52db94e4c4ad52ec161832d0b0033193e96d6f9072d677c10d76a1f6",
+  "game_binary_changed": false,
+  "method": "Normal buttons; read-only live and battery inspection. No game-memory edits, injected progress, or emulator save states.",
+  "verified": [
+    "Flash HM award; Cleffa capture and Flash teaching through ordinary menus",
+    "Flash field use with two badges and cave illumination",
+    "Letter delivery to Steven, Steel Wing award and Match Call registration",
+    "Steven departure persists across a fresh normal battery reload",
+    "Slateport boat unlock and voyage",
+    "Route 109 double/trainer battles and Centre healing",
+    "Shipyard Dock dialogue and museum ticket payment",
+    "Both museum Aqua battles, Archie scene and Devon Parts handoff",
+    "Scott and Birch registration sequences; north route unlock",
+    "Normal Slateport save; both slots have valid sector checksums; fresh process Continue and field movement"
+  ],
+  "checkpoint": {
+    "file": "playthrough/alpha25-slateport-story.sav",
+    "sha256": "57e566e0936d97d6cfefb44d49a01312cc07a7aa54e01200eb90142c0d95eba6",
+    "size_bytes": 131088,
+    "save_counter": 18,
+    "selected_slot": 0,
+    "both_slots_all_14_checksums_valid": true,
+    "map_group_and_num": [
+      9,
+      11
+    ],
+    "position": [
+      7,
+      4
+    ],
+    "badges": [
+      1,
+      2
+    ],
+    "party": [
+      {
+        "species": 259,
+        "level": 24,
+        "HP_maxHP_Attack_Defense_Speed_SpA_SpD": [
+          89,
+          89,
+          44,
+          43,
+          34,
+          59,
+          46
+        ],
+        "EVs_HP_Atk_Def_Spe_SpA_SpD": [
+          252,
+          0,
+          0,
+          6,
+          252,
+          0
+        ],
+        "moves": [
+          33,
+          317,
+          189,
+          55
+        ],
+        "status": 0
+      },
+      {
+        "species": 173,
+        "level": 10,
+        "HP_maxHP_Attack_Defense_Speed_SpA_SpD": [
+          31,
+          31,
+          10,
+          10,
+          8,
+          17,
+          15
+        ],
+        "EVs_HP_Atk_Def_Spe_SpA_SpD": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ],
+        "moves": [
+          148,
+          227,
+          47,
+          186
+        ],
+        "status": 0
+      }
+    ],
+    "progress": {
+      "flash_received": true,
+      "devon_returned": true,
+      "devon_delivered_to_stern": true,
+      "pokenav_received": true,
+      "letter_delivered_to_steven": true,
+      "rustboro_rival_defeated": true,
+      "steven_registered": true,
+      "flash_used": false,
+      "brawly_defeated": true
+    }
+  },
+  "scope_notes": [
+    "Flash-used flag is temporary: true in Granite Cave checkpoint and cleared after leaving; its false value in Slateport is expected.",
+    "Route 110 rival was reached but not defeated. Two normal losses exposed poor QA-controller move choices and an undersupported party; no game crash observed.",
+    "Host travel handles elevation-15 bridge underpasses and wild fleeing; trainer choices require review. Added an ineffective-move damage guard to the experimental host controller.",
+    "Original full audit counts unchanged. No production code change or new full audit claimed."
+  ],
+  "next": [
+    "Build an appropriate party for the Route 110 rival and continue Mauville",
+    "Continue major story and save gates; review the 16 known failures separately"
+  ]
+}
