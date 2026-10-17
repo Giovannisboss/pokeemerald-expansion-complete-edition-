@@ -27,6 +27,8 @@ jobs:
       - name: Affected candidate native families
         if: github.ref_name == 'qa-reconcile-20261016'
         run: bash tools/complete_edition/test-candidate.sh
+      - name: Complete Edition native regressions
+        run: ./tools/complete_edition/test.sh --ce-only
       - name: Full native regression audit in headless mGBA
         run: ./tools/complete_edition/test.sh --full
       - name: Save verification logs

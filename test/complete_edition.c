@@ -270,3 +270,68 @@ TEST("Complete Edition: script training rejects invalid party slots and operatio
     EXPECT_EQ(gSpecialVar_Result, CE_SERVICE_INVALID);
     EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_HIDDEN_NATURE), nature);
 }
+
+
+TEST("Complete Edition: training recalculates HP safely for fainted injured and healthy Pokemon")
+{
+    u32 operation = 0, condition = 0;
+    enum Species species = SPECIES_PIKACHU;
+    const enum Species speciesCases[] = {SPECIES_PIKACHU, SPECIES_SHEDINJA};
+    for (u32 s = 0; s < ARRAY_COUNT(speciesCases); s++)
+        for (u32 op = 0; op < 4; op++)
+            for (u32 hp = 0; hp < 3; hp++)
+                PARAMETRIZE_LABEL("species %u operation %u HP condition %u", speciesCases[s], op, hp)
+                {
+                    species = speciesCases[s];
+                    operation = op;
+                    condition = hp;
+                }
+
+    struct Pokemon mon;
+    CreateMonWithIVs(&mon, species, 50, 12345, OTID_STRUCT_PRESET(54321), 10);
+    // Reset must exercise a real reduction in maximum HP.
+    if (operation == 3)
+        EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_HP, 252), CE_SERVICE_OK);
+    u32 oldMaxHP = GetMonData(&mon, MON_DATA_MAX_HP);
+    u32 hp = condition == 0 ? 0 : condition == 1 ? 1 : oldMaxHP;
+    SetMonData(&mon, MON_DATA_HP, &hp);
+    switch (operation)
+    {
+    case 0:
+        EXPECT(CompleteEditionSetNature(&mon, NATURE_MODEST));
+        break;
+    case 1:
+        EXPECT(AddBagItem(ITEM_BOTTLE_CAP, 1));
+        EXPECT_EQ(CompleteEditionTrainIV(&mon, STAT_HP, FALSE), CE_SERVICE_OK);
+        EXPECT(!CheckBagHasItem(ITEM_BOTTLE_CAP, 1));
+        break;
+    case 2:
+        EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_HP, 252), CE_SERVICE_OK);
+        break;
+    case 3:
+        CompleteEditionResetEVs(&mon);
+        break;
+    }
+    u32 newMaxHP = GetMonData(&mon, MON_DATA_MAX_HP);
+    u32 newHP = GetMonData(&mon, MON_DATA_HP);
+    EXPECT(newHP <= newMaxHP);
+    if (condition == 0)
+        EXPECT_EQ(newHP, 0); // Training is never a revival service.
+    else if (condition == 2 || species == SPECIES_SHEDINJA)
+        EXPECT_EQ(newHP, newMaxHP);
+    else if (newMaxHP >= oldMaxHP)
+        EXPECT_EQ(newMaxHP - newHP, oldMaxHP - hp); // Preserve missing HP on growth.
+    else
+        EXPECT_EQ(newHP, hp); // One remaining HP must survive EV removal.
+    if (species == SPECIES_SHEDINJA)
+        EXPECT_EQ(newMaxHP, 1);
+    else if (operation == 1 || operation == 2)
+        EXPECT(newMaxHP > oldMaxHP);
+    else if (operation == 3)
+        EXPECT(newMaxHP < oldMaxHP);
+    else
+        EXPECT_EQ(newMaxHP, oldMaxHP);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_PERSONALITY), 12345);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_OT_ID), 54321);
+    EXPECT(IsMonShiny(&mon));
+}

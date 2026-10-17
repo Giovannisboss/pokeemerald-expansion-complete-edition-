@@ -107,3 +107,12 @@ Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complet
 ### Training boundary CI checkpoint
 
 Run39028497564/job117384104598 at2973b74d8e405ad082714cb35c85f85ec453945c: event validator, six BPS tests, native-log parser checks and production Build all succeeded. Full native regression audit remained in progress at the latest direct job-step query. Available decoded log ended during native-test assembly, with no compiler-error markers in that available content; this is not a completed test result. No verification artifact was available yet. Do not rerun or reapply this change merely because a chat ended: inspect this same run first. Four new tests remain unverified until its completed native log is inspected. Owner has deferred ordinary desktop playthrough; no desktop setup is required to continue GitHub work.
+
+
+## 17 October 2026 — training boundaries verified; HP regression coverage
+
+- Run39028497564/job117384104598 completed successfully at11:50:05UTC on2973b74d8e405ad082714cb35c85f85ec453945c. Directly inspected completed job, four new PASS lines,5423PASS/5921TOTAL and PASS:full suite footer. Five known failures remain: two disabled Dynamax AI, two Neutralizing Gas, Gen5+ Roost. No failure markers changed.
+- Production ROM SHA256 remains ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040. Verification artifact12099323613 digest0458e679e4b80d9b7a5b239d767a76926581b71921b057747a41f4f64a26f7f4.
+- Added native HP training coverage for24 parametrized combinations: Pikachu/Shedinja; nature,HP IV,HP EV,EV reset; fainted,oneHP,healthy. Checks no revival,HP bounds,appropriate maxHP recalculation,identity and shininess.
+- Added --ce-only mode to existing test runner and a focused native CI step before full suite. Separate log directory preserves both focused and full evidence. Uses the same strict result classifier and ARM object validation. New native test/runner changes pending their CI execution.
+- No production game changes. Ordinary playthrough remains explicitly deferred by owner. Artwork and final ordinary-gameplay certification remain unfinished.
