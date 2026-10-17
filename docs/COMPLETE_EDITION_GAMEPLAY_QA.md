@@ -200,7 +200,7 @@ Exact selector: `BattleFrontier_PokemonCenter_1F` object **(3,3), elevation3**, 
 
 - [ ] Pending - selector cancellation and pre-Champion refusal return safely; no forced challenge.
 - [ ] Pending - ordinary loss/whiteout followed by replay; rewards/money/party remain consistent.
-- [ ] Pending - competitive held items, moves, abilities and AI are observed in battle; temporary portraits recorded honestly as unresolved visual work.
+- [ ] Pending - competitive held items, moves, abilities and AI are observed in battle; dedicated portraits observed with correct palette, placement and clipping.
 
 ## Seven original Battle Frontier facilities
 
@@ -254,32 +254,32 @@ Use naturally acquired Pokemon and labelled ordinary-save branches. Keep a per-s
 - [ ] Pending - Egg deposit/withdraw/hatching and evolved/trained Pokemon survive box moves and reload; no cross-slot data contamination.
 - [ ] Pending - if real hardware/flashcart testing is unavailable, retain hardware timing/audio/save-flash checks as Blocked; do not substitute emulator results.
 
-## Outstanding portrait assets (source audit, not gameplay)
+## Dedicated portraits — implementation complete; gameplay review pending
 
-No dedicated existing assets were found for these 18 characters in the inspected trainer asset directories/registries. Keep the prior approval limitation intact; use permitted assets only. Leader substitutions affect both visiting and tournament teams.
+The owner supplied the new atlas on 17 October 2026. All 18 dedicated assets and 34 trainer assignments are integrated at `d801d69748baa9570049a23864c1be74ea00e37c`. Existing picture IDs and the save format are preserved. Indexed PNG/source checks pass; native decode and palette results are recorded in the latest status report. Observe each portrait in its ordinary battle before marking its visual review Pass.
 
-| Character | Current substitute front portrait |
+| Character | Dedicated front portrait |
 | --- | --- |
-| Falkner | bird_keeper.png |
-| Bugsy | bug_catcher.png |
-| Whitney | beauty.png |
-| Morty | hex_maniac.png |
-| Chuck | black_belt.png |
-| Jasmine | leader_roxanne.png |
-| Pryce | gentleman.png |
-| Clair | cooltrainer_f.png |
-| Roark | hiker.png |
-| Gardenia | aroma_lady.png |
-| Maylene | battle_girl.png |
-| Crasher Wake | swimmer_m.png |
-| Fantina | lady.png |
-| Byron | hiker.png |
-| Candice | beauty.png |
-| Volkner | cooltrainer_m.png |
-| Silver | cooltrainer_m.png |
-| Gold | brendan_rs.png |
+| Falkner | `ce_falkner.png` |
+| Bugsy | `ce_bugsy.png` |
+| Whitney | `ce_whitney.png` |
+| Morty | `ce_morty.png` |
+| Chuck | `ce_chuck.png` |
+| Jasmine | `ce_jasmine.png` |
+| Pryce | `ce_pryce.png` |
+| Clair | `ce_clair.png` |
+| Roark | `ce_roark.png` |
+| Gardenia | `ce_gardenia.png` |
+| Maylene | `ce_maylene.png` |
+| Crasher Wake | `ce_crasher_wake.png` |
+| Fantina | `ce_fantina.png` |
+| Byron | `ce_byron.png` |
+| Candice | `ce_candice.png` |
+| Volkner | `ce_volkner.png` |
+| Gold | `ce_gold.png` |
+| Silver | `ce_silver.png` |
 
-Source mappings: src/data/trainers.party. Registries/resources: include/constants/trainers.h and src/data/graphics/trainers.h. Assets: graphics/trainers/front_pics/.
+Source mappings: `src/data/trainers.party`. Registry/resources: `include/constants/trainers.h` and `src/data/graphics/trainers.h`. Assets: `graphics/trainers/front_pics/`.
 
 ## Final gameplay sign-off
 

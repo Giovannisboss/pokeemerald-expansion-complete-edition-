@@ -3,7 +3,17 @@
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
 
-## 2026-10-17: latest HP and full native verification
+## 2026-10-17: 18 portraits integrated; final native run active
+
+All 18 dedicated portraits are integrated at `d801d69748baa9570049a23864c1be74ea00e37c`: 16 Johto/Sinnoh leaders, Gold and Silver. All 34 relevant trainer assignments use these assets. Local and CI checks pass for distinct indexed 64x64 artwork, transparent index zero, at most 16 palette entries, graphics mappings and preservation of all 158 existing portrait IDs. The save format is unchanged.
+
+Production compilation and exact clean-reference/BPS round-trip verification pass. Portrait-enabled production SHA-256: `a7b4c7afba7792984779478a621df19bfb5ddb467d1733f8233f1257ca4509d7`. The owner's local clean ROM matches required SHA-1 `f3ae088181bf583e55daf962a92bb46f4f1d07b7`. CI rebuilds the matching reference from pinned pret sources and uploads no ROMs.
+
+The new resource test initially triggered GCC's table-index bounds warning; `e082485208c5a3d1c3b21989ce480e103b33b2262` adds an explicit bounds guard without weakening assertions. [Final verification run 39059775787](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39059775787), job117475162147, is active at this checkpoint. Do not claim its focused/full native results or downloadable patch until it completes. Earlier native totals below are historical baselines.
+
+The owner will perform ordinary story/postgame and battle presentation verification. Those checks and hardware verification remain open. No ordinary gameplay progress is claimed here.
+
+## 2026-10-17: earlier HP and full native verification
 
 Source `a18692567ed17b4a1cef13fec1cf253167c72ae9` passed [run39030540953](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39030540953), job117389924632. Focused Complete Edition: **51/51 PASS**. Full suite: **5,424 PASS / 5,922 outcomes / zero unexpected failures**. Strict local reclassification of the full-suite section confirms all5,922 rows, two deliberate green crashes and zero failing footers. The same five known failures,63 assumption skips,421 TODOs and seven expected failures remain visible. The new HP family covers24 combinations and passes in both focused and full runs.
 
