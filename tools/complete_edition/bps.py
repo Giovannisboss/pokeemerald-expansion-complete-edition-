@@ -19,9 +19,13 @@ def number(value):
         out.append(byte)
         value -= 1
 
-def read_number(data, offset):
+def read_number(data, offset, end=None):
+    if end is None:
+        end = len(data)
     value, shift = 0, 1
     while True:
+        if offset >= end:
+            raise ValueError("Truncated BPS number")
         byte = data[offset]
         offset += 1
         value += (byte & 127) * shift
@@ -55,22 +59,31 @@ def create(source, target):
     return bytes(patch)
 
 def apply(source, patch):
-    if patch[:4] != b"BPS1" or zlib.crc32(patch[:-4]) != struct.unpack("<I", patch[-4:])[0]:
+    if len(patch) < 19 or patch[:4] != b"BPS1" or zlib.crc32(patch[:-4]) != struct.unpack("<I", patch[-4:])[0]:
         raise ValueError("Invalid BPS signature/checksum")
-    source_size, offset = read_number(patch, 4)
-    target_size, offset = read_number(patch, offset)
-    metadata_size, offset = read_number(patch, offset)
+    end = len(patch) - 12
+    source_size, offset = read_number(patch, 4, end)
+    target_size, offset = read_number(patch, offset, end)
+    metadata_size, offset = read_number(patch, offset, end)
+    if metadata_size > end - offset:
+        raise ValueError("Truncated BPS metadata")
     offset += metadata_size
     source_crc, target_crc = struct.unpack("<II", patch[-12:-4])
     if len(source) != source_size or zlib.crc32(source) != source_crc:
         raise ValueError("Wrong input ROM")
     target = bytearray()
     while len(target) < target_size:
-        command, offset = read_number(patch, offset)
+        command, offset = read_number(patch, offset, end)
         length, mode = (command >> 2) + 1, command & 3
+        if length > target_size - len(target):
+            raise ValueError("BPS command exceeds target size")
         if mode == 0:
+            if length > len(source) - len(target):
+                raise ValueError("BPS SourceRead exceeds input ROM")
             target += source[len(target):len(target) + length]
         elif mode == 1:
+            if length > end - offset:
+                raise ValueError("Truncated BPS TargetRead")
             target += patch[offset:offset + length]
             offset += length
         else:
@@ -98,3 +111,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

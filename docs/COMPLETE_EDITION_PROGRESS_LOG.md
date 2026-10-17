@@ -85,3 +85,13 @@ Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complet
 - Preserved reusable controller under tools/complete_edition. Static ROM map extraction matched three source Git blob SHA1s, avoiding connector base64 text-normalization corruption. No emulator memory or game-data mutation.
 - Rechecked include/config/general.h: GEN_LATEST is GEN_4; no generation config change required.
 - Next: ordinary cave traversal/Steven Letter; catch suitable Flash learner normally. Postgame,18 portraits and release patch remain outstanding. Production source unchanged.
+
+
+## 17 October 2026 — interrupted-session recovery and release patch verification
+
+- Re-read Master Specification version1.5 and inspected live branch HEAD268d999632803e09ddc552d948e3b4fcae5695b7. Preserved its tree and all previous changes; no old patch reapplication, reset or force push.
+- Recovered committed progress through Granite Cave HM05 and the persistent Windows controls. The later session06 counter23 save is referenced but not present in this local workspace. Library milestone still resolves; local transfer failed with PermissionError. Computer Use failed to launch its app-server. Local older ROM checksum does not match the verified build, so it was not launched with the newer save.
+- Continued release tooling: bounded BPS header, metadata, command and literal decoding to the command section; reject oversized commands and SourceRead outside the input. Previously malformed valid-CRC patches could consume footer bytes or raise IndexError instead of a controlled validation error.
+- Added six regression methods covering105 synthetic round trips, every truncation of a generated patch, wrong source, corruption, unterminated numbers, truncated metadata/literals, invalid copy ranges, unsupported modes, target CRC and trailing commands. All six methods pass locally under bundled Python3.12. No retail ROM required or included.
+- Added patch-integrity tests to CI before toolchain installation. Remote CI pending for this commit; no new native suite result claimed.
+- Game source and production ROM remain unchanged. Last full native suite evidence remains5419PASS/5917outcomes/zero unexpected failures with five documented known failures. Story/Steven Letter, postgame, portraits and final release remain unfinished.
