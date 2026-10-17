@@ -33,3 +33,9 @@ Resume in an environment able to fetch/build this source and run mGBA, with the 
 7. Report hardware timing/audio/flashcart compatibility only if actually tested.
 
 Machine-readable evidence: [2026-10-17 recovery verification](qa/2026-10-17-recovery-verification.json).
+
+## 17 October 2026 — close continuous-validation gap
+
+Source review found that the existing map/event validator was absent from the CI workflow and build script. Added a dedicated CI step before toolchain installation. This validator checks CE placements, manifests, starter/legend capture flags, catalogue gates, quest cycles and graphics coverage. It does not prove whole-map routes or actual story/event execution.
+
+Validation of this CI change is pending until its workflow completes. No game binary source changed. Reviewed service/catalogue/tournament source showed no additional confirmed defect; ordinary gameplay coverage remains required.

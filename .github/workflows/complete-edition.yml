@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Verify Complete Edition event placements and gates
+        run: python3 tools/complete_edition/validate.py
       - name: Install ARM toolchain
         run: |
           sudo apt-get update
