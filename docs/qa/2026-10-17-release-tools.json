@@ -1,0 +1,26 @@
+{
+  "source_commit": "c2ba95e743ede71005e5f31ad817bed9430dda0b",
+  "workflow_run": 39032789005,
+  "job": 117396480178,
+  "conclusion": "success",
+  "bps_test_methods": 6,
+  "packaging_test_methods": 6,
+  "local_test_methods": 12,
+  "production_rom_pair_exercised": false,
+  "fixture": "Synthetic source and target; digest replaced only inside unittest mock context, never via production CLI",
+  "output_files": [
+    "CompleteEdition.bps",
+    "release.json",
+    "README.txt",
+    "SHA256SUMS"
+  ],
+  "no_roms_in_package": true,
+  "game_source_changed": false,
+  "native_baseline": {
+    "source": "a18692567ed17b4a1cef13fec1cf253167c72ae9",
+    "run": 39030540953,
+    "passes": 5424,
+    "total": 5922,
+    "unexpected_failures": 0
+  }
+}

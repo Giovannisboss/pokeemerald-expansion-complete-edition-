@@ -148,3 +148,7 @@ No ordinary saves were modified; no desktop access or owner action was required.
 - Dedicated release-tool CI verifies these host changes without a retail ROM or a redundant native rebuild. Native workflow excludes onlydocs and the two packaging-only files; engine/game/native-test changes retain the full audit. CI result for this new tooling is pending.
 - Corrected build guide with current focused/full commands,passed native totals,Alpha2 battery compatibility and ordinary-save-only QA instructions. Historical evidence remains.
 - Production game remains unchanged. Previous fully verified native sourcea186925/run39030540953 remains the baseline. No actual production patch,ordinary-play completion or portrait completion is claimed in this tooling pass.
+
+### Release-tool CI completed
+
+Run39032789005/job117396480178 atc2ba95e743ede71005e5f31ad817bed9430dda0b completed successfully at12:30:33UTC. Both groups ran6 tests each;all12 pass. Directly inspected successful steps and named test results. New CLI --help also passes locally. No retail/compiled ROM was distributed and no actual production patch is claimed. Main engine/native code remains unchanged from the verified5922-outcome baseline. Documentation and Master Specification were corrected to supersede the removed full-ROM delivery configuration.

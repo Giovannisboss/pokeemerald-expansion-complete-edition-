@@ -9,7 +9,7 @@ Source `a18692567ed17b4a1cef13fec1cf253167c72ae9` passed [run39030540953](https:
 
 Production SHA256 is unchanged: `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`. No production-game source changed. [Evidence](qa/2026-10-17-training-hp.json) records the exact tested source.
 
-Commit1328b4d adds success-gated production-ROM/checksum/source-commit artifacts for future CI runs. That packaging step was added after this run started and has not executed yet; do not claim an uploaded ROM artifact from this run.
+Patch-only packaging is now implemented at`c2ba95e743ede71005e5f31ad817bed9430dda0b`. [Release-tool CI39032789005](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39032789005),job117396480178,passes all12 BPS/packaging methods. It requires the exact clean input,verifies an exact round trip,and produces onlyBPS,README,manifest and checksums. It rejects existing outputs and cleans staging after write failure. The unexecuted full-ROM uploader from1328b4d was removed at296a680;the current workflow does not publish full ROMs. No production patch has been generated in this pass because the matching input/target pair is not available locally. Packaging-only changes receive dedicated host CI;the passed native engine baseline above remains unchanged.
 
 This remains a development build. Ordinary story/postgame verification is deferred,18 dedicated portraits remain unfinished, and final patch/release and hardware checks remain open.
 
