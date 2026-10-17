@@ -138,3 +138,13 @@ This remains a development build. Ordinary story/postgame verification is deferr
 
 
 No ordinary saves were modified; no desktop access or owner action was required. Future continuation should use this completed run rather than repeat the pending-run checks above.
+
+
+## 17 October 2026 — finish patch-only release tooling
+
+- Build guide explicitly requires patch-only distribution. Removed the unexecuted full-ROM artifact configuration from1328b4d before it published any ROM. Correction/configuration commit296a680adbf75b268acc57ff030455d321dacc5c.
+- Added package_release.py: validates clean input SHA1,target size,BPS CRCs and exact round trip; stages and publishes a package containing onlyBPS,README,manifest and checksums. Original ROM files remain unchanged; existing output paths are rejected.
+- Twelve local host tests pass:six BPS methods and six packaging methods. Packaging tests use synthetic fixture bytes and test-only digest substitution; production has no bypass option. Includes simulated write failure cleanup.
+- Dedicated release-tool CI verifies these host changes without a retail ROM or a redundant native rebuild. Native workflow excludes onlydocs and the two packaging-only files; engine/game/native-test changes retain the full audit. CI result for this new tooling is pending.
+- Corrected build guide with current focused/full commands,passed native totals,Alpha2 battery compatibility and ordinary-save-only QA instructions. Historical evidence remains.
+- Production game remains unchanged. Previous fully verified native sourcea186925/run39030540953 remains the baseline. No actual production patch,ordinary-play completion or portrait completion is claimed in this tooling pass.

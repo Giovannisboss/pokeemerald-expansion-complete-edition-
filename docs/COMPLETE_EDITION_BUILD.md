@@ -2,6 +2,34 @@
 
 Work on `complete-edition-development`. No retail ROM is needed to compile.
 
+## Current commands and verification — 17 October 2026
+
+The latest full native baseline is source`a18692567ed17b4a1cef13fec1cf253167c72ae9`, run39030540953:51/51 focused Complete Edition outcomes pass; full suite5,424 PASS/5,922 total/zero unexpected failures. Five known failures,63 assumption skips,421 TODOs,seven expected failures and two deliberate expected crashes remain explicit. See the current status page for evidence and remaining release gates. The historical Alpha1/Alpha2 sections below describe their original milestones.
+
+```sh
+./tools/complete_edition/build.sh
+./tools/complete_edition/test.sh --ce-only
+./tools/complete_edition/test.sh --full
+python3 -m unittest discover -s tools/complete_edition -p 'test_bps.py' -v
+python3 -m unittest discover -s tools/complete_edition -p 'test_package_release.py' -v
+```
+
+Use sequential native test runs because the host runner shares temporary filenames. Current development builds retain the Alpha2 save layout: back up existing Alpha2 battery saves before upgrading; Alpha1/original Emerald saves are incompatible. New native test coverage does not itself require starting over.
+
+### Patch-only development package
+
+Keep both ROMs outside the published package. With your own correct clean input and the compiled target:
+
+```sh
+python3 tools/complete_edition/package_release.py /private/clean-emerald.gba pokeemerald.gba /private/CompleteEdition-development
+```
+
+The output must be a new directory. It contains only`CompleteEdition.bps`,`release.json`,`README.txt` and`SHA256SUMS`. The packager checks the exact source SHA1,nonempty/maximum target size,BPS CRCs and an exact round trip before publishing the staged output. It never copies either ROM into the package,never modifies the inputs,and refuses an existing output path. Check the patched ROM against`target_sha256` in the manifest. This verifies patch integrity,not story/gameplay completion.
+
+Dedicated release-tool CI runs these synthetic tests without a retail ROM. Packaging-only files and documentation do not trigger redundant native builds; game/engine/test changes still run the native workflow. Both workflows retain manual dispatch. No full-ROM artifact is published by the current configuration.
+
+Current ordinary QA uses normal controls and battery saves with fresh-process reloads. Do not use the historical controller's`save`/`load` savestate commands for progression,recovery or gameplay evidence. Ordinary story/postgame verification remains deferred; dedicated portraits and final release checks remain open.
+
 ## Ubuntu 24.04 / Codespaces
 
 The `.devcontainer` installs the build dependencies automatically. For an existing Ubuntu system:
@@ -38,9 +66,9 @@ gcc -O2 -Wall -Wextra tools/complete_edition/smoke.c -lmgba -o /tmp/ce-smoke
 timeout 40 /tmp/ce-smoke pokeemerald.gba /tmp/newgame.ppm 1800 9
 ```
 
-## Alpha 1
+## Historical Alpha 1
 
-Run `./tools/complete_edition/test.sh` for the focused production-profile checks and map validation. `./tools/complete_edition/test.sh --full` runs the full upstream suite; it currently has unresolved failures under Gen 4 defaults and is not a release gate that passes. See `COMPLETE_EDITION_STATUS.md` for evidence and limits.
+Run `./tools/complete_edition/test.sh` for the focused production-profile checks and map validation. `./tools/complete_edition/test.sh --full` runs the full upstream suite; at that historical milestone it had unresolved failures. Current full-suite evidence is recorded above. See `COMPLETE_EDITION_STATUS.md` for evidence and limits.
 
 Quickstart and all developer menus are disabled. A **new save is required**: species settings and trainer-flag allocation deliberately differ from upstream and earlier experimental builds.
 
