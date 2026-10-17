@@ -35,16 +35,44 @@ jobs:
       - name: Verify native-log classification
         run: python3 -m unittest discover -s tools/complete_edition -p 'test_summarize_tests.py' -v
       - name: Build
-        run: ./tools/complete_edition/build.sh
+        run: |
+          mkdir -p build/complete-edition-logs
+          if ./tools/complete_edition/build.sh > build/complete-edition-logs/production-console.log 2>&1; then
+            tail -n 35 build/complete-edition-logs/production-console.log
+          else
+            tail -n 120 build/complete-edition-logs/production-console.log
+            exit 1
+          fi
       - name: Build clean reference and verify patch round trip
-        run: bash tools/complete_edition/package_from_source.sh
+        run: |
+          mkdir -p build/complete-edition-logs
+          if bash tools/complete_edition/package_from_source.sh > build/complete-edition-logs/reference-console.log 2>&1; then
+            tail -n 35 build/complete-edition-logs/reference-console.log
+          else
+            tail -n 120 build/complete-edition-logs/reference-console.log
+            exit 1
+          fi
       - name: Affected candidate native families
         if: github.ref_name == 'qa-reconcile-20261016'
         run: bash tools/complete_edition/test-candidate.sh
       - name: Complete Edition native regressions
-        run: ./tools/complete_edition/test.sh --ce-only
+        run: |
+          mkdir -p build/complete-edition-logs
+          if ./tools/complete_edition/test.sh --ce-only > build/complete-edition-logs/focused-console.log 2>&1; then
+            tail -n 35 build/complete-edition-logs/focused-console.log
+          else
+            tail -n 120 build/complete-edition-logs/focused-console.log
+            exit 1
+          fi
       - name: Full native regression audit in headless mGBA
-        run: ./tools/complete_edition/test.sh --full
+        run: |
+          mkdir -p build/complete-edition-logs
+          if ./tools/complete_edition/test.sh --full > build/complete-edition-logs/full-console.log 2>&1; then
+            tail -n 35 build/complete-edition-logs/full-console.log
+          else
+            tail -n 120 build/complete-edition-logs/full-console.log
+            exit 1
+          fi
       - name: Save verified patch package
         uses: actions/upload-artifact@v4
         with:
