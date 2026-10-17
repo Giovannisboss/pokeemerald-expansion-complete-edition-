@@ -120,3 +120,7 @@ Run39028497564/job117384104598 at2973b74d8e405ad082714cb35c85f85ec453945c: event
 ### Reclassified completed training audit
 
 Timestamp-stripped native rows and summary footers from completed run39028497564 were locally passed through the repository strict parser:5921/5921 complete,5423PASS,zero unexpected failures,two green expected crashes,zero failing footers. All50 Complete Edition outcomes pass. Saved docs/qa/2026-10-17-training-boundaries.json and refreshed the status-page lead; historical evidence is retained. The HP follow-up remains pending CI.
+
+### HP training focused check passed
+
+Run39030540953/job117389924632 at a18692567ed17b4a1cef13fec1cf253167c72ae9: production Build passed at12:00:21UTC; new Complete Edition native regressions step passed at12:05:25UTC. World-event,BPS and parser checks also passed. Full native audit is running. Exact HP result rows and final outcome counts will be inspected after the completed job log becomes available; available partial log still ended during assembly. No final full-suite result or ordinary-gameplay completion is claimed yet.
