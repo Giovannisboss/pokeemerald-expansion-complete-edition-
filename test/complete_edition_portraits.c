@@ -94,7 +94,13 @@ TEST("Complete Edition: custom portraits decompress exactly through production a
     bool32 nonempty = FALSE;
     bool32 paletteMatches = TRUE;
 
-    EXPECT(id < TRAINER_PIC_COUNT);
+    // EXPECT reports failure but is not declared noreturn. Keep the table
+    // access explicitly guarded so GCC can prove every index is in bounds.
+    if (id >= TRAINER_PIC_COUNT)
+    {
+        EXPECT(id < TRAINER_PIC_COUNT);
+        return;
+    }
     EXPECT(gTrainerPicInfo[id].frontPic != NULL);
     compressed = GetTrainerFrontPicData(id);
     palette = GetTrainerFrontPicPalette(id);
