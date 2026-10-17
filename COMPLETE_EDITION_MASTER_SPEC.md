@@ -1,6 +1,6 @@
 # Pokémon Emerald: Complete Edition
 ## Master Specification & Development Recovery Handover
-**Version:** 1.1 — 17 October 2026  
+**Version:** 1.2 — 17 October 2026  
 **Project owner:** Giovannisboss  
 **Status:** Advanced alpha; completion and final verification outstanding
 
@@ -37,10 +37,18 @@ Read this section before acting on the historical handover below.
 
 Permanent continuation record: `docs/COMPLETE_EDITION_PROGRESS_LOG.md`.
 Latest audit details: `docs/qa/2026-10-17-recovery-verification.json`.
+Detailed locations and pending ordinary-play checks: `docs/COMPLETE_EDITION_GAMEPLAY_QA.md`.
+
+### Fresh validation in this continuation
+
+- Added the previously omitted world-event validator to CI at `f8fa55b0cff7bfee57247ec47098b759a71f29d6`.
+- Fresh run `39018035474`, job `117354056382`: world-event validation, native-log classification and production build have passed; the full native suite is running. Do not describe this run as complete until its footer, counts and workflow conclusion are checked.
+- Locally ran four result-parser regression methods (19 scenarios): PASS after placing TEMP/TMP in the writable task folder. Reclassified the prior CI log with the same parser: complete 5,917 outcomes, zero unexpected failures.
+- All 46 Complete Edition-labelled native outcomes in that prior full log pass. This is still not an ordinary-playthrough result.
 
 ### Execution blocker in this continuation
 
-The current Windows execution host cannot resolve GitHub from local Git/PowerShell/Node requests; `git ls-remote` fails with `getaddrinfo() thread failed to start`. GitHub connector reads and source writes work. WSL is not installed; no ARM compiler, make or emulator is available on PATH. No local source checkout, matching ROM or running emulator has been recovered here.
+The current Windows execution host cannot resolve GitHub from local Git/PowerShell/Node requests; `git ls-remote` fails with `getaddrinfo() thread failed to start`. GitHub connector reads and source writes work. WSL is not installed; no ARM compiler or make is available on PATH. mGBA 0.10.5 was subsequently found at `C:\\Program Files\\mGBA\\mgba-sdl.exe`, outside PATH. No local source checkout, matching ROM or running emulator has been recovered here. The normal-save transfer was denied by the local execution environment. The owner has been asked to place the matching build ZIP and two-badge save in this task's `work/playtest` directory; verify exact hashes before launching.
 
 This is an execution-environment limitation, not a game defect. A working build/emulation environment is required for ordinary gameplay and fresh local validation. Existing successful CI logs were inspected; they must not be described as new tests run by this chat. Do not repeat the patch reconciliation merely because local cloning is unavailable. No gameplay progress or new release patch has been produced in this continuation.
 
@@ -143,7 +151,7 @@ Use the approved visual direction for the custom title screen, adapted to actual
 
 Maintain readable graphics, correct palettes, reliable title-screen transitions and the original game's general aesthetic.
 
-Some Johto/Sinnoh Gym Leaders and Gold/Silver still have substitute portraits according to the last handover.
+Source audit confirms 18 missing dedicated battle portraits: all 16 Johto/Sinnoh leaders, Gold and Silver. The leaders use substitutes in both visitor and tournament teams. Correct dedicated assets were not found in the current source asset directories/registries. The exact mappings are recorded in the gameplay QA checklist.
 
 An earlier portrait-generation attempt was rejected by an automatic approval review. Do not circumvent that restriction. Use permitted assets or leave the limitation clearly documented.
 

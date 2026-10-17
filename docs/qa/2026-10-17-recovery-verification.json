@@ -47,9 +47,10 @@
     "final_release_produced": false,
     "blockers": [
       "Local network/name-resolution failure",
-      "WSL not installed",
-      "ARM compiler, make and emulator not available on PATH"
-    ]
+      "WSL not installed; ARM compiler and make unavailable on PATH",
+      "Normal save transfer denied; matching ROM/save not locally recovered"
+    ],
+    "installed_emulator": "C:\\Program Files\\mGBA\\mgba-sdl.exe (0.10.5)"
   },
   "remaining": [
     "Ordinary story through Steven/Hall of Fame",
@@ -59,5 +60,43 @@
     "Replace substitute portraits with permitted assets",
     "Final full validation, ROM and patch round trip",
     "Hardware QA remains unverified"
-  ]
+  ],
+  "fresh_run": {
+    "source_commit": "f8fa55b0cff7bfee57247ec47098b759a71f29d6",
+    "run_id": 39018035474,
+    "job_id": 117354056382,
+    "event_validator": "success",
+    "parser_tests": "success",
+    "production_build": "success",
+    "full_suite": "in_progress"
+  },
+  "host_parser_tests": {
+    "test_methods": 4,
+    "scenarios": 19,
+    "result": "PASS",
+    "temporary_directory": "workspace-local after initial Windows temp permission error"
+  },
+  "portraits": {
+    "missing_dedicated_count": 18,
+    "characters": [
+      "Falkner",
+      "Bugsy",
+      "Whitney",
+      "Morty",
+      "Chuck",
+      "Jasmine",
+      "Pryce",
+      "Clair",
+      "Roark",
+      "Gardenia",
+      "Maylene",
+      "Crasher Wake",
+      "Fantina",
+      "Byron",
+      "Candice",
+      "Volkner",
+      "Silver",
+      "Gold"
+    ]
+  }
 }

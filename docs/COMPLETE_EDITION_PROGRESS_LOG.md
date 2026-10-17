@@ -39,3 +39,11 @@ Machine-readable evidence: [2026-10-17 recovery verification](qa/2026-10-17-reco
 Source review found that the existing map/event validator was absent from the CI workflow and build script. Added a dedicated CI step before toolchain installation. This validator checks CE placements, manifests, starter/legend capture flags, catalogue gates, quest cycles and graphics coverage. It does not prove whole-map routes or actual story/event execution.
 
 Validation of this CI change is pending until its workflow completes. No game binary source changed. Reviewed service/catalogue/tournament source showed no additional confirmed defect; ordinary gameplay coverage remains required.
+
+### Follow-up evidence during the fresh run
+
+- CI run 39018035474/job117354056382 passed the newly added event-validation step, parser tests and production build. Full native suite is still in progress.
+- Four local parser test methods covering19 scenarios pass with workspace-local TEMP/TMP. Initial test launch failed only because Windows' sandbox temporary directory was unwritable; rerun passed unchanged tests.
+- Prior full-log parser recheck confirms5917/5917 outcomes, zero unexpected failures. All46 Complete Edition-labelled outcomes pass.
+- Found installed SDL mGBA0.10.5 outside PATH. Save transfer into this task was denied. Await matching build ZIP and ordinary two-badge save in work/playtest; do not use Alpha1.
+- Added the full gameplay checklist with exact locations/gates, source boundaries and18 missing portrait mappings. No additional proven gameplay defect found; no new story progress claimed.
