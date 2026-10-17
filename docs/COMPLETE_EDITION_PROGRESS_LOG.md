@@ -103,3 +103,7 @@ Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complet
 - Confirmed CI run39026199175/job117377556313 succeeded, including production compilation, BPS integrity, event placement, parser checks and full native audit. Exact new outcome counts were not independently extracted in this continuation.
 - Added four native training regressions: replacement/reduction at exactly510EVs, invalid IV indexes preserving cap/IVs, Egg nature/IV/EV/reset rejection, and invalid party-slot/operation script rejection. These address untested boundaries; no new gameplay defect or production change is claimed.
 - New native tests require CI compilation/execution; pending until the workflow reports completion. Previous gameplay checkpoints remain untouched.
+
+### Training boundary CI checkpoint
+
+Run39028497564/job117384104598 at2973b74d8e405ad082714cb35c85f85ec453945c: event validator, six BPS tests, native-log parser checks and production Build all succeeded. Full native regression audit remained in progress at the latest direct job-step query. Available decoded log ended during native-test assembly, with no compiler-error markers in that available content; this is not a completed test result. No verification artifact was available yet. Do not rerun or reapply this change merely because a chat ended: inspect this same run first. Four new tests remain unverified until its completed native log is inspected. Owner has deferred ordinary desktop playthrough; no desktop setup is required to continue GitHub work.
