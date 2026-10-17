@@ -1,0 +1,65 @@
+{
+  "source_commit": "a18692567ed17b4a1cef13fec1cf253167c72ae9",
+  "workflow_run": 39030540953,
+  "job": 117389924632,
+  "conclusion": "success",
+  "completed_utc": "2026-10-17T12:22:38Z",
+  "production_sha256": "ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040",
+  "focused": {
+    "pass": 51,
+    "total": 51
+  },
+  "full": {
+    "log": "GitHub job117389924632; full-suite section only",
+    "complete": true,
+    "recorded_results": 5922,
+    "reported_total": 5922,
+    "statuses": {
+      "ASSUMPTION_FAIL": 63,
+      "CRASH": 2,
+      "EXPECTED_FAIL": 7,
+      "KNOWN_FAILING": 5,
+      "PASS": 5424,
+      "TO_DO": 421
+    },
+    "failing_outcomes": 0,
+    "expected_crashes": 2,
+    "footer_failures": 0,
+    "known_failures": [
+      {
+        "name": "Neutralizing Gas fainting as Discharge's ally restores Sheer Force before opposing secondary effects",
+        "detail": "test/battle/ability/neutralizing_gas.c:4: Expected 1.0 passes/successes, observed 0.0"
+      },
+      {
+        "name": "Neutralizing Gas fainting as Discharge's foe allows 30% paralysis on the attacker's ally",
+        "detail": "test/battle/ability/neutralizing_gas.c:34: Expected 0.299 passes/successes, observed 0.0"
+      },
+      {
+        "name": "AI uses Dynamax -- Max Moves are scored based on max move effects, not base effects",
+        "detail": "test/battle/ai/gimmick_dynamax.c:24: Unmatched EXPECT_MOVE Explosion, got Scratch"
+      },
+      {
+        "name": "AI uses Dynamax -- AI does not dynamax before using a utility move",
+        "detail": "test/battle/ai/gimmick_dynamax.c:36: Expected gimmick N/A, got Dynamax"
+      },
+      {
+        "name": "Roost rounds half-HP recovery up from Gen5 onwards",
+        "detail": "test/battle/move_effect/roost.c:79: EXPECT_EQ(50, 51) failed"
+      }
+    ],
+    "no_failing_outcomes": true,
+    "failures": []
+  },
+  "new_hp_cases": 24,
+  "production_game_source_changed": false,
+  "delivery_workflow": {
+    "commit": "1328b4d7a6096c2a165e38316e7d9e3e8f50a09b",
+    "status": "Configured for future successful runs; not executed in run39030540953"
+  },
+  "remaining": [
+    "Deferred ordinary story and postgame playthrough",
+    "18 dedicated trainer portraits",
+    "Final production BPS round trip and release certification",
+    "Unverified hardware timing/audio/flashcart behavior"
+  ]
+}

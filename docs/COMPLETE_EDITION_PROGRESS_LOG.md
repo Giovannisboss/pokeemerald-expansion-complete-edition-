@@ -124,3 +124,17 @@ Timestamp-stripped native rows and summary footers from completed run39028497564
 ### HP training focused check passed
 
 Run39030540953/job117389924632 at a18692567ed17b4a1cef13fec1cf253167c72ae9: production Build passed at12:00:21UTC; new Complete Edition native regressions step passed at12:05:25UTC. World-event,BPS and parser checks also passed. Full native audit is running. Exact HP result rows and final outcome counts will be inspected after the completed job log becomes available; available partial log still ended during assembly. No final full-suite result or ordinary-gameplay completion is claimed yet.
+
+
+## 17 October 2026 — HP and full native audit completed successfully
+
+Source `a18692567ed17b4a1cef13fec1cf253167c72ae9` passed [run39030540953](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39030540953), job117389924632. Focused Complete Edition: **51/51 PASS**. Full suite: **5,424 PASS / 5,922 outcomes / zero unexpected failures**. Strict local reclassification of the full-suite section confirms all5,922 rows, two deliberate green crashes and zero failing footers. The same five known failures,63 assumption skips,421 TODOs and seven expected failures remain visible. The new HP family covers24 combinations and passes in both focused and full runs.
+
+Production SHA256 is unchanged: `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`. No production-game source changed. [Evidence](qa/2026-10-17-training-hp.json) records the exact tested source.
+
+Commit1328b4d adds success-gated production-ROM/checksum/source-commit artifacts for future CI runs. That packaging step was added after this run started and has not executed yet; do not claim an uploaded ROM artifact from this run.
+
+This remains a development build. Ordinary story/postgame verification is deferred,18 dedicated portraits remain unfinished, and final patch/release and hardware checks remain open.
+
+
+No ordinary saves were modified; no desktop access or owner action was required. Future continuation should use this completed run rather than repeat the pending-run checks above.

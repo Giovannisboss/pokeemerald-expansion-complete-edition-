@@ -3,7 +3,17 @@
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
 
-## 2026-10-17: current verified automated state
+## 2026-10-17: latest HP and full native verification
+
+Source `a18692567ed17b4a1cef13fec1cf253167c72ae9` passed [run39030540953](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39030540953), job117389924632. Focused Complete Edition: **51/51 PASS**. Full suite: **5,424 PASS / 5,922 outcomes / zero unexpected failures**. Strict local reclassification of the full-suite section confirms all5,922 rows, two deliberate green crashes and zero failing footers. The same five known failures,63 assumption skips,421 TODOs and seven expected failures remain visible. The new HP family covers24 combinations and passes in both focused and full runs.
+
+Production SHA256 is unchanged: `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`. No production-game source changed. [Evidence](qa/2026-10-17-training-hp.json) records the exact tested source.
+
+Commit1328b4d adds success-gated production-ROM/checksum/source-commit artifacts for future CI runs. That packaging step was added after this run started and has not executed yet; do not claim an uploaded ROM artifact from this run.
+
+This remains a development build. Ordinary story/postgame verification is deferred,18 dedicated portraits remain unfinished, and final patch/release and hardware checks remain open.
+
+## 2026-10-17: earlier training-boundary audit
 
 Full run [39028497564](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39028497564), job117384104598, source2973b74d8e405ad082714cb35c85f85ec453945c completed successfully. Production compilation, placement/gate validation, six BPS integrity tests, log-parser regressions and the full native suite passed. Strict local reclassification confirms **5,423 PASS / 5,921 outcomes / zero unexpected failures**, including all50 Complete Edition outcomes. Five known failures,63 assumption skips,421 upstream TODOs,seven expected failures and two deliberate expected crashes remain visible. No failure marker was removed or weakened.
 
