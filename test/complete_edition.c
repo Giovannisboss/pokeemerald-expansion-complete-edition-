@@ -199,3 +199,74 @@ TEST("Complete Edition: catalogue unlocks with the seventh badge before becoming
     EXPECT_EQ(GetMonData(&gParties[B_TRAINER_OPPONENT_A][0], MON_DATA_SPECIES), badges >= 7 ? SPECIES_ARCEUS : SPECIES_SENTRET);
     EXPECT(!FlagGet(FLAG_SYS_GAME_CLEAR));
 }
+
+
+TEST("Complete Edition: EV replacement at 510 permits reductions and preserves rejected allocations")
+{
+    struct Pokemon mon;
+    CreateRandomMon(&mon, SPECIES_PIKACHU, 50);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_ATK, 252), CE_SERVICE_OK);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_SPEED, 252), CE_SERVICE_OK);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_HP, 6), CE_SERVICE_OK);
+    // Replacing a stat must exclude its old value from the total.
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_ATK, 252), CE_SERVICE_OK);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_DEF, 1), CE_SERVICE_EV_LIMIT);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_DEF_EV), 0);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_EV), 6);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_HP, 0), CE_SERVICE_OK);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_DEF, 6), CE_SERVICE_OK);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_ATK_EV), 252);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_SPEED_EV), 252);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_DEF_EV), 6);
+}
+
+TEST("Complete Edition: invalid single-stat IV requests never consume a cap")
+{
+    struct Pokemon mon;
+    CreateMonWithIVs(&mon, SPECIES_PIKACHU, 50, 12345, OTID_STRUCT_PRESET(0), 10);
+    EXPECT(AddBagItem(ITEM_BOTTLE_CAP, 1));
+    EXPECT_EQ(CompleteEditionTrainIV(&mon, NUM_STATS, FALSE), CE_SERVICE_INVALID);
+    EXPECT_EQ(CompleteEditionTrainIV(&mon, 0xFFFFFFFF, FALSE), CE_SERVICE_INVALID);
+    EXPECT(CheckBagHasItem(ITEM_BOTTLE_CAP, 1));
+    for (u32 i = 0; i < NUM_STATS; i++)
+        EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_IV + i), 10);
+}
+
+TEST("Complete Edition: Egg training rejects nature IV and EV changes atomically")
+{
+    struct Pokemon mon;
+    CreateMonWithIVs(&mon, SPECIES_TOGEPI, 50, 12345, OTID_STRUCT_PRESET(0), 10);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_HP, 100), CE_SERVICE_OK);
+    u32 nature = GetMonData(&mon, MON_DATA_HIDDEN_NATURE);
+    bool32 isEgg = TRUE;
+    SetMonData(&mon, MON_DATA_IS_EGG, &isEgg);
+    EXPECT(AddBagItem(ITEM_BOTTLE_CAP, 1));
+    EXPECT(!CompleteEditionSetNature(&mon, (nature + 1) % NUM_NATURES));
+    EXPECT_EQ(CompleteEditionTrainIV(&mon, STAT_HP, FALSE), CE_SERVICE_INVALID);
+    EXPECT_EQ(CompleteEditionSetEV(&mon, STAT_HP, 0), CE_SERVICE_INVALID);
+    CompleteEditionResetEVs(&mon);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_HIDDEN_NATURE), nature);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_IV), 10);
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_HP_EV), 100);
+    EXPECT(CheckBagHasItem(ITEM_BOTTLE_CAP, 1));
+    EXPECT_EQ(GetMonData(&mon, MON_DATA_IS_EGG), TRUE);
+}
+
+TEST("Complete Edition: script training rejects invalid party slots and operations")
+{
+    CreateRandomMon(&gParties[B_TRAINER_PLAYER][0], SPECIES_PIKACHU, 50);
+    u32 nature = GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_HIDDEN_NATURE);
+    gSpecialVar_0x8005 = 0;
+    gSpecialVar_0x8006 = (nature + 1) % NUM_NATURES;
+    gSpecialVar_0x8004 = PARTY_SIZE;
+    Script_CompleteEditionTraining();
+    EXPECT_EQ(gSpecialVar_Result, CE_SERVICE_INVALID);
+    gSpecialVar_0x8004 = 0xFFFF;
+    Script_CompleteEditionTraining();
+    EXPECT_EQ(gSpecialVar_Result, CE_SERVICE_INVALID);
+    gSpecialVar_0x8004 = 0;
+    gSpecialVar_0x8005 = 0xFFFF;
+    Script_CompleteEditionTraining();
+    EXPECT_EQ(gSpecialVar_Result, CE_SERVICE_INVALID);
+    EXPECT_EQ(GetMonData(&gParties[B_TRAINER_PLAYER][0], MON_DATA_HIDDEN_NATURE), nature);
+}

@@ -95,3 +95,11 @@ Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complet
 - Added six regression methods covering105 synthetic round trips, every truncation of a generated patch, wrong source, corruption, unterminated numbers, truncated metadata/literals, invalid copy ranges, unsupported modes, target CRC and trailing commands. All six methods pass locally under bundled Python3.12. No retail ROM required or included.
 - Added patch-integrity tests to CI before toolchain installation. Remote CI pending for this commit; no new native suite result claimed.
 - Game source and production ROM remain unchanged. Last full native suite evidence remains5419PASS/5917outcomes/zero unexpected failures with five documented known failures. Story/Steven Letter, postgame, portraits and final release remain unfinished.
+
+
+## 17 October 2026 — continue native training boundary coverage
+
+- Owner explicitly deferred ordinary mGBA playthrough and authorized continued GitHub development/build/tests.
+- Confirmed CI run39026199175/job117377556313 succeeded, including production compilation, BPS integrity, event placement, parser checks and full native audit. Exact new outcome counts were not independently extracted in this continuation.
+- Added four native training regressions: replacement/reduction at exactly510EVs, invalid IV indexes preserving cap/IVs, Egg nature/IV/EV/reset rejection, and invalid party-slot/operation script rejection. These address untested boundaries; no new gameplay defect or production change is claimed.
+- New native tests require CI compilation/execution; pending until the workflow reports completion. Previous gameplay checkpoints remain untouched.
