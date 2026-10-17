@@ -1,0 +1,35 @@
+{
+  "source_commit": "2973b74d8e405ad082714cb35c85f85ec453945c",
+  "workflow_run": 39028497564,
+  "job": 117384104598,
+  "conclusion": "success",
+  "production_sha256": "ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040",
+  "native": {
+    "reported_total": 5921,
+    "recorded_results": 5921,
+    "statuses": {
+      "PASS": 5423,
+      "EXPECTED_FAIL": 7,
+      "CRASH": 2,
+      "ASSUMPTION_FAIL": 63,
+      "TO_DO": 421,
+      "KNOWN_FAILING": 5
+    },
+    "unexpected_failures": 0,
+    "expected_crashes": 2,
+    "failing_summary_footers": 0,
+    "completion_footer": "PASS: full suite",
+    "complete_edition_outcomes": 50,
+    "complete_edition_nonpassing": 0
+  },
+  "new_verified_tests": [
+    "EV replacement at exactly 510",
+    "invalid single-stat IV requests preserve cap and IVs",
+    "Egg nature/IV/EV/reset rejection",
+    "invalid script party slots and operations"
+  ],
+  "verification": "Inspected successful job steps and decoded completion log; reclassified timestamp-stripped native result rows and summary footers using the repository strict parser. Extracted known-failure detail context is not used.",
+  "gameplay": "Deferred; no ordinary-play progress claimed",
+  "next_native_commit": "a18692567ed17b4a1cef13fec1cf253167c72ae9",
+  "next_native_status": "pending CI"
+}

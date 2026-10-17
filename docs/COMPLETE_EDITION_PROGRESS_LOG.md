@@ -116,3 +116,7 @@ Run39028497564/job117384104598 at2973b74d8e405ad082714cb35c85f85ec453945c: event
 - Added native HP training coverage for24 parametrized combinations: Pikachu/Shedinja; nature,HP IV,HP EV,EV reset; fainted,oneHP,healthy. Checks no revival,HP bounds,appropriate maxHP recalculation,identity and shininess.
 - Added --ce-only mode to existing test runner and a focused native CI step before full suite. Separate log directory preserves both focused and full evidence. Uses the same strict result classifier and ARM object validation. New native test/runner changes pending their CI execution.
 - No production game changes. Ordinary playthrough remains explicitly deferred by owner. Artwork and final ordinary-gameplay certification remain unfinished.
+
+### Reclassified completed training audit
+
+Timestamp-stripped native rows and summary footers from completed run39028497564 were locally passed through the repository strict parser:5921/5921 complete,5423PASS,zero unexpected failures,two green expected crashes,zero failing footers. All50 Complete Edition outcomes pass. Saved docs/qa/2026-10-17-training-boundaries.json and refreshed the status-page lead; historical evidence is retained. The HP follow-up remains pending CI.

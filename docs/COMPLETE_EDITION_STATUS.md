@@ -3,6 +3,16 @@
 **Development milestone; final-release QA remains open.** No moves or abilities
 have been removed. The physical/special split and Gen 4 defaults remain enabled.
 
+## 2026-10-17: current verified automated state
+
+Full run [39028497564](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39028497564), job117384104598, source2973b74d8e405ad082714cb35c85f85ec453945c completed successfully. Production compilation, placement/gate validation, six BPS integrity tests, log-parser regressions and the full native suite passed. Strict local reclassification confirms **5,423 PASS / 5,921 outcomes / zero unexpected failures**, including all50 Complete Edition outcomes. Five known failures,63 assumption skips,421 upstream TODOs,seven expected failures and two deliberate expected crashes remain visible. No failure marker was removed or weakened.
+
+The new coverage verifies exact510EV replacement/reduction, invalid IV-index rejection without cap consumption, Egg training rejection, and invalid script slots/operations. [Machine-readable evidence](qa/2026-10-17-training-boundaries.json) identifies the exact source and workflow.
+
+Production SHA256 remains `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`. Follow-up commit `a18692567ed17b4a1cef13fec1cf253167c72ae9` adds24 HP-training combinations and a focused Complete Edition step before the full audit; its CI is pending and is not part of the passed totals above.
+
+Latest durable ordinary milestone is Granite Cave HM05, save SHA256`1295405399a5b6c9fa14fe236a09d0666b4400f06bb7285d999c44ad1360aae8`. The subsequent working save was not recovered in this environment. The owner deferred ordinary mGBA playthrough; do not treat that deferral as a pass or return to an older incompatible ROM. Steven Letter, story/postgame certification,18 dedicated portraits and final release sign-off remain open.
+
 ## 2026-10-16: reconciled pending fixes fully tested
 
 Commit `adb01b50634e49c0d3dfbbd59d6d787dd549424b` passes all 21 affected native families and a fresh complete full suite: **5,418 PASS, zero unexpected failures, 5,916 total outcomes**. Five known failures, 63 assumption skips, 421 upstream TODOs and nine expected self-test outcomes (including two deliberate crashes) remain visible. The native footer, strict result checker, process exit and workflow all pass. See [machine-readable evidence](qa/2026-10-16-reconciled-fixes-full.json) and [completed workflow](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/38942000064).
