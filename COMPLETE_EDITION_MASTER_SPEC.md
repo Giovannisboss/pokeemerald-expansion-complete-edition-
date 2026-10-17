@@ -1,6 +1,6 @@
 # Pokémon Emerald: Complete Edition
 ## Master Specification & Development Recovery Handover
-**Version:** 1.2 — 17 October 2026  
+**Version:** 1.3 — 17 October 2026  
 **Project owner:** Giovannisboss  
 **Status:** Advanced alpha; completion and final verification outstanding
 
@@ -20,17 +20,17 @@ The owner prefers autonomous development, minimal interruptions, phone-based man
 
 Read this section before acting on the historical handover below.
 
-- Live development HEAD verified: `7a15cd7e5d4a964a8c8eef184e9fd1a5324cbe39`.
+- Recovery-start development HEAD verified: `7a15cd7e5d4a964a8c8eef184e9fd1a5324cbe39`.
 - Recovery snapshot: `recovery-baseline-20261017`, pointing to that exact commit.
 - Pending branch remains `497700e5c6071b83e87ebaf1b2deead64b651492`; preserve it as historical evidence.
 - Pending fixes were already reconciled at `adb01b50634e49c0d3dfbbd59d6d787dd549424b`. Do not reapply the old patch.
 - Embargo compilation blocker is already fixed: `ShouldUseItem(GetBattlerAtPosition(B_POSITION_OPPONENT_LEFT))`.
-- Latest completed full audit: run [38944845308](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/38944845308), job `117121249286`, source `057efeb3584cccc90dcfa4b03ae0700012c406e3`.
+- Latest completed full audit: fresh run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39018035474), job `117354056382`, source `f8fa55b0cff7bfee57247ec47098b759a71f29d6`, completed successfully on 17 October 2026. Prior run `38944845308` independently passed the same counts at `057efeb3584cccc90dcfa4b03ae0700012c406e3`.
 - Directly inspected job log and successful steps verify **5,419 PASS, 5 known failures, 63 assumption skips, 421 TODO, 7 expected failures and 2 deliberate harness crashes: 5,917 outcomes, zero unexpected failures**. Footer: `PASS: full suite`.
-- All 21 affected candidate families passed in earlier run `38942000064` at `adb01b5...`. The newer full run intentionally skips that branch-specific focused step and runs the full suite.
+- All 21 affected candidate families passed in earlier run `38942000064` at `adb01b5...`. The later full runs intentionally skip that branch-specific focused step and run the full suite.
 - Additional passing test: pending tournament prize survives flash reload; saving a claim prevents duplication.
 - Verified CI production ROM SHA-256: `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`.
-- Development HEAD differs from the latest tested source only in two QA documentation files. This continuation has not built a new ROM.
+- The fresh CI rebuild produced exactly the same production ROM checksum. Later handover/checklist commits contain documentation only; no production game source changed in this continuation.
 - Five known failures: two disabled Dynamax AI cases, two Neutralizing Gas interactions, Gen5+ Roost rounding. These remain explicit limitations; zero unexpected failures does not mean zero known failures.
 - Latest recovered normal save remains Dewford Gym after Brawly. Later Slateport progress has no recovered save. **Never pair the Alpha 1 ROM with this save**: incompatibility was reproduced previously. Back up the battery file before using the current Alpha 2.5.1 build.
 - Ordinary story/postgame completion, remaining portraits and release QA remain outstanding.
@@ -42,15 +42,15 @@ Detailed locations and pending ordinary-play checks: `docs/COMPLETE_EDITION_GAME
 ### Fresh validation in this continuation
 
 - Added the previously omitted world-event validator to CI at `f8fa55b0cff7bfee57247ec47098b759a71f29d6`.
-- Fresh run `39018035474`, job `117354056382`: world-event validation, native-log classification and production build have passed; the full native suite is running. Do not describe this run as complete until its footer, counts and workflow conclusion are checked.
+- Fresh run `39018035474`, job `117354056382`: world-event validation, native-log classification, production build and full native suite all passed. Directly inspected the complete log and successful workflow conclusion. Locally re-ran the strict parser on its native results: 5,917/5,917 outcomes, zero unexpected failures, two correctly classified expected crashes and zero failing summary footers.
 - Locally ran four result-parser regression methods (19 scenarios): PASS after placing TEMP/TMP in the writable task folder. Reclassified the prior CI log with the same parser: complete 5,917 outcomes, zero unexpected failures.
-- All 46 Complete Edition-labelled native outcomes in that prior full log pass. This is still not an ordinary-playthrough result.
+- All 46 Complete Edition-labelled outcomes in the prior full log pass; the fresh full run preserves the same suite totals. Native results are not an ordinary-playthrough result.
 
 ### Execution blocker in this continuation
 
-The current Windows execution host cannot resolve GitHub from local Git/PowerShell/Node requests; `git ls-remote` fails with `getaddrinfo() thread failed to start`. GitHub connector reads and source writes work. WSL is not installed; no ARM compiler or make is available on PATH. mGBA 0.10.5 was subsequently found at `C:\\Program Files\\mGBA\\mgba-sdl.exe`, outside PATH. No local source checkout, matching ROM or running emulator has been recovered here. The normal-save transfer was denied by the local execution environment. The owner has been asked to place the matching build ZIP and two-badge save in this task's `work/playtest` directory; verify exact hashes before launching.
+The current Windows execution host cannot resolve GitHub from local Git/PowerShell/Node requests; `git ls-remote` fails with `getaddrinfo() thread failed to start`. GitHub connector reads and source writes work. WSL is not installed; no ARM compiler or make is available on PATH. mGBA 0.10.5 was subsequently found at `C:\Program Files\mGBA\mgba-sdl.exe`, outside PATH. No local source checkout, matching ROM or running emulator has been recovered here. The normal-save transfer was denied by the local execution environment. The owner has been asked to place the matching build ZIP and two-badge save in this task's `work/playtest` directory; verify exact hashes before launching.
 
-This is an execution-environment limitation, not a game defect. A working build/emulation environment is required for ordinary gameplay and fresh local validation. Existing successful CI logs were inspected; they must not be described as new tests run by this chat. Do not repeat the patch reconciliation merely because local cloning is unavailable. No gameplay progress or new release patch has been produced in this continuation.
+This is an execution-environment limitation, not a game defect. A working build/emulation environment is required for ordinary gameplay and fresh local validation. Historical CI logs were inspected and a fresh CI build/full suite was triggered and verified as recorded above. No new local game build or ordinary gameplay is claimed. Do not repeat the patch reconciliation merely because local cloning is unavailable. No gameplay progress or new release patch has been produced in this continuation. The owner has now downloaded the matching ZIP after signing into GitHub; it and the ordinary two-badge save still need to be copied into `work/playtest`. The ZIP's verified contents are `CE_20261016_Verified.gba`, `ORIGINAL_SHA256SUMS` and `README.txt`; its historical README predates the extra passing flash test.
 
 ## 2. Repository and source control
 
@@ -268,7 +268,7 @@ Never declare the project finished solely because the ROM compiles or a partial 
 2. Preserve all existing implementation and test evidence.
 3. Never blindly overwrite or reset another session's work.
 4. Use the existing code as the starting point; do not rebuild completed systems unnecessarily.
-5. Fix the immediate test blocker and validate the pending patch.
+5. Preserve the verified reconciled fixes; do not reapply the historical patch or repeat its resolved compilation blocker.
 6. Run focused tests, followed by the full test suite.
 7. Continue ordinary story gameplay and preserve valid save checkpoints.
 8. Audit every requested feature against actual game behaviour.

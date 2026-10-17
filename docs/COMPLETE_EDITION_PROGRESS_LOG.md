@@ -42,8 +42,21 @@ Validation of this CI change is pending until its workflow completes. No game bi
 
 ### Follow-up evidence during the fresh run
 
-- CI run 39018035474/job117354056382 passed the newly added event-validation step, parser tests and production build. Full native suite is still in progress.
+- CI run 39018035474/job 117354056382 passed the newly added event-validation step, parser tests and production build. Full native suite is still in progress.
 - Four local parser test methods covering19 scenarios pass with workspace-local TEMP/TMP. Initial test launch failed only because Windows' sandbox temporary directory was unwritable; rerun passed unchanged tests.
-- Prior full-log parser recheck confirms5917/5917 outcomes, zero unexpected failures. All46 Complete Edition-labelled outcomes pass.
+- Prior full-log parser recheck confirms 5917/5917 outcomes, zero unexpected failures. All46 Complete Edition-labelled outcomes pass.
 - Found installed SDL mGBA0.10.5 outside PATH. Save transfer into this task was denied. Await matching build ZIP and ordinary two-badge save in work/playtest; do not use Alpha1.
 - Added the full gameplay checklist with exact locations/gates, source boundaries and18 missing portrait mappings. No additional proven gameplay defect found; no new story progress claimed.
+
+## 17 October 2026 — fresh build, event checks and complete suite PASS
+
+Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complete-edition-/actions/runs/39018035474), job 117354056382, tested source `f8fa55b0cff7bfee57247ec47098b759a71f29d6`, completed successfully at 09:04:04 UTC. All configured steps passed; the candidate-branch-only focused step is intentionally skipped here and its earlier 21-family evidence remains preserved.
+
+- Production build PASS; SHA-256 unchanged: `ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040`.
+- World-event validator PASS: 84 placements, 24 visitors, 12 starters, 29 added legend trails, seventh-badge gates, acyclic quest dependencies and 61 graphics IDs. This does not prove complete route traversal or script gameplay.
+- Full native suite PASS: 5419 PASS, 5 KNOWN_FAILING, 63 ASSUMPTION_FAIL, 421 TODO, 7 EXPECTED_FAIL, 2 deliberate expected CRASH; 5917 total, zero unexpected failures.
+- Directly inspected the full completion footer and workflow conclusion. Local strict-parser recheck confirms 5917/5917 recorded rows, zero failing footers and correctly classified expected crashes.
+- The five existing known failures remain listed in the machine-readable recovery record. No failure markers were changed.
+- Owner confirmed the browser was signed out; after sign-in, reports the matching ZIP downloaded. Still awaiting ZIP plus ordinary two-badge save in this task's work/playtest folder. The prior artifact's production ROM matches the fresh build exactly. It contains a QA ROM and checksum/README, not a final release patch.
+- Local SDL button helper at work/host-tools/mgba_buttons.py has syntax/--help checks only; no GUI launch/input/gameplay execution yet. Runtime delivery remains unverified.
+- Master specification updated to 1.3. Ordinary story, postgame, portraits, save edge cases and final release remain unfinished. No ordinary save was modified.
