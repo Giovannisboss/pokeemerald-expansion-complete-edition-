@@ -2,8 +2,16 @@ name: Complete Edition
 on:
   push:
     branches: [complete-edition-development, qa-reconcile-20261016]
+    paths-ignore:
+      - 'docs/**'
+      - 'tools/complete_edition/package_release.py'
+      - 'tools/complete_edition/test_package_release.py'
   pull_request:
     branches: [complete-edition-development]
+    paths-ignore:
+      - 'docs/**'
+      - 'tools/complete_edition/package_release.py'
+      - 'tools/complete_edition/test_package_release.py'
   workflow_dispatch:
 permissions:
   contents: read
@@ -31,20 +39,6 @@ jobs:
         run: ./tools/complete_edition/test.sh --ce-only
       - name: Full native regression audit in headless mGBA
         run: ./tools/complete_edition/test.sh --full
-      - name: Prepare tested development build
-        run: |
-          mkdir -p build/complete-edition-playable
-          cp pokeemerald.gba build/complete-edition-playable/CompleteEdition.gba
-          printf '%s\n' "$GITHUB_SHA" > build/complete-edition-playable/SOURCE_COMMIT.txt
-          printf '%s\n' 'Pokemon Emerald: Complete Edition - tested development build' 'Automated checks passed for the source commit recorded in SOURCE_COMMIT.txt.' 'Ordinary story/postgame certification and dedicated portrait work remain unfinished.' 'Back up your Alpha 2 battery save before upgrading. Alpha 1/original saves are incompatible.' > build/complete-edition-playable/README.txt
-          cd build/complete-edition-playable
-          sha256sum CompleteEdition.gba > SHA256SUMS
-      - name: Upload tested development build
-        uses: actions/upload-artifact@v4
-        with:
-          name: complete-edition-tested-development
-          path: build/complete-edition-playable/
-          if-no-files-found: error
       - name: Save verification logs
         if: always()
         uses: actions/upload-artifact@v4

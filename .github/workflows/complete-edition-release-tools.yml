@@ -1,0 +1,30 @@
+name: Complete Edition release tools
+on:
+  push:
+    branches: [complete-edition-development]
+    paths:
+      - 'tools/complete_edition/package_release.py'
+      - 'tools/complete_edition/test_package_release.py'
+      - 'tools/complete_edition/bps.py'
+      - 'tools/complete_edition/test_bps.py'
+      - '.github/workflows/complete-edition-release-tools.yml'
+  pull_request:
+    branches: [complete-edition-development]
+    paths:
+      - 'tools/complete_edition/package_release.py'
+      - 'tools/complete_edition/test_package_release.py'
+      - 'tools/complete_edition/bps.py'
+      - 'tools/complete_edition/test_bps.py'
+      - '.github/workflows/complete-edition-release-tools.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-release-tools:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify BPS integrity
+        run: python3 -m unittest discover -s tools/complete_edition -p 'test_bps.py' -v
+      - name: Verify patch-only packaging
+        run: python3 -m unittest discover -s tools/complete_edition -p 'test_package_release.py' -v
