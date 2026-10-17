@@ -72,3 +72,16 @@ Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complet
 - Evidence: session06 native screenshots19 (Continue2:23),20 (Dewford after fresh reload), earlier7–9 (summary/moves),16–17 (save/field); read-only sector report docs/qa/2026-10-17-baseline-save.json.
 - Persistent controller startup must wait for SDL window replacement; reacquire only within same verified child PID. New hold/pulse commands remain unverified. No source game changes, injected flags/items/levels, memory access or savestates.
 - Next: leave Gym, heal/check PC, Flash/Steven's Letter in Granite Cave; story/postgame/portraits/release remain pending. No additional user setup required.
+
+## 17 October 2026 — Dewford systems and Granite Cave HM05
+
+- Ordinary play PASS: Gym exit, town/Center transitions, nurse healing (82/82HP), PC opening, Box17-to-Box1 navigation, female Sentret5 withdrawal (19/19HP) and two-member party menu.
+- Route106 Fisherman Ned defeated using Rock Tomb; opposing Tentacool12 appeared shiny; normal return to overworld. Marshtomp22 later81/82HP after failed wild catch attempt.
+- GraniteCave entry and hiker HM05 award PASS. Fresh-process reload shows both party members and HM05 persists in TM/HM pocket.
+- Durable milestone CE_QA_20261017_GraniteCave_HM05.sav: SHA2561295405399a5b6c9fa14fe236a09d0666b4400f06bb7285d999c44ad1360aae8,131088bytes;both slots valid,newest counter19,B1F(4,21),group24/map8. Original unchanged. Working session06 progresses beyond this milestone; counter23 atB1F(25,19).
+- Screenshots:40 healed party;46 Box17;51/53 Box1/Sentret;54 withdrawal menu;57 two-member party;60 successful Center save;69 shiny trainer Tentacool;72 faint;74 overworld;76 cave;87 obtained HM05;99 Continue2:41;101 reloaded party;103 HM05 persisted;108/113 B1F circle/menu;119/129/140/146 later ordinary saves.
+- Flash teaching/use remains Pending: party Marshtomp/Sentret both NOTABLE; source all_learnables agrees. Cleffa was weakened once then fainted on second Mud-Slap; Abra escaped Great Ball/teleported. No successful catch claimed. Other wild shiny presentations observed.
+- Controller basic press/pulse/B+direction and F12/quit observed working, but0.15s direction can only turn and0.3s can take two steps. About0.22s hold/0.4s gap for precision walking; encounters interrupt batches. Verify actual result. Python battery reads work during emulation; Get-FileHash sharing error does not mean save corruption.
+- Preserved reusable controller under tools/complete_edition. Static ROM map extraction matched three source Git blob SHA1s, avoiding connector base64 text-normalization corruption. No emulator memory or game-data mutation.
+- Rechecked include/config/general.h: GEN_LATEST is GEN_4; no generation config change required.
+- Next: ordinary cave traversal/Steven Letter; catch suitable Flash learner normally. Postgame,18 portraits and release patch remain outstanding. Production source unchanged.

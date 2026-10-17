@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-17",
+  "sha256": "1295405399a5b6c9fa14fe236a09d0666b4400f06bb7285d999c44ad1360aae8",
+  "bytes": 131088,
+  "slots": [
+    {
+      "slot": 0,
+      "counter": 18,
+      "sectors": [
+        {
+          "physical": 0,
+          "logical": 10,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 1,
+          "logical": 11,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 2,
+          "logical": 12,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 3,
+          "logical": 13,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 4,
+          "logical": 0,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 5,
+          "logical": 1,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 6,
+          "logical": 2,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 7,
+          "logical": 3,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 8,
+          "logical": 4,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 9,
+          "logical": 5,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 10,
+          "logical": 6,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 11,
+          "logical": 7,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 12,
+          "logical": 8,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 13,
+          "logical": 9,
+          "counter": 18,
+          "checksum_valid": true,
+          "signature_valid": true
+        }
+      ]
+    },
+    {
+      "slot": 1,
+      "counter": 19,
+      "sectors": [
+        {
+          "physical": 14,
+          "logical": 9,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 15,
+          "logical": 10,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 16,
+          "logical": 11,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 17,
+          "logical": 12,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 18,
+          "logical": 13,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 19,
+          "logical": 0,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 20,
+          "logical": 1,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 21,
+          "logical": 2,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 22,
+          "logical": 3,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 23,
+          "logical": 4,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 24,
+          "logical": 5,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 25,
+          "logical": 6,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 26,
+          "logical": 7,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        },
+        {
+          "physical": 27,
+          "logical": 8,
+          "counter": 19,
+          "checksum_valid": true,
+          "signature_valid": true
+        }
+      ]
+    }
+  ],
+  "selected_counter": 19,
+  "position": {
+    "x": 4,
+    "y": 21,
+    "group": 24,
+    "number": 8
+  },
+  "original_preserved": true
+}

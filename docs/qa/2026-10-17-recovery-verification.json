@@ -146,7 +146,7 @@
     "docs/qa/2026-10-16-reconciled-fixes.patch",
     "docs/qa/2026-10-16-recovered-save-inspection.json"
   ],
-  "observed_development_head_before_final_handover_commit": "d38a42c6c6dbd5276ff5ab7ba26d465654ac8cce",
+  "observed_development_head_before_final_handover_commit": "9bda38d548544bf08402d05c41289518e8784284",
   "handover_documentation_paths": [
     "COMPLETE_EDITION_MASTER_SPEC.md",
     "docs/COMPLETE_EDITION_PROGRESS_LOG.md",
@@ -166,5 +166,36 @@
     "save_conversion": false,
     "progression_injected": false,
     "next": "Heal/check PC; Granite Cave Flash and Steven Letter"
-  }
+  },
+  "latest_ordinary_milestone": {
+    "file": "CE_QA_20261017_GraniteCave_HM05.sav",
+    "sha256": "1295405399a5b6c9fa14fe236a09d0666b4400f06bb7285d999c44ad1360aae8",
+    "counter": 19,
+    "map": "GraniteCave_B1F",
+    "position": [
+      4,
+      21
+    ],
+    "badges": 2,
+    "party": [
+      "shiny Marshtomp22",
+      "shiny Sentret5 female"
+    ],
+    "hm05_received": true,
+    "withdrawal_and_hm05_reloaded": true,
+    "flash_used": false,
+    "successful_capture": false,
+    "steven_letter": false
+  },
+  "ordinary_checks_passed": [
+    "Gym exit",
+    "Pokemon Center heal",
+    "PC opening",
+    "Box17-to-Box1 navigation",
+    "Sentret withdrawal",
+    "party and HM05 survive fresh-process reload",
+    "Fisherman Ned victory",
+    "Granite Cave entry",
+    "HM05 award"
+  ]
 }

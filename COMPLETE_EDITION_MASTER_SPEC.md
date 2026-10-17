@@ -1,6 +1,6 @@
 # Pokémon Emerald: Complete Edition
 ## Master Specification & Development Recovery Handover
-**Version:** 1.4 — 17 October 2026  
+**Version:** 1.5 — 17 October 2026  
 **Project owner:** Giovannisboss  
 **Status:** Advanced alpha; completion and final verification outstanding
 
@@ -56,9 +56,23 @@ Observed through ordinary controls and native screenshots: custom title, Continu
 
 Verified new battery SHA-256: `bc254160829475f279e7dc06c7bae9245b43cccdb1d29e2554826a4519dfc828` (131088 bytes). Current working copy: `work/playtest/session-06/CE_20261016_Verified.sav`. Milestone copy: `CE_QA_20261017_Dewford_Baseline.sav`. Normal input and native screenshots work through a persistent host process owning the hidden SDL child. Refresh the current SDL window within that same verified PID; SDL replaces its startup window. No memory access, cheats, injected progression or savestates were used. New simultaneous-hold/pulse commands are not yet gameplay-verified.
 
-**Next ordinary-play task:** leave Dewford Gym, heal/check PC, obtain Flash and deliver Steven's Letter in Granite Cave, then continue toward Slateport. No new story milestone is claimed. Story completion, postgame, portraits and final release patch remain outstanding. No further file transfer is required from the owner.
+**Baseline checkpoint next task (now progressed):** Dewford exit, healing, PC withdrawal and HM05 acquisition have subsequently passed; see the Granite Cave milestone below. Steven's Letter remains pending. Story completion, postgame, portraits and final release patch remain outstanding. No further file transfer is required from the owner.
 
 Local network/build limitations remain: Git/PowerShell cannot resolve GitHub, WSL is absent and local ARM compiler/make are unavailable. GitHub connector access and fresh CI builds work. Do not repeat reconciliation or reset newer commits because of these local limitations.
+
+### Latest ordinary-play milestone — Granite Cave
+
+Completed ordinary gameplay since Dewford: Gym exit, Pokémon Center healing to 82/82 HP, PC opening, Box17-to-Box1 navigation, withdrawal of female Sentret level5 (19/19HP), Route106 Fisherman Ned victory, cave entry, and the hiker awarding HM05. Shiny trainer Tentacool and wild Makuhita/Aron/Cleffa/Abra were observed. A fresh process reloaded the cave save with both party members; HM05 remained in the TM/HM pocket.
+
+Durable milestone: `CE_QA_20261017_GraniteCave_HM05.sav`, SHA256 `1295405399a5b6c9fa14fe236a09d0666b4400f06bb7285d999c44ad1360aae8`, 131088bytes. Both slots pass all sector checksums/signatures; newest counter19 is GraniteCave_B1F at(4,21), mapgroup24/map8. Original battery remains unchanged. The working session06 save advances beyond this separately preserved milestone; inspect its newest valid slot before resuming. Later counter23 was at B1F(25,19).
+
+**Next:** finish ordinary cave traversal and Steven's Letter. Flash teaching/use remains pending: neither Marshtomp nor Sentret is compatible, matching the current source learnability data. Cleffa fainted during a weakening attempt; Abra escaped a Great Ball and teleported. No successful capture or Flash use is claimed. Three Poké Balls and one Great Ball remained after these attempts. Do not inject a compatible Pokémon or items.
+
+Reusable Windows ordinary-input controller is preserved in `tools/complete_edition/mgba_session.py` with `mgba_buttons.py`. Run the persistent runner from the task checkout using an existing verified ROM/save session; it never recopies saves. Basic press/pulse/simultaneous B+direction, native screenshot and graceful closure are screenshot-observed. Individual posted messages still require visual result confirmation. For precision walking use about0.22s hold/0.4s gap;0.15s can turn without stepping,0.3s can take two steps. Encounters interrupt movement batches. Use normal in-game SAVE, then read the battery file to confirm position rather than assuming requested steps occurred. Python read_bytes can read the save with the emulator open; PowerShell Get-FileHash can fail on sharing mode.
+
+Static map data fetched through the connector's base64 file route may be altered by text decoding when high bytes occur. Three cave map blocks were instead recovered read-only from the verified ROM and checked against their exact Git blob SHA1s; do not use a binary map unless its source blob hash matches. This is static ROM/source inspection, not emulator-memory access. The source generation default was rechecked: `GEN_LATEST GEN_4` in include/config/general.h; many individual settings legitimately refer to GEN_LATEST.
+
+Story completion, remaining portraits, postgame systems and final release patch remain unfinished. The CI production source and checksum are unchanged.
 
 ## 2. Repository and source control
 

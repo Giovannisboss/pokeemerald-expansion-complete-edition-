@@ -293,3 +293,13 @@ Runtime-verified on installed mGBA SDL0.10.5: ordinary Start/A/B/arrows, menu na
 Baseline save/reload PASS: original two-badge battery loads; ordinary in-game SAVE completes; graceful exit and fresh-process restart show Continue2:23/two badges and load Dewford Gym. Party: shiny male Marshtomp22,Mild,Torrent,55/82HP; Tackle/Rock Tomb/Mud-Slap/Water Gun. Read-only validation finds both complete flash slots valid, newest counter16; party and PC bytes unchanged from original. This verifies the baseline portion of M00; later progression and service-specific persistence remain pending.
 
 Milestone battery CE_QA_20261017_Dewford_Baseline.sav SHA256 bc254160829475f279e7dc06c7bae9245b43cccdb1d29e2554826a4519dfc828. Original SHA256914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9 remains unchanged. Current working session06. New multi-button hold/pulse commands are still unverified in gameplay. Next: heal/check PC and Granite Cave/Flash/Steven's Letter. No story advancement beyond the recovered Dewford milestone is claimed.
+
+## Executed Dewford and Granite Cave checks — 17 October 2026
+
+PASS: Gym exit; town/Center transitions; nurse heal; PC opens; Box17-to-Box1 navigation; Sentret5 withdrawal; party menu with both Pokémon; ordinary save and fresh-process reload preserving withdrawal/HM05; Fisherman Ned victory; cave entry; hiker HM05 award. Shiny opponent Tentacool and wild Makuhita/Aron/Cleffa/Abra observed.
+
+Pending: Flash teaching/use (current party incompatible), successful capture persistence, Steven Letter/exit/Slateport, and the remaining main-adventure/postgame/service/storage boundary checklist. A Cleffa fainting and Abra teleporting are ordinary attempt outcomes, not capture passes or feature defects.
+
+Milestone CE_QA_20261017_GraniteCave_HM05.sav SHA2561295405399a5b6c9fa14fe236a09d0666b4400f06bb7285d999c44ad1360aae8,counter19,B1F(4,21). Both slots pass raw flash validation. Working session06 newer; inspect latest valid ordinary save before resuming.
+
+Windows runner tools/complete_edition/mgba_session.py and mgba_buttons.py preserve existing save. Basic press/pulse/B+direction/native screenshots/quit have runtime observations; exact input duration is not a verified step count.0.22s walking presses are more reliable than0.15s;0.3s can take two tiles. Confirm scene transitions before issuing menu choices. Use in-game SAVE and read the battery for checkpoint position. Static source map binary reads require blob-hash validation.
