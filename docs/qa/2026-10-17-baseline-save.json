@@ -1,0 +1,245 @@
+{
+  "date": "2026-10-17",
+  "inspection": "read-only; no game launch or mutation",
+  "original_save_sha256": "914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9",
+  "new_save_sha256": "bc254160829475f279e7dc06c7bae9245b43cccdb1d29e2554826a4519dfc828",
+  "new_save_bytes": 131088,
+  "slots": [
+    {
+      "slot": 0,
+      "counter": 16,
+      "complete": true,
+      "checksums_valid": true,
+      "signatures_valid": true,
+      "sectors": [
+        {
+          "physical_sector": 0,
+          "logical_id": 12,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 1,
+          "logical_id": 13,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 2,
+          "logical_id": 0,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 3,
+          "logical_id": 1,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 4,
+          "logical_id": 2,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 5,
+          "logical_id": 3,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 6,
+          "logical_id": 4,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 7,
+          "logical_id": 5,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 8,
+          "logical_id": 6,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 9,
+          "logical_id": 7,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 10,
+          "logical_id": 8,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 11,
+          "logical_id": 9,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 12,
+          "logical_id": 10,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 13,
+          "logical_id": 11,
+          "counter": 16,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        }
+      ]
+    },
+    {
+      "slot": 1,
+      "counter": 15,
+      "complete": true,
+      "checksums_valid": true,
+      "signatures_valid": true,
+      "sectors": [
+        {
+          "physical_sector": 14,
+          "logical_id": 13,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 15,
+          "logical_id": 0,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 16,
+          "logical_id": 1,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 17,
+          "logical_id": 2,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 18,
+          "logical_id": 3,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 19,
+          "logical_id": 4,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 20,
+          "logical_id": 5,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 21,
+          "logical_id": 6,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 22,
+          "logical_id": 7,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 23,
+          "logical_id": 8,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 24,
+          "logical_id": 9,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 25,
+          "logical_id": 10,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 26,
+          "logical_id": 11,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        },
+        {
+          "physical_sector": 27,
+          "logical_id": 12,
+          "counter": 15,
+          "signature": "0xce000002",
+          "checksum_valid": true
+        }
+      ]
+    }
+  ],
+  "selected_slot": 0,
+  "selected_counter": 16,
+  "selection_status": "SAVE_STATUS_OK",
+  "saved_position": {
+    "x": 4,
+    "y": 4,
+    "map_group": 3,
+    "map_number": 3,
+    "map_name": "DewfordTown_Gym"
+  },
+  "party_count_original": 1,
+  "party_count_new": 1,
+  "party_array_identical": true,
+  "pc_primary_bytes_identical": true,
+  "pc_overflow_in_saveblock1_identical": true,
+  "pc_overflow_in_saveblock2_identical": true,
+  "all_saveblock3_footer_chunks_identical": true,
+  "primary_pc_complete_slots_inspected": 446,
+  "primary_pc_has_species_count_original": 1,
+  "primary_pc_has_species_count_new": 1,
+  "pc_preservation_conclusion": "All primary and overflow PC storage bytes are unchanged. Complete boxed population is preserved; numeric total of full17boxes was not independently decoded.",
+  "input_unchanged_after_inspection": true
+}

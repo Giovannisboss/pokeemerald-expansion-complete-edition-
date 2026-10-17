@@ -1,6 +1,6 @@
 # Pokémon Emerald: Complete Edition
 ## Master Specification & Development Recovery Handover
-**Version:** 1.3 — 17 October 2026  
+**Version:** 1.4 — 17 October 2026  
 **Project owner:** Giovannisboss  
 **Status:** Advanced alpha; completion and final verification outstanding
 
@@ -46,11 +46,19 @@ Detailed locations and pending ordinary-play checks: `docs/COMPLETE_EDITION_GAME
 - Locally ran four result-parser regression methods (19 scenarios): PASS after placing TEMP/TMP in the writable task folder. Reclassified the prior CI log with the same parser: complete 5,917 outcomes, zero unexpected failures.
 - All 46 Complete Edition-labelled outcomes in the prior full log pass; the fresh full run preserves the same suite totals. Native results are not an ordinary-playthrough result.
 
-### Execution blocker in this continuation
+### Ordinary gameplay recovered and save/reload verified
 
-The current Windows execution host cannot resolve GitHub from local Git/PowerShell/Node requests; `git ls-remote` fails with `getaddrinfo() thread failed to start`. GitHub connector reads and source writes work. WSL is not installed; no ARM compiler or make is available on PATH. mGBA 0.10.5 was subsequently found at `C:\Program Files\mGBA\mgba-sdl.exe`, outside PATH. No local source checkout, matching ROM or running emulator has been recovered here. The normal-save transfer was denied by the local execution environment. The owner has been asked to place the matching build ZIP and two-badge save in this task's `work/playtest` directory; verify exact hashes before launching.
+The matching ZIP and original two-badge save are now present locally. ZIP SHA-256: `850fc454678a920914892c4fb39aa95f86483ae323133b8d6624d22b895b5767`. Its ROM matches the fresh CI production checksum above. Original battery SHA-256: `914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9`; preserve it unchanged.
 
-This is an execution-environment limitation, not a game defect. A working build/emulation environment is required for ordinary gameplay and fresh local validation. Historical CI logs were inspected and a fresh CI build/full suite was triggered and verified as recorded above. No new local game build or ordinary gameplay is claimed. Do not repeat the patch reconciliation merely because local cloning is unavailable. No gameplay progress or new release patch has been produced in this continuation. The owner has now downloaded the matching ZIP after signing into GitHub; it and the ordinary two-badge save still need to be copied into `work/playtest`. The ZIP's verified contents are `CE_20261016_Verified.gba`, `ORIGINAL_SHA256SUMS` and `README.txt`; its historical README predates the extra passing flash test.
+mGBA SDL 0.10.5 successfully loads this save from a separate working copy. On Windows launch with the ROM **basename** and session directory as cwd; use forward slashes for save/screenshot directory overrides. Passing an absolute backslash ROM argument prevented save discovery and screenshots. This was a host path issue, not save corruption; no save conversion was required.
+
+Observed through ordinary controls and native screenshots: custom title, Continue with two badges, Dewford Gym, shiny male Marshtomp level 22 with 55/82 HP, Mild nature, Torrent and Tackle/Rock Tomb/Mud-Slap/Water Gun. Read-only inspection confirms one stored Pokémon in primary PC storage, matching the original. Ordinary in-game SAVE completed. After graceful emulator closure and a fresh process, Continue showed 2:23 and two badges; selecting it loaded Dewford Gym successfully. Both flash slots have valid checksums and signatures; newest counter is 16. Party and PC bytes remain identical to the original checkpoint.
+
+Verified new battery SHA-256: `bc254160829475f279e7dc06c7bae9245b43cccdb1d29e2554826a4519dfc828` (131088 bytes). Current working copy: `work/playtest/session-06/CE_20261016_Verified.sav`. Milestone copy: `CE_QA_20261017_Dewford_Baseline.sav`. Normal input and native screenshots work through a persistent host process owning the hidden SDL child. Refresh the current SDL window within that same verified PID; SDL replaces its startup window. No memory access, cheats, injected progression or savestates were used. New simultaneous-hold/pulse commands are not yet gameplay-verified.
+
+**Next ordinary-play task:** leave Dewford Gym, heal/check PC, obtain Flash and deliver Steven's Letter in Granite Cave, then continue toward Slateport. No new story milestone is claimed. Story completion, postgame, portraits and final release patch remain outstanding. No further file transfer is required from the owner.
+
+Local network/build limitations remain: Git/PowerShell cannot resolve GitHub, WSL is absent and local ARM compiler/make are unavailable. GitHub connector access and fresh CI builds work. Do not repeat reconciliation or reset newer commits because of these local limitations.
 
 ## 2. Repository and source control
 

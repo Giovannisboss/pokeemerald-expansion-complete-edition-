@@ -131,7 +131,7 @@
     "rom_name": "CE_20261016_Verified.gba",
     "rom_sha256": "ab7793e8a2f73e56863c88daaf3d726b6ae515a78b8f67aed1f902651f14b040",
     "contains_release_patch": false,
-    "local_status": "Owner reports ZIP downloaded; awaiting copy into work/playtest with battery save"
+    "local_status": "ZIP and original battery received; exact ROM hash verified; ordinary baseline save and fresh-process reload PASS"
   },
   "ci_static_checks": {
     "new_npc_placements": 84,
@@ -146,11 +146,25 @@
     "docs/qa/2026-10-16-reconciled-fixes.patch",
     "docs/qa/2026-10-16-recovered-save-inspection.json"
   ],
-  "observed_development_head_before_final_handover_commit": "a6e1d37a231b68d3e10d60b1dbb1cb229255d8bf",
+  "observed_development_head_before_final_handover_commit": "d38a42c6c6dbd5276ff5ab7ba26d465654ac8cce",
   "handover_documentation_paths": [
     "COMPLETE_EDITION_MASTER_SPEC.md",
     "docs/COMPLETE_EDITION_PROGRESS_LOG.md",
     "docs/COMPLETE_EDITION_GAMEPLAY_QA.md",
     "docs/qa/2026-10-17-recovery-verification.json"
-  ]
+  ],
+  "ordinary_baseline": {
+    "status": "PASS for baseline only; story progression pending",
+    "original_save_sha256": "914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9",
+    "milestone_save_sha256": "bc254160829475f279e7dc06c7bae9245b43cccdb1d29e2554826a4519dfc828",
+    "milestone_name": "CE_QA_20261017_Dewford_Baseline.sav",
+    "fresh_process_reload": true,
+    "continue_time": "2:23",
+    "badges": 2,
+    "location": "Dewford Gym",
+    "party_pc_unchanged": true,
+    "save_conversion": false,
+    "progression_injected": false,
+    "next": "Heal/check PC; Granite Cave Flash and Steven Letter"
+  }
 }

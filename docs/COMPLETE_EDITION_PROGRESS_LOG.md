@@ -60,3 +60,15 @@ Run [39018035474](https://github.com/Giovannisboss/pokeemerald-expansion-complet
 - Owner confirmed the browser was signed out; after sign-in, reports the matching ZIP downloaded. Still awaiting ZIP plus ordinary two-badge save in this task's work/playtest folder. The prior artifact's production ROM matches the fresh build exactly. It contains a QA ROM and checksum/README, not a final release patch.
 - Local SDL button helper at work/host-tools/mgba_buttons.py has syntax/--help checks only; no GUI launch/input/gameplay execution yet. Runtime delivery remains unverified.
 - Master specification updated to 1.3. Ordinary story, postgame, portraits, save edge cases and final release remain unfinished. No ordinary save was modified.
+
+## 17 October 2026 — ordinary battery recovery and fresh-process reload
+
+- ZIP and original two-badge save received and exact hashes verified; ROM matches fresh CI. Original battery remains unchanged.
+- Resolved Windows SDL path issue: ROM basename with session cwd and forward-slash directory overrides enables save discovery and native screenshots. Absolute backslash ROM argument caused the earlier missing Continue; no save conversion required.
+- Verified ordinary title/Continue, Dewford Gym, two badges, shiny Marshtomp22 (Mild/Torrent,55/82HP), party and move-summary menus. Normal Win32 key messages target only the owned verified mGBA child; native screenshots show outcomes.
+- Completed ordinary in-game SAVE, graceful exit0 and fresh-process reload. Continue shows2:23/two badges; selecting it loads Dewford Gym. Both raw flash slots validate, newest counter16; entire party and PC data match original.
+- Original battery SHA256: 914e4b92f1e1df38009a010f44d3b062a64a6c4feef3cbebe3d28bcb47ed19c9.
+- Verified milestone battery SHA256: bc254160829475f279e7dc06c7bae9245b43cccdb1d29e2554826a4519dfc828;131088bytes. Working session06 preserved; separate milestone CE_QA_20261017_Dewford_Baseline.sav.
+- Evidence: session06 native screenshots19 (Continue2:23),20 (Dewford after fresh reload), earlier7–9 (summary/moves),16–17 (save/field); read-only sector report docs/qa/2026-10-17-baseline-save.json.
+- Persistent controller startup must wait for SDL window replacement; reacquire only within same verified child PID. New hold/pulse commands remain unverified. No source game changes, injected flags/items/levels, memory access or savestates.
+- Next: leave Gym, heal/check PC, Flash/Steven's Letter in Granite Cave; story/postgame/portraits/release remain pending. No additional user setup required.
