@@ -177,6 +177,24 @@ enum __attribute__((packed)) TrainerPicID
     TRAINER_PIC_CRUSH_GIRL_FRLG,
     TRAINER_PIC_POKEMON_BREEDER_FRLG,
     TRAINER_PIC_PAINTER_FRLG,
+    TRAINER_PIC_CE_FALKNER,
+    TRAINER_PIC_CE_BUGSY,
+    TRAINER_PIC_CE_WHITNEY,
+    TRAINER_PIC_CE_MORTY,
+    TRAINER_PIC_CE_CHUCK,
+    TRAINER_PIC_CE_JASMINE,
+    TRAINER_PIC_CE_PRYCE,
+    TRAINER_PIC_CE_CLAIR,
+    TRAINER_PIC_CE_ROARK,
+    TRAINER_PIC_CE_GARDENIA,
+    TRAINER_PIC_CE_MAYLENE,
+    TRAINER_PIC_CE_CRASHER_WAKE,
+    TRAINER_PIC_CE_FANTINA,
+    TRAINER_PIC_CE_BYRON,
+    TRAINER_PIC_CE_CANDICE,
+    TRAINER_PIC_CE_VOLKNER,
+    TRAINER_PIC_CE_GOLD,
+    TRAINER_PIC_CE_SILVER,
     TRAINER_PIC_COUNT,
 };
 
@@ -527,23 +545,23 @@ enum TrainerClassID
 
 enum TrainerApproachMusic
 {
-    TRAINER_ENCOUNTER_MUSIC_MALE,       // Used for Youngsters, Bug Catchers, male School Kids, Sailors, male running and cycling Triathletes, male Pokémon Breeders, and Campers
-    TRAINER_ENCOUNTER_MUSIC_FEMALE,     // Used for Lasses, Ladies, Beauties, Aroma Ladies, female running and cycling Triathletes, female Pokémon Breeders, and Parasol Ladies
+    TRAINER_ENCOUNTER_MUSIC_MALE,       // Used for Youngsters, Bug Catchers, male School Kids, Sailors, male running and cycling Triathletes, male PokÃ©mon Breeders, and Campers
+    TRAINER_ENCOUNTER_MUSIC_FEMALE,     // Used for Lasses, Ladies, Beauties, Aroma Ladies, female running and cycling Triathletes, female PokÃ©mon Breeders, and Parasol Ladies
     TRAINER_ENCOUNTER_MUSIC_GIRL,       // Used for Tubers, Picnickers, female School Kids, and Young Couples. Used more widely with female trainers in FRLG
-    TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS, // Used for Ninja Boys, Collectors, Hex Maniacs, Poké Maniacs, and Bug Maniacs
+    TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS, // Used for Ninja Boys, Collectors, Hex Maniacs, PokÃ© Maniacs, and Bug Maniacs
     TRAINER_ENCOUNTER_MUSIC_INTENSE,    // Used for Guitarists, Psychics, Black Belts, Battle Girls, Dragon Tamers, Experts, and Old Couples
-    TRAINER_ENCOUNTER_MUSIC_COOL,       // Used for Cool Trainers, Pokémon Rangers, and Bird Keepers
+    TRAINER_ENCOUNTER_MUSIC_COOL,       // Used for Cool Trainers, PokÃ©mon Rangers, and Bird Keepers
     TRAINER_ENCOUNTER_MUSIC_AQUA,
     TRAINER_ENCOUNTER_MUSIC_MAGMA,
     TRAINER_ENCOUNTER_MUSIC_SWIMMER,    // Used for Swimmers, swimming Triathletes, and Sis and Bros
-    TRAINER_ENCOUNTER_MUSIC_TWINS,      // Used for Twins, Poké Fans, and Sr. and Jr.s
+    TRAINER_ENCOUNTER_MUSIC_TWINS,      // Used for Twins, PokÃ© Fans, and Sr. and Jr.s
     TRAINER_ENCOUNTER_MUSIC_ELITE_FOUR,
     TRAINER_ENCOUNTER_MUSIC_HIKER,      // Used for Hikers, Ruin Maniacs, Kindlers, and Fishermen
     TRAINER_ENCOUNTER_MUSIC_INTERVIEWER,
     TRAINER_ENCOUNTER_MUSIC_RICH,       // Used for Rich Boys and Gentlemen
     TRAINER_ENCOUNTER_MUSIC_CUTE,       // Used in FRLG for Beauties, Picknickers, Twins, Lasses, Ladies, Breeder, female Swimmers and Leaders
     TRAINER_ENCOUNTER_MUSIC_SERIOUS,    // Used in FRLG for most trainers
-    TRAINER_ENCOUNTER_MUSIC_DANGEROUS,  // Used in FRLG for Burglars, Channelers, Poké Maniacs, Super Nerds and Rockets
+    TRAINER_ENCOUNTER_MUSIC_DANGEROUS,  // Used in FRLG for Burglars, Channelers, PokÃ© Maniacs, Super Nerds and Rockets
 
     TRAINER_ENCOUNTER_MUSIC_COUNT
 };
@@ -557,3 +575,4 @@ enum TrainerApproachMusic
 #define TRAINER_MON_RANDOM_GENDER 3
 
 #endif  // GUARD_TRAINERS_H
+

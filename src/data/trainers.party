@@ -17113,7 +17113,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_FALKNER ===
 Name: FALKNER
 Class: Leader
-Pic: Bird Keeper
+Pic: CE Falkner
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17137,7 +17137,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_BUGSY ===
 Name: BUGSY
 Class: Leader
-Pic: Bug Catcher
+Pic: CE Bugsy
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17161,7 +17161,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_WHITNEY ===
 Name: WHITNEY
 Class: Leader
-Pic: Beauty
+Pic: CE Whitney
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17185,7 +17185,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_MORTY ===
 Name: MORTY
 Class: Leader
-Pic: Hex Maniac
+Pic: CE Morty
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17209,7 +17209,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_CHUCK ===
 Name: CHUCK
 Class: Leader
-Pic: Black Belt
+Pic: CE Chuck
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17233,7 +17233,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_JASMINE ===
 Name: JASMINE
 Class: Leader
-Pic: Leader Roxanne
+Pic: CE Jasmine
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17257,7 +17257,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_PRYCE ===
 Name: PRYCE
 Class: Leader
-Pic: Gentleman
+Pic: CE Pryce
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17281,7 +17281,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_CLAIR ===
 Name: CLAIR
 Class: Leader
-Pic: Cooltrainer F
+Pic: CE Clair
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17305,7 +17305,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_ROARK ===
 Name: ROARK
 Class: Leader
-Pic: Hiker
+Pic: CE Roark
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17329,7 +17329,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_GARDENIA ===
 Name: GARDENIA
 Class: Leader
-Pic: Aroma Lady
+Pic: CE Gardenia
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17353,7 +17353,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_MAYLENE ===
 Name: MAYLENE
 Class: Leader
-Pic: Battle Girl
+Pic: CE Maylene
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17377,7 +17377,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_WAKE ===
 Name: WAKE
 Class: Leader
-Pic: Swimmer M
+Pic: CE Crasher Wake
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17401,7 +17401,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_FANTINA ===
 Name: FANTINA
 Class: Leader
-Pic: Lady
+Pic: CE Fantina
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17425,7 +17425,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_BYRON ===
 Name: BYRON
 Class: Leader
-Pic: Hiker
+Pic: CE Byron
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17449,7 +17449,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_CANDICE ===
 Name: CANDICE
 Class: Leader
-Pic: Beauty
+Pic: CE Candice
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17473,7 +17473,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_VISITOR_VOLKNER ===
 Name: VOLKNER
 Class: Leader
-Pic: Cooltrainer M
+Pic: CE Volkner
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17809,7 +17809,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_FALKNER ===
 Name: FALKNER
 Class: Leader
-Pic: Bird Keeper
+Pic: CE Falkner
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17848,7 +17848,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_BUGSY ===
 Name: BUGSY
 Class: Leader
-Pic: Bug Catcher
+Pic: CE Bugsy
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17887,7 +17887,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_WHITNEY ===
 Name: WHITNEY
 Class: Leader
-Pic: Beauty
+Pic: CE Whitney
 Gender: Female
 Music: Male
 Double Battle: No
@@ -17926,7 +17926,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_MORTY ===
 Name: MORTY
 Class: Leader
-Pic: Hex Maniac
+Pic: CE Morty
 Gender: Male
 Music: Male
 Double Battle: No
@@ -17965,7 +17965,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_CHUCK ===
 Name: CHUCK
 Class: Leader
-Pic: Black Belt
+Pic: CE Chuck
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18004,7 +18004,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_JASMINE ===
 Name: JASMINE
 Class: Leader
-Pic: Leader Roxanne
+Pic: CE Jasmine
 Gender: Female
 Music: Male
 Double Battle: No
@@ -18043,7 +18043,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_PRYCE ===
 Name: PRYCE
 Class: Leader
-Pic: Gentleman
+Pic: CE Pryce
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18082,7 +18082,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_CLAIR ===
 Name: CLAIR
 Class: Leader
-Pic: Cooltrainer F
+Pic: CE Clair
 Gender: Female
 Music: Male
 Double Battle: No
@@ -18121,7 +18121,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_ROARK ===
 Name: ROARK
 Class: Leader
-Pic: Hiker
+Pic: CE Roark
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18160,7 +18160,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_GARDENIA ===
 Name: GARDENIA
 Class: Leader
-Pic: Aroma Lady
+Pic: CE Gardenia
 Gender: Female
 Music: Male
 Double Battle: No
@@ -18199,7 +18199,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_MAYLENE ===
 Name: MAYLENE
 Class: Leader
-Pic: Battle Girl
+Pic: CE Maylene
 Gender: Female
 Music: Male
 Double Battle: No
@@ -18238,7 +18238,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_WAKE ===
 Name: WAKE
 Class: Leader
-Pic: Swimmer M
+Pic: CE Crasher Wake
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18277,7 +18277,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_FANTINA ===
 Name: FANTINA
 Class: Leader
-Pic: Lady
+Pic: CE Fantina
 Gender: Female
 Music: Male
 Double Battle: No
@@ -18316,7 +18316,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_BYRON ===
 Name: BYRON
 Class: Leader
-Pic: Hiker
+Pic: CE Byron
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18355,7 +18355,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_CANDICE ===
 Name: CANDICE
 Class: Leader
-Pic: Beauty
+Pic: CE Candice
 Gender: Female
 Music: Male
 Double Battle: No
@@ -18394,7 +18394,7 @@ IVs: 31 HP / 31 Atk / 31 Def / 31 SpA / 31 SpD / 31 Spe
 === TRAINER_CE_PWT_VOLKNER ===
 Name: VOLKNER
 Class: Leader
-Pic: Cooltrainer M
+Pic: CE Volkner
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18895,7 +18895,7 @@ EVs: 4 HP / 252 Atk / 252 Spe
 === TRAINER_CE_SUPER_SILVER ===
 Name: SILVER
 Class: Rival
-Pic: Cooltrainer M
+Pic: CE Silver
 Gender: Male
 Music: Male
 Double Battle: No
@@ -18970,7 +18970,7 @@ EVs: 4 Def / 252 SpA / 252 Spe
 === TRAINER_CE_SUPER_GOLD ===
 Name: GOLD
 Class: Rival
-Pic: RS Brendan
+Pic: CE Gold
 Gender: Male
 Music: Male
 Double Battle: No
@@ -19041,3 +19041,4 @@ EVs: 4 HP / 252 Atk / 252 Spe
 - Ice Punch
 - Earthquake
 - Dragon Dance
+

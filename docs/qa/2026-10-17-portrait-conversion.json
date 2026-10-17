@@ -1,0 +1,229 @@
+{
+  "source_sha256": "21fa9779481b0ebb4850c4e520df0242093e81e8b1d5297176e73a9816318a20",
+  "source_dimensions": [
+    1774,
+    887
+  ],
+  "grid": [
+    6,
+    3
+  ],
+  "portraits": [
+    {
+      "id": "TRAINER_PIC_CE_FALKNER",
+      "pic": "CE Falkner",
+      "path": "graphics/trainers/front_pics/ce_falkner.png",
+      "source_bbox": [
+        69,
+        16,
+        261,
+        289
+      ],
+      "sha256": "ddabcf1aad13be74691ff0cad62f0d34563ecb96d091696a7c22ac0d753cb771"
+    },
+    {
+      "id": "TRAINER_PIC_CE_BUGSY",
+      "pic": "CE Bugsy",
+      "path": "graphics/trainers/front_pics/ce_bugsy.png",
+      "source_bbox": [
+        50,
+        14,
+        231,
+        287
+      ],
+      "sha256": "777923e992d851fa974e18c68b1e6ae19688b149ee491f32218a0e14b2a4f3cf"
+    },
+    {
+      "id": "TRAINER_PIC_CE_WHITNEY",
+      "pic": "CE Whitney",
+      "path": "graphics/trainers/front_pics/ce_whitney.png",
+      "source_bbox": [
+        36,
+        28,
+        229,
+        289
+      ],
+      "sha256": "af20b1ca67d03e9ab5c0292b2e53be902bf8fcb8ad0981aa8ede1d95793a86db"
+    },
+    {
+      "id": "TRAINER_PIC_CE_MORTY",
+      "pic": "CE Morty",
+      "path": "graphics/trainers/front_pics/ce_morty.png",
+      "source_bbox": [
+        12,
+        18,
+        263,
+        288
+      ],
+      "sha256": "63dadf039904d6d4902f2812bff3e4357f05e1c8403d09c96c8fd930b8d83084"
+    },
+    {
+      "id": "TRAINER_PIC_CE_CHUCK",
+      "pic": "CE Chuck",
+      "path": "graphics/trainers/front_pics/ce_chuck.png",
+      "source_bbox": [
+        25,
+        14,
+        263,
+        293
+      ],
+      "sha256": "3d88c79b6621eca4db7f0d30b8fdb69e642302d1aadd14ec751805e29a289b04"
+    },
+    {
+      "id": "TRAINER_PIC_CE_JASMINE",
+      "pic": "CE Jasmine",
+      "path": "graphics/trainers/front_pics/ce_jasmine.png",
+      "source_bbox": [
+        48,
+        16,
+        226,
+        293
+      ],
+      "sha256": "07b3ed6fec0134bebb6f6a83c911f48aaf26cf9327c7cfd0093d870601ac0717"
+    },
+    {
+      "id": "TRAINER_PIC_CE_PRYCE",
+      "pic": "CE Pryce",
+      "path": "graphics/trainers/front_pics/ce_pryce.png",
+      "source_bbox": [
+        43,
+        12,
+        217,
+        295
+      ],
+      "sha256": "42843536dd3d1ee3c65a8cc63af65d756cf6a15097b2c0c465e63e216a5aed47"
+    },
+    {
+      "id": "TRAINER_PIC_CE_CLAIR",
+      "pic": "CE Clair",
+      "path": "graphics/trainers/front_pics/ce_clair.png",
+      "source_bbox": [
+        2,
+        3,
+        295,
+        295
+      ],
+      "sha256": "a0a0687a46767d4e05bdac5b767cef12df6e278534ff0f03e529cfa3ceb71efb"
+    },
+    {
+      "id": "TRAINER_PIC_CE_ROARK",
+      "pic": "CE Roark",
+      "path": "graphics/trainers/front_pics/ce_roark.png",
+      "source_bbox": [
+        44,
+        14,
+        219,
+        295
+      ],
+      "sha256": "95d92ae68a50bd87657af914a5deef18de427bcf867191d38586923c93804744"
+    },
+    {
+      "id": "TRAINER_PIC_CE_GARDENIA",
+      "pic": "CE Gardenia",
+      "path": "graphics/trainers/front_pics/ce_gardenia.png",
+      "source_bbox": [
+        15,
+        11,
+        250,
+        295
+      ],
+      "sha256": "b2189d7b1cf813c222de3b729560afc83335b71ee9c16088e1f2fcb72ffd0713"
+    },
+    {
+      "id": "TRAINER_PIC_CE_MAYLENE",
+      "pic": "CE Maylene",
+      "path": "graphics/trainers/front_pics/ce_maylene.png",
+      "source_bbox": [
+        54,
+        25,
+        295,
+        272
+      ],
+      "sha256": "21555f5ff5864b079c851f6976bce0ec3865484e0e6ffff402194748935533ff"
+    },
+    {
+      "id": "TRAINER_PIC_CE_CRASHER_WAKE",
+      "pic": "CE Crasher Wake",
+      "path": "graphics/trainers/front_pics/ce_crasher_wake.png",
+      "source_bbox": [
+        0,
+        11,
+        278,
+        295
+      ],
+      "sha256": "66c9e50c1bd99127544924124c04472af639d871b1bf5eb25f103f4a8cad09e4"
+    },
+    {
+      "id": "TRAINER_PIC_CE_FANTINA",
+      "pic": "CE Fantina",
+      "path": "graphics/trainers/front_pics/ce_fantina.png",
+      "source_bbox": [
+        39,
+        0,
+        255,
+        282
+      ],
+      "sha256": "ebdc6ae5ee31d686fe34f082ef5dbadfb5274fc4b8e746b2c7f4dfb636ec3db5"
+    },
+    {
+      "id": "TRAINER_PIC_CE_BYRON",
+      "pic": "CE Byron",
+      "path": "graphics/trainers/front_pics/ce_byron.png",
+      "source_bbox": [
+        46,
+        0,
+        264,
+        281
+      ],
+      "sha256": "5d5c73f9ae7f3c32ab4583227a2114c55ba911ad6ebcfd5b70e0f425c04016e6"
+    },
+    {
+      "id": "TRAINER_PIC_CE_CANDICE",
+      "pic": "CE Candice",
+      "path": "graphics/trainers/front_pics/ce_candice.png",
+      "source_bbox": [
+        32,
+        0,
+        220,
+        270
+      ],
+      "sha256": "95d9ac97f85c66ed2d9678ba83fe6a8d78caf6425315e3aa80df03871acd271d"
+    },
+    {
+      "id": "TRAINER_PIC_CE_VOLKNER",
+      "pic": "CE Volkner",
+      "path": "graphics/trainers/front_pics/ce_volkner.png",
+      "source_bbox": [
+        30,
+        0,
+        227,
+        278
+      ],
+      "sha256": "5a2f9d18518f68cdf57ff21ee24e21a8dc396639b245bc82f838eab1b5d70ec4"
+    },
+    {
+      "id": "TRAINER_PIC_CE_GOLD",
+      "pic": "CE Gold",
+      "path": "graphics/trainers/front_pics/ce_gold.png",
+      "source_bbox": [
+        48,
+        14,
+        249,
+        267
+      ],
+      "sha256": "9e19d51651d29af5674d8934320c8c232f751b46c917c42091fe6dae90fe9365"
+    },
+    {
+      "id": "TRAINER_PIC_CE_SILVER",
+      "pic": "CE Silver",
+      "path": "graphics/trainers/front_pics/ce_silver.png",
+      "source_bbox": [
+        57,
+        0,
+        261,
+        273
+      ],
+      "sha256": "d572d547691dc8c940e6e1d6ee49e09e79bbbf0edd6f2545b773d36abce6b85b"
+    }
+  ]
+}

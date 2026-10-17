@@ -565,6 +565,60 @@ const union AnimCmd *const sBackAnims_OldManPokedude[] = {
 // gTrainerFrontPic/gTrainerPalette pointers, (e.g "gTrainerFrontPic_Hiker" and "gTrainerPalette_Hiker").
 // The last three parameters control the X and Y coordinates and rotation of the mugshot on the screen.
 // They default to 0, 0, and 0x200 which are default values used by the majority of the game's trainer sprites.
+const u32 gTrainerFrontPic_CEFalkner[] = INCGFX_U32("graphics/trainers/front_pics/ce_falkner.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEFalkner[] = INCGFX_U16("graphics/trainers/front_pics/ce_falkner.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEBugsy[] = INCGFX_U32("graphics/trainers/front_pics/ce_bugsy.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEBugsy[] = INCGFX_U16("graphics/trainers/front_pics/ce_bugsy.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEWhitney[] = INCGFX_U32("graphics/trainers/front_pics/ce_whitney.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEWhitney[] = INCGFX_U16("graphics/trainers/front_pics/ce_whitney.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEMorty[] = INCGFX_U32("graphics/trainers/front_pics/ce_morty.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEMorty[] = INCGFX_U16("graphics/trainers/front_pics/ce_morty.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEChuck[] = INCGFX_U32("graphics/trainers/front_pics/ce_chuck.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEChuck[] = INCGFX_U16("graphics/trainers/front_pics/ce_chuck.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEJasmine[] = INCGFX_U32("graphics/trainers/front_pics/ce_jasmine.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEJasmine[] = INCGFX_U16("graphics/trainers/front_pics/ce_jasmine.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEPryce[] = INCGFX_U32("graphics/trainers/front_pics/ce_pryce.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEPryce[] = INCGFX_U16("graphics/trainers/front_pics/ce_pryce.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEClair[] = INCGFX_U32("graphics/trainers/front_pics/ce_clair.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEClair[] = INCGFX_U16("graphics/trainers/front_pics/ce_clair.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CERoark[] = INCGFX_U32("graphics/trainers/front_pics/ce_roark.png", ".4bpp.smol");
+const u16 gTrainerPalette_CERoark[] = INCGFX_U16("graphics/trainers/front_pics/ce_roark.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEGardenia[] = INCGFX_U32("graphics/trainers/front_pics/ce_gardenia.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEGardenia[] = INCGFX_U16("graphics/trainers/front_pics/ce_gardenia.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEMaylene[] = INCGFX_U32("graphics/trainers/front_pics/ce_maylene.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEMaylene[] = INCGFX_U16("graphics/trainers/front_pics/ce_maylene.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CECrasherWake[] = INCGFX_U32("graphics/trainers/front_pics/ce_crasher_wake.png", ".4bpp.smol");
+const u16 gTrainerPalette_CECrasherWake[] = INCGFX_U16("graphics/trainers/front_pics/ce_crasher_wake.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEFantina[] = INCGFX_U32("graphics/trainers/front_pics/ce_fantina.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEFantina[] = INCGFX_U16("graphics/trainers/front_pics/ce_fantina.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEByron[] = INCGFX_U32("graphics/trainers/front_pics/ce_byron.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEByron[] = INCGFX_U16("graphics/trainers/front_pics/ce_byron.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CECandice[] = INCGFX_U32("graphics/trainers/front_pics/ce_candice.png", ".4bpp.smol");
+const u16 gTrainerPalette_CECandice[] = INCGFX_U16("graphics/trainers/front_pics/ce_candice.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEVolkner[] = INCGFX_U32("graphics/trainers/front_pics/ce_volkner.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEVolkner[] = INCGFX_U16("graphics/trainers/front_pics/ce_volkner.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CEGold[] = INCGFX_U32("graphics/trainers/front_pics/ce_gold.png", ".4bpp.smol");
+const u16 gTrainerPalette_CEGold[] = INCGFX_U16("graphics/trainers/front_pics/ce_gold.png", ".gbapal");
+
+const u32 gTrainerFrontPic_CESilver[] = INCGFX_U32("graphics/trainers/front_pics/ce_silver.png", ".4bpp.smol");
+const u16 gTrainerPalette_CESilver[] = INCGFX_U16("graphics/trainers/front_pics/ce_silver.png", ".gbapal");
+
 #define TRAINER_FRONT_PIC(picFile, paletteFile, ...)                           \
     (const struct TrainerFrontPicInfo[])                                       \
     {{                                                                         \
@@ -1226,4 +1280,77 @@ const struct TrainerPicInfo gTrainerPicInfo[TRAINER_PIC_COUNT] =
     {
         .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_PainterFrlg, gTrainerPalette_PainterFrlg),
     },
+    [TRAINER_PIC_CE_FALKNER] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEFalkner, gTrainerPalette_CEFalkner),
+    },
+    [TRAINER_PIC_CE_BUGSY] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEBugsy, gTrainerPalette_CEBugsy),
+    },
+    [TRAINER_PIC_CE_WHITNEY] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEWhitney, gTrainerPalette_CEWhitney),
+    },
+    [TRAINER_PIC_CE_MORTY] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEMorty, gTrainerPalette_CEMorty),
+    },
+    [TRAINER_PIC_CE_CHUCK] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEChuck, gTrainerPalette_CEChuck),
+    },
+    [TRAINER_PIC_CE_JASMINE] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEJasmine, gTrainerPalette_CEJasmine),
+    },
+    [TRAINER_PIC_CE_PRYCE] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEPryce, gTrainerPalette_CEPryce),
+    },
+    [TRAINER_PIC_CE_CLAIR] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEClair, gTrainerPalette_CEClair),
+    },
+    [TRAINER_PIC_CE_ROARK] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CERoark, gTrainerPalette_CERoark),
+    },
+    [TRAINER_PIC_CE_GARDENIA] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEGardenia, gTrainerPalette_CEGardenia),
+    },
+    [TRAINER_PIC_CE_MAYLENE] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEMaylene, gTrainerPalette_CEMaylene),
+    },
+    [TRAINER_PIC_CE_CRASHER_WAKE] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CECrasherWake, gTrainerPalette_CECrasherWake),
+    },
+    [TRAINER_PIC_CE_FANTINA] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEFantina, gTrainerPalette_CEFantina),
+    },
+    [TRAINER_PIC_CE_BYRON] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEByron, gTrainerPalette_CEByron),
+    },
+    [TRAINER_PIC_CE_CANDICE] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CECandice, gTrainerPalette_CECandice),
+    },
+    [TRAINER_PIC_CE_VOLKNER] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEVolkner, gTrainerPalette_CEVolkner),
+    },
+    [TRAINER_PIC_CE_GOLD] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CEGold, gTrainerPalette_CEGold),
+    },
+    [TRAINER_PIC_CE_SILVER] =
+    {
+        .frontPic = TRAINER_FRONT_PIC(gTrainerFrontPic_CESilver, gTrainerPalette_CESilver),
+    },
 };
+

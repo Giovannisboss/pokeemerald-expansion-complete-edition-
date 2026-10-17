@@ -37,7 +37,7 @@ def package_release(source_path, target_path, output):
         "target_size_bytes": len(target),
         "patch_sha256": sha256(patch),
         "verification": "BPS CRCs and exact apply-to-clean-ROM round trip; does not certify gameplay",
-        "remaining": ["ordinary story and postgame certification", "dedicated trainer portraits", "hardware verification"],
+        "remaining": ["ordinary story and postgame certification", "hardware verification"],
     }
     readme = (
         "Pokemon Emerald: Complete Edition - development patch\n\n"
@@ -51,7 +51,7 @@ def package_release(source_path, target_path, output):
         "pairs together. Copy a supported battery save beside the patched ROM\n"
         "using its basename and the .sav extension. Load Continue, not a savestate.\n\n"
         "This is a development build. Ordinary story/postgame certification,\n"
-        "dedicated trainer portraits and hardware verification remain unfinished.\n"
+        "and hardware verification remain unfinished.\n"
         "Patch verification alone is not game-completion certification.\n"
         "Consult the native verification logs for known failures, skips and TODOs.\n"
     )
